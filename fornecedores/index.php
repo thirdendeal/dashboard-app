@@ -24,7 +24,7 @@
     <h1>Fornecedores</h1>
     <br>
 
-    <a href="/novo-fornecedor/" class="add-button">Adicionar Fornecedor</a>
+    <a href="/adicionar-fornecedor/" class="add-button">Adicionar Fornecedor</a>
     <br>
 
     <div class="empty-table-view">
