@@ -161,3 +161,32 @@ main {
 .tab__link--current:hover {
   text-decoration: underline;
 }
+
+/* Table View */
+/* ------------------------------------------------------------------ */
+
+.add-button {
+  background-color: limegreen;
+  border-radius: 0.5rem;
+  color: white;
+  display: block;
+  font-weight: 700;
+  padding: 0.5rem;
+  text-align: center;
+  width: 100%;
+}
+
+.add-button:hover {
+  background-color: forestgreen;
+}
+
+/* ------------------------------------------------------------------ */
+
+.empty-table-view {
+  background-color: gainsboro;
+  border-radius: 0.5rem;
+  color: gray;
+  display: block;
+  font-weight: 700;
+  padding: 2rem;
+}

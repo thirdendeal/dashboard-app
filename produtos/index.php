@@ -22,10 +22,14 @@
 
   <main>
     <h1>Produtos</h1>
-
     <br>
 
-    <p>(Produtos aqui...)</p>
+    <a href="/novo-produto/" class="add-button">Adicionar Produto</a>
+    <br>
+
+    <div class="empty-table-view">
+      Nenhum produto encontrado :(
+    </div>
   </main>
 </body>
 

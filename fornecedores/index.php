@@ -22,10 +22,14 @@
 
   <main>
     <h1>Fornecedores</h1>
-
     <br>
 
-    <p>(Fornecedores aqui...)</p>
+    <a href="/novo-fornecedor/" class="add-button">Adicionar Fornecedor</a>
+    <br>
+
+    <div class="empty-table-view">
+      Nenhum fornecedor encontrado :(
+    </div>
   </main>
 </body>
 
