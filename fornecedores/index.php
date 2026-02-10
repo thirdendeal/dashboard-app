@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Dashboard - Burguer Burguer</title>
+  <title>Fornecedores - Burguer Burguer</title>
 
   <link rel="stylesheet" href="/css/partials/minireset.min.css">
   <link rel="stylesheet" href="/css/partials/normalize.css">
@@ -16,16 +16,16 @@
 <body>
 
   <?php
-  $currentTab = 1;
+  $currentTab = 2;
   include $_SERVER['DOCUMENT_ROOT'] . "/include/aside.php";
   ?>
 
   <main>
-    <h1>Dashboard</h1>
+    <h1>Fornecedores</h1>
 
     <br>
 
-    <p>Bem-vindo!</p>
+    <p>(Fornecedores aqui...)</p>
   </main>
 </body>
 
