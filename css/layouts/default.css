@@ -128,11 +128,16 @@ main {
   flex-grow: 1;
   height: 100vh;
   overflow-y: scroll;
-  padding: 3rem;
+  padding: 5rem 3rem;
 }
 
 h1 {
   color: chocolate;
+}
+
+.container {
+  margin: auto;
+  max-width: 32rem;
 }
 
 /* ------------------------------------------------------------------ */

@@ -13,22 +13,24 @@
   <link rel="stylesheet" href="/css/layouts/default.css">
 </head>
 
-<body>
+<body class="body">
 
   <?php
   $currentTab = 3;
   include $_SERVER['DOCUMENT_ROOT'] . "/include/aside.php";
   ?>
 
-  <main>
-    <h1>Produtos</h1>
-    <br>
+  <main class="main">
+    <div class="container">
+      <h1>Produtos</h1>
+      <br>
 
-    <a href="/adicionar-produto/" class="green-button">Adicionar Produto</a>
-    <br>
+      <a href="/adicionar-produto/" class="green-button">Adicionar Produto</a>
+      <br>
 
-    <div class="empty-table-view">
-      Nenhum produto encontrado :(
+      <div class="empty-table-view">
+        Nenhum produto encontrado :(
+      </div>
     </div>
   </main>
 </body>

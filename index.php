@@ -13,19 +13,21 @@
   <link rel="stylesheet" href="/css/layouts/default.css">
 </head>
 
-<body>
+<body class="body">
 
   <?php
   $currentTab = 1;
   include $_SERVER['DOCUMENT_ROOT'] . "/include/aside.php";
   ?>
 
-  <main>
-    <h1>Dashboard</h1>
+  <main class="main">
+    <div class="container">
+      <h1>Dashboard</h1>
 
-    <br>
+      <br>
 
-    <p>Bem-vinda, equipe Burguer Burguer!</p>
+      <p>Bem-vinda, equipe Burguer Burguer!</p>
+    </div>
   </main>
 </body>
 

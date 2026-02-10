@@ -1,4 +1,4 @@
-<aside>
+<aside class="aside">
   <h2 class="logotype">Burguer Burguer</h2>
 
   <?php
