@@ -25,7 +25,7 @@
 
     <br>
 
-    <p>Bem-vindo!</p>
+    <p>Bem-vinda, equipe Burguer Burguer!</p>
   </main>
 </body>
 

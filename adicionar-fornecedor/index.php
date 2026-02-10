@@ -16,7 +16,7 @@
 <body>
 
   <?php
-  $currentTab = 0;
+  $currentTab = 2;
   include $_SERVER['DOCUMENT_ROOT'] . "/include/aside.php";
   ?>
 
@@ -24,7 +24,31 @@
     <h1>Adicionar Fornecedor</h1>
     <br>
 
-    <p>Formulário</p>
+    <form action="">
+      <label for="nome">
+        Nome do Fornecedor
+        <input class="textbox" type="text" name="nome" id="nome" />
+      </label>
+
+      <label for="cnpj">
+        CNPJ
+        <input class="textbox" type="text" name="cnpj" id="cnpj" />
+      </label>
+
+      <label for="email">
+        E-Mail
+        <input class="textbox" type="email" name="email" id="email" />
+      </label>
+
+      <label for="telefone">
+        Telefone
+        <input class="textbox" type="tel" name="telefone" id="telefone" />
+      </label>
+
+      <br>
+
+      <input class="green-button" type="submit" value="Registrar Fornecedor" />
+    </form>
   </main>
 </body>
 

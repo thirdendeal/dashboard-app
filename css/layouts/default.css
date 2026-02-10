@@ -131,6 +131,10 @@ main {
   padding: 3rem;
 }
 
+h1 {
+  color: chocolate;
+}
+
 /* ------------------------------------------------------------------ */
 
 .logotype {
@@ -165,23 +169,6 @@ main {
 /* Table View */
 /* ------------------------------------------------------------------ */
 
-.add-button {
-  background-color: limegreen;
-  border-radius: 0.5rem;
-  color: white;
-  display: block;
-  font-weight: 700;
-  padding: 0.5rem;
-  text-align: center;
-  width: 100%;
-}
-
-.add-button:hover {
-  background-color: forestgreen;
-}
-
-/* ------------------------------------------------------------------ */
-
 .empty-table-view {
   background-color: gainsboro;
   border-radius: 0.5rem;
@@ -189,4 +176,42 @@ main {
   display: block;
   font-weight: 700;
   padding: 2rem;
+}
+
+/* Buttons */
+/* ------------------------------------------------------------------ */
+
+.green-button {
+  background-color: limegreen;
+  border-radius: 0.5rem;
+  color: white;
+  display: block;
+  font-weight: 700;
+  padding: 0.75rem;
+  text-align: center;
+  width: 100%;
+}
+
+.green-button:hover {
+  background-color: forestgreen;
+  cursor: pointer;
+}
+
+/* Forms */
+/* ------------------------------------------------------------------ */
+
+label {
+  color: saddlebrown;
+  font-weight: 700;
+}
+
+.textbox,
+.textbox-area {
+  background-color: whitesmoke;
+  border-radius: 0.5rem;
+  color: black;
+  display: block;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  width: 100%;
 }

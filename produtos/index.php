@@ -24,7 +24,7 @@
     <h1>Produtos</h1>
     <br>
 
-    <a href="/adicionar-produto/" class="add-button">Adicionar Produto</a>
+    <a href="/adicionar-produto/" class="green-button">Adicionar Produto</a>
     <br>
 
     <div class="empty-table-view">
