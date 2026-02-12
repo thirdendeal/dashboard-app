@@ -7,17 +7,17 @@
 
   <title>Fornecedores - Burguer Burguer</title>
 
-  <link rel="stylesheet" href="/css/partials/minireset.min.css">
-  <link rel="stylesheet" href="/css/partials/normalize.css">
+  <link rel="stylesheet" href="/_view/assets/css/minireset.min.css">
+  <link rel="stylesheet" href="/_view/assets/css/normalize.css">
 
-  <link rel="stylesheet" href="/css/layouts/default.css">
+  <link rel="stylesheet" href="/_view/assets/css/default.css">
 </head>
 
 <body class="body">
 
   <?php
   $currentTab = 2;
-  include $_SERVER['DOCUMENT_ROOT'] . "/include/aside.php";
+  include $_SERVER['DOCUMENT_ROOT'] . "/_view/includes/aside.php";
   ?>
 
   <main class="main">
