@@ -9,5 +9,3 @@ $pdo = new PDO(
         PDO::ATTR_EMULATE_PREPARES => false,
     ]
 );
-
-echo "<span style=\"background-color: green; color: white; padding: 0.25rem; font-family: sans-serif\">OK<span/>";
