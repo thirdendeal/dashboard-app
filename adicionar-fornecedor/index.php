@@ -1,3 +1,59 @@
+<?php
+
+session_start();
+
+// Insert
+
+$success = isset($_SESSION["status"]) && $_SESSION["status"];
+$failure = !$success;
+
+// Fields
+
+if (isset($_SESSION["fields"]) && $failure) { // auto-fill on failure only
+  $fields = $_SESSION["fields"];
+
+  unset($_SESSION['fields']);
+} else {
+  $fields = [];
+
+  $fields["nome"]     = "";
+  $fields["cnpj"]     = "";
+  $fields["e-mail"]   = "";
+  $fields["telefone"] = "";
+}
+
+// Errors
+
+if (isset($_SESSION["errors"])) {
+  $errors = $_SESSION["errors"];
+
+  unset($_SESSION['errors']);
+} else {
+  $errors = [];
+
+  $errors["nome"]     = "";
+  $errors["cnpj"]     = "";
+  $errors["e-mail"]   = "";
+  $errors["telefone"] = "";
+}
+
+// Status
+
+if (isset($_SESSION["status"])) {
+  if ($_SESSION["status"]) {
+    $toast = "toast--success";
+  } else {
+    $toast = "toast--failure";
+  }
+
+  unset($_SESSION['fields']);
+  unset($_SESSION['status']);
+} else {
+  $toast = "toast--hidden";
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -25,31 +81,37 @@
       <h1>Adicionar Fornecedor</h1>
       <br>
 
-      <form action="">
+      <form action="/_controller/fornecedor/adicionar/submit.php" method="post">
         <label for="nome">
           Nome do Fornecedor
-          <input class="textbox" type="text" name="nome" id="nome" />
+          <input class="textbox" type="text" name="nome" id="nome" value="<?= $fields["nome"] ?>" />
+          <span class="error"><?= $errors["nome"] ?></span>
         </label>
 
         <label for="cnpj">
           CNPJ
-          <input class="textbox" type="text" name="cnpj" id="cnpj" />
+          <input class="textbox" type="text" name="cnpj" id="cnpj" value="<?= $fields["cnpj"] ?>" />
+          <span class="error"><?= $errors["cnpj"] ?></span>
         </label>
 
-        <label for="email">
+        <label for="e-mail">
           E-Mail
-          <input class="textbox" type="email" name="email" id="email" />
+          <input class="textbox" type="email" name="e-mail" id="e-mail" value="<?= $fields["e-mail"] ?>" />
+          <span class="error"><?= $errors["e-mail"] ?></span>
         </label>
 
         <label for="telefone">
           Telefone
-          <input class="textbox" type="tel" name="telefone" id="telefone" />
+          <input class="textbox" type="tel" name="telefone" id="telefone" value="<?= $fields["telefone"] ?>" />
+          <span class="error"><?= $errors["telefone"] ?></span>
         </label>
 
         <br>
 
         <input class="green-button" type="submit" value="Registrar Fornecedor" />
       </form>
+
+      <div class="<?= $toast ?>"></div>
     </div>
   </main>
 </body>
