@@ -84,25 +84,25 @@ if (isset($_SESSION["status"])) {
       <form action="/_controller/fornecedor/adicionar/submit.php" method="post">
         <label for="nome">
           Nome do Fornecedor
-          <input class="textbox" type="text" name="nome" id="nome" value="<?= $fields["nome"] ?>" />
+          <input class="textbox" type="text" name="nome" id="nome" value="<?= $fields["nome"] ?>" oninput="ajaxField(this.id, this.value)" />
           <span class="error"><?= $errors["nome"] ?></span>
         </label>
 
         <label for="cnpj">
           CNPJ
-          <input class="textbox" type="text" name="cnpj" id="cnpj" value="<?= $fields["cnpj"] ?>" />
+          <input class="textbox" type="text" name="cnpj" id="cnpj" value="<?= $fields["cnpj"] ?>" oninput="ajaxField(this.id, this.value)" />
           <span class="error"><?= $errors["cnpj"] ?></span>
         </label>
 
         <label for="e-mail">
           E-Mail
-          <input class="textbox" type="email" name="e-mail" id="e-mail" value="<?= $fields["e-mail"] ?>" />
+          <input class="textbox" type="email" name="e-mail" id="e-mail" value="<?= $fields["e-mail"] ?>" oninput="ajaxField(this.id, this.value)" />
           <span class="error"><?= $errors["e-mail"] ?></span>
         </label>
 
         <label for="telefone">
           Telefone
-          <input class="textbox" type="tel" name="telefone" id="telefone" value="<?= $fields["telefone"] ?>" />
+          <input class="textbox" type="tel" name="telefone" id="telefone" value="<?= $fields["telefone"] ?>" oninput="ajaxField(this.id, this.value)" />
           <span class="error"><?= $errors["telefone"] ?></span>
         </label>
 
@@ -114,6 +114,13 @@ if (isset($_SESSION["status"])) {
       <div class="<?= $toast ?>"></div>
     </div>
   </main>
+
+  <script src="/_view/assets/js/jquery-4.0.0.min.js"></script>
+  <script src="/_view/assets/js/ajax.js"></script>
+
+  <script>
+    const ajaxField = ajax("/_controller/fornecedor/adicionar/ajax.php");
+  </script>
 </body>
 
 </html>
