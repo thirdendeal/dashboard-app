@@ -111,7 +111,18 @@ if (isset($_SESSION["status"])) {
         <input class="green-button" type="submit" value="Registrar Fornecedor" />
       </form>
 
-      <div class="<?= $toast ?>"></div>
+      <?php
+      if ($toast == "toast--success") {
+      ?>
+        <div class="toast--success">Registro feito com sucesso! <a class="toast-link" href="/fornecedores">Vizualizar</a></div>
+      <?php
+      } elseif ($toast == "toast--failure") {
+      ?>
+        <div class="toast--failure">Algo deu errado no registro...</div>
+      <?php
+      }
+      ?>
+
     </div>
   </main>
 
