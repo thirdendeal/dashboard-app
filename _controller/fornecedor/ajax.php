@@ -6,8 +6,8 @@ require $_SERVER['DOCUMENT_ROOT'] . "/_model/entity/fornecedor/validate.php";
 
 $validate = new \Fornecedor\Validate();
 
-$id = $_POST["id"];
-$value = $_POST["value"];
+$id = htmlspecialchars(stripslashes(trim($_POST["id"])));
+$value = htmlspecialchars(stripslashes(trim($_POST["value"])));
 
 switch ($id) {
   case "nome":
@@ -17,9 +17,14 @@ switch ($id) {
     echo $validate->cnpj($value);
     break;
   case "e-mail":
+    $value = filter_var($_POST["value"], FILTER_SANITIZE_EMAIL);
+
     echo $validate->email($value);
     break;
   case "telefone":
     echo $validate->telefone($value);
+    break;
+  case "status":
+    echo $validate->status($value);
     break;
 }

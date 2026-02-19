@@ -56,4 +56,13 @@ class Validate
       return "Telefone inválido.";
     }
   }
+
+  function status($status)
+  {
+    $status = (int) $status;
+
+    if (($status != 0) && ($status != 1)) {
+      return "Status inválido.";
+    }
+  }
 }

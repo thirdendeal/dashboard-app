@@ -75,7 +75,7 @@ if (isset($_SESSION["status"])) {
       <h1>Adicionar Fornecedor</h1>
       <br>
 
-      <form action="/_controller/fornecedor/adicionar/submit.php" method="post">
+      <form action="/_controller/fornecedor/submit.php" method="post">
         <label for="nome">
           Nome do Fornecedor
           <input class="textbox" type="text" name="nome" id="nome" value="<?= $fields["nome"] ?>" oninput="ajaxField(this.id, this.value)" />
@@ -116,7 +116,6 @@ if (isset($_SESSION["status"])) {
       <?php
       }
       ?>
-
     </div>
   </main>
 
@@ -124,7 +123,7 @@ if (isset($_SESSION["status"])) {
   <script src="/_view/assets/js/ajax.js"></script>
 
   <script>
-    const ajaxField = ajax("/_controller/fornecedor/adicionar/ajax.php");
+    const ajaxField = ajax("/_controller/fornecedor/ajax.php");
   </script>
 </body>
 

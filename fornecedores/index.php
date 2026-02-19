@@ -86,7 +86,7 @@ require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/get-table.php";
     $(document).ready(function() {
       $(".link-row").hover(function() {
         $(this).children().each(function() {
-          $(this).css("background-color", "orange");
+          $(this).css("background-color", "blanchedalmond");
         });
       }, function() {
         $(this).children().each(function() {

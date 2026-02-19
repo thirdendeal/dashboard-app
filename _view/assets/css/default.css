@@ -250,6 +250,9 @@ label {
   }
   to {
     bottom: -5rem;
+
+    display: none;
+    opacity: 0;
   }
 }
 
@@ -260,6 +263,8 @@ label {
     toastIn 0.5s cubic-bezier(0.68, -0.6, 0.32, 1.6),
     toast 2s linear 0.5s,
     toastOut 1s cubic-bezier(0.68, -0.6, 0.32, 1.6) 2.5s;
+
+  animation-fill-mode: forwards;
   backdrop-filter: blur(12px) saturate(1.5);
   background-color: rgba(0, 128, 0, 0.7);
   border-radius: 0.5rem;
@@ -297,7 +302,7 @@ label {
 /* ------------------------------------------------------------------ */
 
 .empty-view {
-  background-color: gainsboro;
+  background-color: whitesmoke;
   border-radius: 0.5rem;
   color: gray;
   display: block;
@@ -306,7 +311,7 @@ label {
 }
 
 table {
-  background-color: floralwhite;
+  background-color: whitesmoke;
   border-radius: 0.5rem;
   display: block;
   overflow-x: auto;
@@ -319,7 +324,7 @@ tr {
 }
 
 tr:nth-child(odd) td {
-  background: blanchedalmond;
+  background: white;
 }
 
 tr td:first-of-type {
@@ -357,13 +362,87 @@ td {
 /* List View */
 /* ------------------------------------------------------------------ */
 
+.list {
+  margin-top: 0.75rem;
+}
+
 .list__item {
+  align-items: center;
   display: flex;
+  margin-bottom: 0.5rem;
   word-break: break-all;
 }
 
 .list__title {
-  flex: 0 0 40%;
+  align-self: stretch;
+  background-color: blanchedalmond;
+  border-radius: 0.5rem 0 0 0.5rem;
+  border: 2px solid saddlebrown;
+  color: saddlebrown;
+  flex: 0 0 20%;
   font-size: 1em;
   margin-right: 1rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.list__form,
+.list__p {
+  flex-grow: 1;
+  padding: 0.25rem 0.5rem;
+}
+
+.list__form {
+  padding: 0.25rem 0;
+}
+
+.list__edit {
+  background-color: cornflowerblue;
+  border-radius: 0.5rem;
+  color: white;
+  display: inline-block;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-left: 1rem;
+  padding-right: 0.6rem;
+  padding: 0.4rem 0.7rem;
+}
+
+.list__edit:hover {
+  background-color: steelblue;
+  cursor: pointer;
+}
+
+.list__form__padlock {
+  display: flex;
+  justify-content: space-between;
+}
+
+.list__cancel,
+.list__submit {
+  background-color: mediumseagreen;
+  border-radius: 0.5rem;
+  color: white;
+  display: block;
+  flex: 0 0 49%;
+  font-weight: 700;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.list__cancel {
+  background-color: indianred;
+}
+
+.list__cancel:hover,
+.list__submit:hover {
+  background-color: forestgreen;
+  cursor: pointer;
+}
+
+.list__cancel:hover {
+  background-color: firebrick;
+}
+
+svg {
+  vertical-align: text-top;
 }

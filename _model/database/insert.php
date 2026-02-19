@@ -8,18 +8,20 @@ function insert($table_name, $pairs)
 {
   global $pdo;
 
-  $backticked_columns = [];
+  $columns = [];
   $values = [];
-
-  foreach ($pairs as $column => $value) { // match keys and values order
-    $backticked_columns[] = "`$column`";
-    $values[] = $value;
+  foreach ($pairs as $column => $value) { // match $values to $columns
+    array_push($columns, "`$column`");
+    array_push($values, $value);
   }
+  $columns_string = implode(", ", $columns);
+  $values_string  = implode(", ", array_fill(0, count($columns), "?"));
 
-  $columns_order = implode(", ", $backticked_columns);
-  $values_order  = implode(", ", array_fill(0, count($backticked_columns), "?"));
+  $statement = $pdo->prepare(
+    "INSERT INTO dashboard_app.`$table_name` ($columns_string) VALUES ($values_string);"
+  );
 
-  return $pdo->prepare(
-    "INSERT INTO dashboard_app.`$table_name` ($columns_order) VALUES ($values_order);"
-  )->execute($values);
+  $status = $statement->execute($values);
+
+  return $status;
 }
