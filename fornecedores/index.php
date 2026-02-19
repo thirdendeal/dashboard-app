@@ -1,6 +1,4 @@
 <?php
-require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/pdo.php";
-
 require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/get-table.php";
 ?>
 
@@ -28,48 +26,52 @@ require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/get-table.php";
       <a href="/adicionar-fornecedor/" class="green-button">Adicionar Fornecedor</a>
       <br>
 
-
       <?php
       list($headers, $rows) = get_table("fornecedor");
 
       if ($headers) {
       ?>
         <table>
-          <tr>
+          <thead>
+            <tr>
+              <?php
+              foreach ($headers as $header) {
+                if ($header == "id_fornecedor")
+                  $header = "ID";
+
+                if ($header == "cnpj")
+                  $header = "CNPJ";
+
+                echo "<th>$header</th>";
+              }
+              ?>
+            </tr>
+          </thead>
+          <tbody>
             <?php
-            foreach ($headers as $header) {
-              if ($header == "id_fornecedor")
-                $header = "ID";
+            while ($row = $rows->fetch(PDO::FETCH_ASSOC)) {
+              $id = $row["id_fornecedor"];
 
-              if ($header == "cnpj")
-                $header = "CNPJ";
+              echo "<tr class=\"link-row\" data-href=\"/fornecedor?id=$id\">";
+              foreach ($row as $key => $value) {
+                if ($key == "status") {
+                  $value = $value ? "ATIVO" : "INATIVO";
+                  $class = $value ? "td-active" : "td-inactive";
 
-              echo "<th>$header</th>";
+                  echo "<td class=\"$class\">$value</td>";
+                } else {
+                  echo "<td>$value</td>";
+                }
+              }
+              echo "</tr>";
             }
             ?>
-          </tr>
-
-          <?php
-          while ($row = $rows->fetch(PDO::FETCH_ASSOC)) {
-            echo "<tr>";
-            foreach ($row as $key => $value) {
-              if ($key == "status") {
-                $value = $value ? "ATIVO" : "INATIVO";
-                $class = $value ? "td-active" : "td-inactive";
-
-                echo "<td class=\"$class\">$value</td>";
-              } else {
-                echo "<td>$value</td>";
-              }
-            }
-            echo "</tr>";
-          }
-          ?>
+          </tbody>
         </table>
       <?php
       } else {
       ?>
-        <div class="empty-table-view">
+        <div class="empty-view">
           Nenhum fornecedor encontrado :(
         </div>
       <?php
@@ -77,6 +79,26 @@ require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/get-table.php";
       ?>
     </div>
   </main>
+
+  <script src="/_view/assets/js/jquery-4.0.0.min.js"></script>
+
+  <script>
+    $(document).ready(function() {
+      $(".link-row").hover(function() {
+        $(this).children().each(function() {
+          $(this).css("background-color", "orange");
+        });
+      }, function() {
+        $(this).children().each(function() {
+          $(this).removeAttr('style');
+        });
+      });
+
+      $(".link-row").click(function() {
+        window.location = $(this).data("href");
+      });
+    });
+  </script>
 </body>
 
 </html>

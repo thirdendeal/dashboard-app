@@ -22,7 +22,7 @@
       <a href="/adicionar-produto/" class="green-button">Adicionar Produto</a>
       <br>
 
-      <div class="empty-table-view">
+      <div class="empty-view">
         Nenhum produto encontrado :(
       </div>
     </div>

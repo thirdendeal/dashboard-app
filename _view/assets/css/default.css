@@ -296,7 +296,7 @@ label {
 /* Table View */
 /* ------------------------------------------------------------------ */
 
-.empty-table-view {
+.empty-view {
   background-color: gainsboro;
   border-radius: 0.5rem;
   color: gray;
@@ -314,15 +314,19 @@ table {
   width: 100%;
 }
 
-tr:nth-child(odd):not(:first-of-type) td {
+tr {
+  cursor: pointer;
+}
+
+tr:nth-child(odd) td {
   background: blanchedalmond;
 }
 
-tr:nth-child(odd):not(:first-of-type) td:first-of-type {
+tr td:first-of-type {
   border-radius: 0.5rem 0 0 0.5rem;
 }
 
-tr:nth-child(odd):not(:first-of-type) td:last-of-type {
+tr td:last-of-type {
   border-radius: 0 0.5rem 0.5rem 0;
 }
 
@@ -348,4 +352,18 @@ td {
 
 .td-inactive {
   color: red;
+}
+
+/* List View */
+/* ------------------------------------------------------------------ */
+
+.list__item {
+  display: flex;
+  word-break: break-all;
+}
+
+.list__title {
+  flex: 0 0 40%;
+  font-size: 1em;
+  margin-right: 1rem;
 }
