@@ -2,19 +2,13 @@
 <html lang="pt-BR">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Dashboard - Burguer Burguer</title>
-
-  <link rel="stylesheet" href="/_view/assets/css/minireset.min.css">
-  <link rel="stylesheet" href="/_view/assets/css/normalize.css">
-
-  <link rel="stylesheet" href="/_view/assets/css/default.css">
+  <?php
+  $title = "Dashboard";
+  include $_SERVER['DOCUMENT_ROOT'] . "/_view/includes/head.php";
+  ?>
 </head>
 
 <body class="body">
-
   <?php
   $currentTab = 1;
   include $_SERVER['DOCUMENT_ROOT'] . "/_view/includes/aside.php";

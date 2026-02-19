@@ -185,6 +185,10 @@ h1 {
   width: 100%;
 }
 
+.green-button:visited {
+  color: white;
+}
+
 .green-button:hover {
   background-color: forestgreen;
   cursor: pointer;
@@ -279,6 +283,10 @@ label {
   font-weight: 700;
   margin-left: 1rem;
   padding: 0.5rem;
+}
+
+.toast-link:visited {
+  color: white;
 }
 
 .toast-link:hover {
