@@ -9,14 +9,7 @@ function get_rows($table_name)
   global $pdo;
 
   $rows = $pdo->prepare("SELECT * FROM dashboard_app.`$table_name`;");
-  $rows->execute();
-  $headers = $rows->fetch(PDO::FETCH_ASSOC);
+  $rows_status = $rows->execute();
 
-  if ($headers)
-    $headers = array_keys($headers);
-
-  $rows = $pdo->prepare("SELECT * FROM dashboard_app.`$table_name`;");
-  $rows->execute();
-
-  return [$headers, $rows];
+  return [$rows_status, $rows];
 }

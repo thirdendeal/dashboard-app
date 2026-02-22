@@ -1,5 +1,7 @@
 <?php
 require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/pdo/get-rows.php";
+
+list($rows_success, $rows) = get_rows("fornecedor");
 ?>
 
 <!DOCTYPE html>
@@ -7,14 +9,14 @@ require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/pdo/get-rows.php";
 
 <head>
   <?php
-  $title = "Fornecedores";
+  $head_title = "Fornecedores";
   include $_SERVER['DOCUMENT_ROOT'] . "/_view/includes/head.php";
   ?>
 </head>
 
 <body class="body">
   <?php
-  $currentTab = 2;
+  $aside_current_tab = 2;
   include $_SERVER['DOCUMENT_ROOT'] . "/_view/includes/aside.php";
   ?>
 
@@ -26,61 +28,42 @@ require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/pdo/get-rows.php";
       <a href="/adicionar-fornecedor/" class="green-button">Adicionar Fornecedor</a>
       <br>
 
-      <?php
-      list($headers, $rows) = get_rows("fornecedor");
-
-      if ($headers) {
-      ?>
+      <?php if ($rows_success) { ?>
         <table>
           <thead>
             <tr>
-              <?php
-              foreach ($headers as $header) {
-                if ($header == "id_fornecedor")
-                  $header = "ID";
-
-                if ($header == "cnpj")
-                  $header = "CNPJ";
-
-                echo "<th>$header</th>";
-              }
-              ?>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>CNPJ</th>
+              <th>E-Mail</th>
+              <th>Telefone</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
-            <?php
-            while ($row = $rows->fetch(PDO::FETCH_ASSOC)) {
-              $id = $row["id_fornecedor"];
-
-              echo "<tr class=\"link-row\" data-href=\"/fornecedor?id=$id\">";
-              foreach ($row as $key => $value) {
-                if ($key == "status") {
-                  $value = $value ? "ATIVO" : "INATIVO";
-                  $class = $value ? "td-active" : "td-inactive";
-
-                  echo "<td class=\"$class\">$value</td>";
-                } else {
-                  echo "<td>$value</td>";
-                }
-              }
-              echo "</tr>";
-            }
-            ?>
+            <?php while ($row = $rows->fetch(PDO::FETCH_ASSOC)) { ?>
+              <tr class="link-row" data-href="/fornecedor?id=<?= $row["id_fornecedor"] ?>">
+                <td><?= $row["id_fornecedor"] ?></td>
+                <td><?= $row["nome"] ?></td>
+                <td><?= $row["cnpj"] ?></td>
+                <td><?= $row["e-mail"] ?></td>
+                <td><?= $row["telefone"] ?></td>
+                <td class="<?php echo $row['status'] ? 'green' : 'red' ?>">
+                  <?php echo $row["status"] ? "ATIVO" : "INATIVO" ?>
+                </td>
+              </tr>
+            <?php } ?>
           </tbody>
         </table>
-      <?php
-      } else {
-      ?>
+      <?php } else { ?>
         <div class="empty-view">
           Nenhum fornecedor encontrado :(
         </div>
-      <?php
-      }
-      ?>
+      <?php } ?>
     </div>
   </main>
 
-  <script src="/_view/assets/js/jquery-4.0.0.min.js"></script>
+  <script src="/_view/vendor/jquery-v4.0.0.min.js"></script>
 
   <script>
     $(document).ready(function() {

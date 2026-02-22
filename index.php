@@ -3,14 +3,14 @@
 
 <head>
   <?php
-  $title = "Dashboard";
+  $head_title = "Dashboard";
   include $_SERVER['DOCUMENT_ROOT'] . "/_view/includes/head.php";
   ?>
 </head>
 
 <body class="body">
   <?php
-  $currentTab = 1;
+  $aside_current_tab = 1;
   include $_SERVER['DOCUMENT_ROOT'] . "/_view/includes/aside.php";
   ?>
 

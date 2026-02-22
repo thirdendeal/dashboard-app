@@ -109,6 +109,14 @@ textarea {
   vertical-align: middle;
 }
 
+.green {
+  color: green;
+}
+
+.red {
+  color: red;
+}
+
 /* Sidebar */
 /* ------------------------------------------------------------------ */
 
@@ -351,14 +359,6 @@ td {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   white-space: nowrap;
-}
-
-.td-active {
-  color: green;
-}
-
-.td-inactive {
-  color: red;
 }
 
 /* List View */

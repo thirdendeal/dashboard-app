@@ -59,14 +59,14 @@ if (isset($_SESSION["status"])) {
 
 <head>
   <?php
-  $title = "Adicionar Fornecedor";
+  $head_title = "Adicionar Fornecedor";
   include $_SERVER['DOCUMENT_ROOT'] . "/_view/includes/head.php";
   ?>
 </head>
 
 <body class="body">
   <?php
-  $currentTab = 2;
+  $aside_current_tab = 2;
   include $_SERVER['DOCUMENT_ROOT'] . "/_view/includes/aside.php";
   ?>
 
@@ -119,7 +119,7 @@ if (isset($_SESSION["status"])) {
     </div>
   </main>
 
-  <script src="/_view/assets/js/jquery-4.0.0.min.js"></script>
+  <script src="/_view/vendor/jquery-v4.0.0.min.js"></script>
   <script src="/_view/assets/js/ajax.js"></script>
 
   <script>

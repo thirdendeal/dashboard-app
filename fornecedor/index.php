@@ -44,14 +44,14 @@ require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/pdo/get-row.php";
 
 <head>
   <?php
-  $title = "Fornecedor";
+  $head_title = "Fornecedor";
   include $_SERVER['DOCUMENT_ROOT'] . "/_view/includes/head.php";
   ?>
 </head>
 
 <body class="body">
   <?php
-  $currentTab = 2;
+  $aside_current_tab = 2;
   include $_SERVER['DOCUMENT_ROOT'] . "/_view/includes/aside.php";
 
   $id = htmlspecialchars(stripslashes(trim($_GET["id"])));
@@ -214,7 +214,7 @@ require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/pdo/get-row.php";
     </div>
   </main>
 
-  <script src="/_view/assets/js/jquery-4.0.0.min.js"></script>
+  <script src="/_view/vendor/jquery-v4.0.0.min.js"></script>
   <script src="/_view/assets/js/ajax.js"></script>
 
   <script>
