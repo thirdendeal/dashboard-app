@@ -2,55 +2,39 @@
 
 session_start();
 
-// Insert
+// Status
+// ---------------------------------------------------------------------
 
-$success = isset($_SESSION["status"]) && $_SESSION["status"];
-$failure = !$success;
+$attempt = isset($_SESSION["status"]);
+$success = $_SESSION["status"] ?? false;
+
+unset($_SESSION['status']);
 
 // Fields
+// ---------------------------------------------------------------------
 
-if (isset($_SESSION["fields"]) && $failure) { // auto-fill on failure only
-  $fields = $_SESSION["fields"];
+// Auto-fill on failure only
 
-  unset($_SESSION['fields']);
-} else {
-  $fields = [];
+$fields = [
+  "nome"     => $success ? "" : ($_SESSION["fields"]["nome"] ?? ""),
+  "cnpj"     => $success ? "" : ($_SESSION["fields"]["cnpj"] ?? ""),
+  "e-mail"   => $success ? "" : ($_SESSION["fields"]["e-mail"] ?? ""),
+  "telefone" => $success ? "" : ($_SESSION["fields"]["telefone"] ?? "")
+];
 
-  $fields["nome"]     = "";
-  $fields["cnpj"]     = "";
-  $fields["e-mail"]   = "";
-  $fields["telefone"] = "";
-}
+unset($_SESSION["fields"]);
 
 // Errors
+// ---------------------------------------------------------------------
 
-if (isset($_SESSION["errors"])) {
-  $errors = $_SESSION["errors"];
+$errors = [
+  "nome"     => $_SESSION["errors"]["nome"] ?? "",
+  "cnpj"     => $_SESSION["errors"]["cnpj"] ?? "",
+  "e-mail"   => $_SESSION["errors"]["e-mail"] ?? "",
+  "telefone" => $_SESSION["errors"]["telefone"] ?? ""
+];
 
-  unset($_SESSION['errors']);
-} else {
-  $errors = [];
-
-  $errors["nome"]     = "";
-  $errors["cnpj"]     = "";
-  $errors["e-mail"]   = "";
-  $errors["telefone"] = "";
-}
-
-// Status
-
-if (isset($_SESSION["status"])) {
-  if ($_SESSION["status"]) {
-    $toast = "toast--success";
-  } else {
-    $toast = "toast--failure";
-  }
-
-  unset($_SESSION['fields']);
-  unset($_SESSION['status']);
-} else {
-  $toast = "toast--hidden";
-}
+unset($_SESSION['errors']);
 
 ?>
 
@@ -78,25 +62,25 @@ if (isset($_SESSION["status"])) {
       <form action="/_controller/fornecedor/add.php" method="post">
         <label for="nome">
           Nome do Fornecedor
-          <input class="textbox" type="text" name="nome" id="nome" value="<?= $fields["nome"] ?>" oninput="ajaxField(this.id, this.value)" />
+          <input class="textbox" type="text" name="nome" id="nome" value="<?= $fields["nome"] ?>" oninput="getHint(this.id, this.value)" />
           <span class="error"><?= $errors["nome"] ?></span>
         </label>
 
         <label for="cnpj">
           CNPJ
-          <input class="textbox" type="text" name="cnpj" id="cnpj" value="<?= $fields["cnpj"] ?>" oninput="ajaxField(this.id, this.value)" />
+          <input class="textbox" type="text" name="cnpj" id="cnpj" value="<?= $fields["cnpj"] ?>" oninput="getHint(this.id, this.value)" />
           <span class="error"><?= $errors["cnpj"] ?></span>
         </label>
 
         <label for="e-mail">
           E-Mail
-          <input class="textbox" type="email" name="e-mail" id="e-mail" value="<?= $fields["e-mail"] ?>" oninput="ajaxField(this.id, this.value)" />
+          <input class="textbox" type="email" name="e-mail" id="e-mail" value="<?= $fields["e-mail"] ?>" oninput="getHint(this.id, this.value)" />
           <span class="error"><?= $errors["e-mail"] ?></span>
         </label>
 
         <label for="telefone">
           Telefone
-          <input class="textbox" type="tel" name="telefone" id="telefone" value="<?= $fields["telefone"] ?>" oninput="ajaxField(this.id, this.value)" />
+          <input class="textbox" type="tel" name="telefone" id="telefone" value="<?= $fields["telefone"] ?>" oninput="getHint(this.id, this.value)" />
           <span class="error"><?= $errors["telefone"] ?></span>
         </label>
 
@@ -105,25 +89,21 @@ if (isset($_SESSION["status"])) {
         <input class="green-button" type="submit" value="Registrar Fornecedor" />
       </form>
 
-      <?php
-      if ($toast == "toast--success") {
-      ?>
-        <div class="toast--success">Registro feito com sucesso! <a class="toast-link" href="/fornecedores">Vizualizar</a></div>
-      <?php
-      } elseif ($toast == "toast--failure") {
-      ?>
-        <div class="toast--failure">Algo deu errado no registro...</div>
-      <?php
-      }
-      ?>
+      <?php if ($attempt) { ?>
+        <?php if ($success) { ?>
+          <div class="toast--success">Registro feito com sucesso! <a class="toast-link" href="/fornecedores">Vizualizar</a></div>
+        <?php } else { ?>
+          <div class="toast--failure">Algo deu errado no registro...</div>
+        <?php } ?>
+      <?php } ?>
     </div>
   </main>
 
   <script src="/_view/vendor/jquery-v4.0.0.min.js"></script>
-  <script src="/_view/assets/js/ajax.js"></script>
+  <script src="/_view/assets/js/get-hint.js"></script>
 
   <script>
-    const ajaxField = ajax("/_controller/fornecedor/hint.php");
+    const getHint = makeGetHint("/_controller/fornecedor/hint.php");
   </script>
 </body>
 

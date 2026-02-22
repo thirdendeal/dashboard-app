@@ -2,14 +2,22 @@
 
 require $_SERVER['DOCUMENT_ROOT'] . "/_model/entity/fornecedor/validate.php";
 
+// Escape
 // ---------------------------------------------------------------------
 
 $validate = new \Fornecedor\Validate();
 
-$id = htmlspecialchars(stripslashes(trim($_POST["id"])));
-$value = htmlspecialchars(stripslashes(trim($_POST["value"])));
+$field = htmlspecialchars(stripslashes(trim($_POST["field"])));
 
-switch ($id) {
+if ($field == "e-mail") {
+  $value = filter_var($_POST["value"], FILTER_SANITIZE_EMAIL);
+} else {
+  $value = htmlspecialchars(stripslashes(trim($_POST["value"])));
+}
+
+// ---------------------------------------------------------------------
+
+switch ($field) {
   case "nome":
     echo $validate->nome($value);
     break;
@@ -17,8 +25,6 @@ switch ($id) {
     echo $validate->cnpj($value);
     break;
   case "e-mail":
-    $value = filter_var($_POST["value"], FILTER_SANITIZE_EMAIL);
-
     echo $validate->email($value);
     break;
   case "telefone":

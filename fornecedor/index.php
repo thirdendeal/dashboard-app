@@ -75,7 +75,7 @@ require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/pdo/get-row.php";
 
             <form class="list__form" action="/_controller/fornecedor/edit.php" method="post">
               <label for="nome">
-                <input class="list__input textbox" type="text" name="nome" id="nome" value="<?= $fornecedor["nome"] ?>" oninput="ajaxField(this.id, this.value)" />
+                <input class="list__input textbox" type="text" name="nome" id="nome" value="<?= $fornecedor["nome"] ?>" oninput="getHint(this.id, this.value)" />
                 <span class="list__error error"></span>
               </label>
 
@@ -98,7 +98,7 @@ require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/pdo/get-row.php";
 
             <form class="list__form" action="/_controller/fornecedor/edit.php" method="post">
               <label for="cnpj">
-                <input class="list__input textbox" type="text" name="cnpj" id="cnpj" value="<?= $fornecedor["cnpj"] ?>" oninput="ajaxField(this.id, this.value)" />
+                <input class="list__input textbox" type="text" name="cnpj" id="cnpj" value="<?= $fornecedor["cnpj"] ?>" oninput="getHint(this.id, this.value)" />
                 <span class="list__error error"></span>
               </label>
 
@@ -122,7 +122,7 @@ require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/pdo/get-row.php";
 
             <form class="list__form" action="/_controller/fornecedor/edit.php" method="post">
               <label for="e-mail">
-                <input class="list__input textbox" type="email" name="e-mail" id="e-mail" value="<?= $fornecedor["e-mail"] ?>" oninput="ajaxField(this.id, this.value)" />
+                <input class="list__input textbox" type="email" name="e-mail" id="e-mail" value="<?= $fornecedor["e-mail"] ?>" oninput="getHint(this.id, this.value)" />
                 <span class="list__error error"></span>
               </label>
 
@@ -145,7 +145,7 @@ require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/pdo/get-row.php";
 
             <form class="list__form" action="/_controller/fornecedor/edit.php" method="post">
               <label for="telefone">
-                <input class="list__input textbox" type="tel" name="telefone" id="telefone" value="<?= $fornecedor["telefone"] ?>" oninput="ajaxField(this.id, this.value)" />
+                <input class="list__input textbox" type="tel" name="telefone" id="telefone" value="<?= $fornecedor["telefone"] ?>" oninput="getHint(this.id, this.value)" />
                 <span class="list__error error"></span>
               </label>
 
@@ -169,7 +169,7 @@ require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/pdo/get-row.php";
 
             <form class="list__form" action="/_controller/fornecedor/edit.php" method="post">
               <label for="status">
-                <input class="list__input textbox" type="text" name="status" id="status" value="<?= $fornecedor["status"] ?>" oninput="ajaxField(this.id, this.value)" />
+                <input class="list__input textbox" type="text" name="status" id="status" value="<?= $fornecedor["status"] ?>" oninput="getHint(this.id, this.value)" />
                 <span class="list__error error"></span>
               </label>
 
@@ -215,10 +215,10 @@ require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/pdo/get-row.php";
   </main>
 
   <script src="/_view/vendor/jquery-v4.0.0.min.js"></script>
-  <script src="/_view/assets/js/ajax.js"></script>
+  <script src="/_view/assets/js/get-hint.js"></script>
 
   <script>
-    const ajaxField = ajax("/_controller/fornecedor/hint.php");
+    const getHint = makeGetHint("/_controller/fornecedor/hint.php");
 
     $(document).ready(function() {
       $(".list__form").hide();

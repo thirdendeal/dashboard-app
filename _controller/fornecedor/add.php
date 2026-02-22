@@ -10,12 +10,12 @@ require $_SERVER['DOCUMENT_ROOT'] . "/_model/entity/fornecedor/validate.php";
 // Escape
 // ---------------------------------------------------------------------
 
-$fields = [];
-
-$fields["nome"]     = htmlspecialchars(stripslashes(trim($_POST["nome"])));
-$fields["cnpj"]     = htmlspecialchars(stripslashes(trim($_POST["cnpj"])));
-$fields["e-mail"]   = filter_var($_POST["e-mail"], FILTER_SANITIZE_EMAIL);
-$fields["telefone"] = htmlspecialchars(stripslashes(trim($_POST["telefone"])));
+$fields = [
+  "nome"     => htmlspecialchars(stripslashes(trim($_POST["nome"]))),
+  "cnpj"     => htmlspecialchars(stripslashes(trim($_POST["cnpj"]))),
+  "e-mail"   => filter_var($_POST["e-mail"], FILTER_SANITIZE_EMAIL),
+  "telefone" => htmlspecialchars(stripslashes(trim($_POST["telefone"])))
+];
 
 $_SESSION["fields"] = $fields;
 
@@ -24,12 +24,12 @@ $_SESSION["fields"] = $fields;
 
 $validate = new \Fornecedor\Validate();
 
-$errors = [];
-
-$errors["nome"]     = $validate->nome($fields["nome"]);
-$errors["cnpj"]     = $validate->cnpj($fields["cnpj"]);
-$errors["e-mail"]   = $validate->email($fields["e-mail"]);
-$errors["telefone"] = $validate->telefone($fields["telefone"]);
+$errors = [
+  "nome"     => $validate->nome($fields["nome"]),
+  "cnpj"     => $validate->cnpj($fields["cnpj"]),
+  "e-mail"   => $validate->email($fields["e-mail"]),
+  "telefone" => $validate->telefone($fields["telefone"])
+];
 
 $_SESSION["errors"] = $errors;
 
@@ -37,11 +37,9 @@ $_SESSION["errors"] = $errors;
 // ---------------------------------------------------------------------
 
 if (empty(array_filter($errors))) {
-  // no errors
-
   $_SESSION["status"] = insert("fornecedor", $fields);
 }
 
 // ---------------------------------------------------------------------
 
-header("Location: /adicionar-fornecedor");
+header("Location: /adicionar-fornecedor/");
