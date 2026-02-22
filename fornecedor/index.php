@@ -35,7 +35,7 @@ if (isset($_SESSION["status"])) {
 
 // Require
 
-require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/get-row.php";
+require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/pdo/get-row.php";
 
 ?>
 
@@ -218,7 +218,7 @@ require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/get-row.php";
   <script src="/_view/assets/js/ajax.js"></script>
 
   <script>
-    const ajaxField = ajax("/_controller/fornecedor/ajax.php");
+    const ajaxField = ajax("/_controller/fornecedor/hint.php");
 
     $(document).ready(function() {
       $(".list__form").hide();

@@ -4,7 +4,7 @@ session_start();
 
 // ---------------------------------------------------------------------
 
-require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/insert.php";
+require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/pdo/insert.php";
 require $_SERVER['DOCUMENT_ROOT'] . "/_model/entity/fornecedor/validate.php";
 
 // Escape

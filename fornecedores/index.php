@@ -1,5 +1,5 @@
 <?php
-require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/get-table.php";
+require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/pdo/get-rows.php";
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +27,7 @@ require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/get-table.php";
       <br>
 
       <?php
-      list($headers, $rows) = get_table("fornecedor");
+      list($headers, $rows) = get_rows("fornecedor");
 
       if ($headers) {
       ?>

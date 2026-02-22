@@ -4,7 +4,7 @@ session_start();
 
 // ---------------------------------------------------------------------
 
-require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/update.php";
+require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/pdo/update.php";
 require $_SERVER['DOCUMENT_ROOT'] . "/_model/entity/fornecedor/validate.php";
 
 // Parse

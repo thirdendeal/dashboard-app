@@ -1,6 +1,6 @@
 <?php
 
-require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/create.php";
+require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/pdo/setup.php";
 
 echo "<span style=\"background-color: green; color: white; padding: 0.25rem; font-family: sans-serif\">";
 echo "  CRIADO";

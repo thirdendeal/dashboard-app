@@ -17,7 +17,6 @@
   <main class="main">
     <div class="container">
       <h1>Dashboard</h1>
-
       <br>
 
       <p>Bem-vinda, equipe Burguer Burguer!</p>
