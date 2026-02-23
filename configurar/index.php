@@ -9,7 +9,7 @@ require $_SERVER["DOCUMENT_ROOT"] . "/_view/helpers/consume-session.php";
 // ---------------------------------------------------------------------
 
 $session = consume_session(
-  "connect", "connect_submit", "setup", "setup_submit"
+  "connect", "connect_submit", "setup", "setup_submit", "drop", "drop_submit"
 );
 
 ?>
@@ -57,6 +57,19 @@ $session = consume_session(
           <?php if ($session["setup_submit"]) { ?>
             <div class="<?= $session["setup"] ? "green" : "red" ?>">
               <?= $session["setup"] ? "> Setup feito com sucesso." : "* Erro no setup do banco de dados." ?>
+            </div>
+          <?php } ?>
+
+          <br>
+        </li>
+        <li>
+          <form action="/_controller/configurar/drop.php" method="post">
+            <input class="green-button" type="submit" value="Remover Banco de Dados">
+          </form>
+
+          <?php if ($session["drop_submit"]) { ?>
+            <div class="<?= $session["drop"] ? "green" : "red" ?>">
+              <?= $session["drop"] ? "> Remoção feita com sucesso." : "* Erro ao remover o banco de dados." ?>
             </div>
           <?php } ?>
         </li>
