@@ -29,7 +29,7 @@ $session = consume_session(
 
 <body class="body">
   <?php
-  $aside_current_tab = 0;
+  $aside_current_tab = 4;
   include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/aside.php";
   ?>
 
