@@ -109,27 +109,6 @@ textarea {
   vertical-align: middle;
 }
 
-.green {
-  color: green;
-}
-
-.red {
-  color: red;
-}
-
-.pass,
-.fail {
-  display: inline-block;
-  background-color: green;
-  color: white;
-  padding: 0.25rem;
-  font-family: sans-serif;
-}
-
-.fail {
-  background: red;
-}
-
 /* Sidebar */
 /* ------------------------------------------------------------------ */
 
@@ -460,4 +439,32 @@ td {
 
 svg {
   vertical-align: text-top;
+}
+
+/* Ad-Hoc */
+/* ------------------------------------------------------------------ */
+
+.green {
+  color: green;
+}
+
+.red {
+  color: red;
+}
+
+.pass,
+.fail {
+  display: inline-block;
+  background-color: green;
+  color: white;
+  padding: 0.25rem;
+  font-family: sans-serif;
+}
+
+.fail {
+  background: red;
+}
+
+.left {
+  text-align: left;
 }

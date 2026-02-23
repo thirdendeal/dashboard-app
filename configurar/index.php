@@ -9,7 +9,10 @@ require $_SERVER["DOCUMENT_ROOT"] . "/_view/helpers/consume-session.php";
 // ---------------------------------------------------------------------
 
 $session = consume_session(
-  "connect", "connect_submit", "setup", "setup_submit", "drop", "drop_submit"
+  "connect", "connect_submit",
+  "setup", "setup_submit",
+  "drop", "drop_submit",
+  "populate", "populate_submit"
 );
 
 ?>
@@ -38,7 +41,7 @@ $session = consume_session(
       <ul>
         <li>
           <form action="/_controller/configurar/connect.php" method="post">
-            <input class="green-button" type="submit" value="Testar Conexão">
+            <input class="green-button left" type="submit" value="Testar Conexão">
           </form>
 
           <?php if ($session["connect_submit"]) { ?>
@@ -51,7 +54,7 @@ $session = consume_session(
         </li>
         <li>
           <form action="/_controller/configurar/setup.php" method="post">
-            <input class="green-button" type="submit" value="Setup Banco de Dados">
+            <input class="green-button left" type="submit" value="Setup">
           </form>
 
           <?php if ($session["setup_submit"]) { ?>
@@ -64,12 +67,25 @@ $session = consume_session(
         </li>
         <li>
           <form action="/_controller/configurar/drop.php" method="post">
-            <input class="green-button" type="submit" value="Remover Banco de Dados">
+            <input class="green-button left" type="submit" value="Remover Banco de Dados">
           </form>
 
           <?php if ($session["drop_submit"]) { ?>
             <div class="<?= $session["drop"] ? "green" : "red" ?>">
               <?= $session["drop"] ? "> Remoção feita com sucesso." : "* Erro ao remover o banco de dados." ?>
+            </div>
+          <?php } ?>
+
+          <br>
+        </li>
+        <li>
+          <form action="/_controller/configurar/populate.php" method="post">
+            <input class="green-button left" type="submit" value="Inserir Mockup">
+          </form>
+
+          <?php if ($session["populate_submit"]) { ?>
+            <div class="<?= $session["populate"] ? "green" : "red" ?>">
+              <?= $session["populate"] ? "> Inserção feita com sucesso." : "* Erro na inserção no banco de dados." ?>
             </div>
           <?php } ?>
         </li>
