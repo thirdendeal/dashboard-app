@@ -1,6 +1,6 @@
 <?php
 
-require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/pdo.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo.php";
 
 // ---------------------------------------------------------------------
 

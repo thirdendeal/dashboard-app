@@ -4,14 +4,14 @@
 <head>
   <?php
   $head_title = "Dashboard";
-  include $_SERVER['DOCUMENT_ROOT'] . "/_view/includes/head.php";
+  include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/head.php";
   ?>
 </head>
 
 <body class="body">
   <?php
   $aside_current_tab = 1;
-  include $_SERVER['DOCUMENT_ROOT'] . "/_view/includes/aside.php";
+  include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/aside.php";
   ?>
 
   <main class="main">

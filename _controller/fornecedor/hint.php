@@ -1,11 +1,9 @@
 <?php
 
-require $_SERVER['DOCUMENT_ROOT'] . "/_model/entity/fornecedor/validate.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_model/entity/fornecedor/validate.php";
 
 // Escape
 // ---------------------------------------------------------------------
-
-$validate = new \Fornecedor\Validate();
 
 $field = htmlspecialchars(stripslashes(trim($_POST["field"])));
 
@@ -15,7 +13,10 @@ if ($field == "e-mail") {
   $value = htmlspecialchars(stripslashes(trim($_POST["value"])));
 }
 
+// Validate and respond
 // ---------------------------------------------------------------------
+
+$validate = new \Fornecedor\Validate();
 
 switch ($field) {
   case "nome":

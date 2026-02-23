@@ -2,13 +2,20 @@
 
 session_start();
 
+// Submission
+// ---------------------------------------------------------------------
+
+$submitted = isset($_SESSION["submitted"]);
+
+unset($_SESSION["submitted"]);
+
 // Status
 // ---------------------------------------------------------------------
 
-$attempt = isset($_SESSION["status"]);
-$success = $_SESSION["status"] ?? false;
+$attempted = isset($_SESSION["status"]);
+$inserted = $_SESSION["status"] ?? false;
 
-unset($_SESSION['status']);
+unset($_SESSION["status"]);
 
 // Fields
 // ---------------------------------------------------------------------
@@ -16,10 +23,10 @@ unset($_SESSION['status']);
 // Auto-fill on failure only
 
 $fields = [
-  "nome"     => $success ? "" : ($_SESSION["fields"]["nome"] ?? ""),
-  "cnpj"     => $success ? "" : ($_SESSION["fields"]["cnpj"] ?? ""),
-  "e-mail"   => $success ? "" : ($_SESSION["fields"]["e-mail"] ?? ""),
-  "telefone" => $success ? "" : ($_SESSION["fields"]["telefone"] ?? "")
+  "nome"     => $inserted ? "" : ($_SESSION["fields"]["nome"] ?? ""),
+  "cnpj"     => $inserted ? "" : ($_SESSION["fields"]["cnpj"] ?? ""),
+  "e-mail"   => $inserted ? "" : ($_SESSION["fields"]["e-mail"] ?? ""),
+  "telefone" => $inserted ? "" : ($_SESSION["fields"]["telefone"] ?? "")
 ];
 
 unset($_SESSION["fields"]);
@@ -34,7 +41,7 @@ $errors = [
   "telefone" => $_SESSION["errors"]["telefone"] ?? ""
 ];
 
-unset($_SESSION['errors']);
+unset($_SESSION["errors"]);
 
 ?>
 
@@ -44,14 +51,14 @@ unset($_SESSION['errors']);
 <head>
   <?php
   $head_title = "Adicionar Fornecedor";
-  include $_SERVER['DOCUMENT_ROOT'] . "/_view/includes/head.php";
+  include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/head.php";
   ?>
 </head>
 
 <body class="body">
   <?php
   $aside_current_tab = 2;
-  include $_SERVER['DOCUMENT_ROOT'] . "/_view/includes/aside.php";
+  include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/aside.php";
   ?>
 
   <main class="main">
@@ -89,8 +96,8 @@ unset($_SESSION['errors']);
         <input class="green-button" type="submit" value="Registrar Fornecedor" />
       </form>
 
-      <?php if ($attempt) { ?>
-        <?php if ($success) { ?>
+      <?php if ($attempted) { ?>
+        <?php if ($inserted) { ?>
           <div class="toast--success">Registro feito com sucesso! <a class="toast-link" href="/fornecedores">Vizualizar</a></div>
         <?php } else { ?>
           <div class="toast--failure">Algo deu errado no registro...</div>

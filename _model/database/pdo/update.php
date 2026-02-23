@@ -1,6 +1,6 @@
 <?php
 
-require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/pdo.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo.php";
 
 // ---------------------------------------------------------------------
 
@@ -19,9 +19,8 @@ function update($table_name, $pk_column, $pk_value, $pairs)
   $statement = $pdo->prepare(
     "UPDATE dashboard_app.`$table_name` SET $set_string WHERE `$pk_column` = ?;"
   );
-  array_push($values, $pk_value);
 
-  $status = $statement->execute($values);
+  $status = $statement->execute([...$values, $pk_value]);
 
   return $status;
 }

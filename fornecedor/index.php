@@ -2,40 +2,50 @@
 
 session_start();
 
-// Redirect malformed
+// ---------------------------------------------------------------------
 
-if (!isset($_GET["id"])) {
-  header("Location: /fornecedores");
+require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/get-row.php";
+
+// Get row
+// ---------------------------------------------------------------------
+
+if (empty($_GET["id"])) {
+  header("Location: /fornecedores/");
+
   exit();
 }
 
-// Error
+list($row_success, $row) = get_row(
+  "fornecedor",
+  "id_fornecedor",
+  htmlspecialchars(stripslashes(trim($_GET["id"])))
+);
 
-if (isset($_SESSION["error"])) {
-  $error = $_SESSION["error"];
-
-  unset($_SESSION['error']);
-} else {
-  $error = "";
+if ($row_success) {
+  $fornecedor = $row->fetch(PDO::FETCH_ASSOC);
 }
+
+// Update
+// ---------------------------------------------------------------------
+
+// Submission
+
+$submitted = isset($_SESSION["submitted"]);
+
+unset($_SESSION["submitted"]);
 
 // Status
 
-if (isset($_SESSION["status"])) {
-  if ($_SESSION["status"]) {
-    $toast = "toast--success";
-  } else {
-    $toast = "toast--failure";
-  }
+$attempted = isset($_SESSION["status"]);
+$updated = $_SESSION["status"] ?? false;
 
-  unset($_SESSION['status']);
-} else {
-  $toast = "toast--hidden";
-}
+unset($_SESSION['status']);
 
-// Require
+// Error
 
-require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/pdo/get-row.php";
+$error = $_SESSION['error'] ?? "";
+
+unset($_SESSION['error']);
 
 ?>
 
@@ -45,25 +55,19 @@ require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/pdo/get-row.php";
 <head>
   <?php
   $head_title = "Fornecedor";
-  include $_SERVER['DOCUMENT_ROOT'] . "/_view/includes/head.php";
+  include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/head.php";
   ?>
 </head>
 
 <body class="body">
   <?php
   $aside_current_tab = 2;
-  include $_SERVER['DOCUMENT_ROOT'] . "/_view/includes/aside.php";
-
-  $id = htmlspecialchars(stripslashes(trim($_GET["id"])));
-
-  $fornecedor = get_row("fornecedor", "id_fornecedor", $id);
+  include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/aside.php";
   ?>
 
   <main class="main">
     <div class="container">
-      <?php
-      if ($fornecedor) {
-      ?>
+      <?php if ($fornecedor) { ?>
         <h1><?= $fornecedor["nome"] ?> – Fornecedor</h1>
         <br>
 
@@ -101,7 +105,6 @@ require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/pdo/get-row.php";
                 <input class="list__input textbox" type="text" name="cnpj" id="cnpj" value="<?= $fornecedor["cnpj"] ?>" oninput="getHint(this.id, this.value)" />
                 <span class="list__error error"></span>
               </label>
-
 
               <div class="list__form__padlock">
                 <input class="list__submit" type="submit" value="Atualizar" />
@@ -149,7 +152,6 @@ require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/pdo/get-row.php";
                 <span class="list__error error"></span>
               </label>
 
-
               <div class="list__form__padlock">
                 <input class="list__submit" type="submit" value="Atualizar" />
                 <button type="button" class="list__cancel">Cancelar</button>
@@ -165,7 +167,9 @@ require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/pdo/get-row.php";
           <li class="list__item">
             <h3 class="list__title">Status</h3>
 
-            <p class="list__p"><?php echo $fornecedor["status"] ? "ATIVO" : "INATIVO" ?></p>
+            <p class="list__p <?php echo $fornecedor['status'] ? 'green' : 'red' ?>">
+              <?php echo $fornecedor["status"] ? "ATIVO" : "INATIVO" ?>
+            </p>
 
             <form class="list__form" action="/_controller/fornecedor/edit.php" method="post">
               <label for="status">
@@ -186,31 +190,22 @@ require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/pdo/get-row.php";
             </button>
           </li>
         </ul>
-      <?php
-      } else {
-      ?>
+      <?php } else { ?>
         <h1>Fornecedor</h1>
-
         <br>
 
         <div class="empty-view">
           Fornecedor não encontrado :(
         </div>
-      <?php
-      }
-      ?>
+      <?php } ?>
 
-      <?php
-      if ($toast == "toast--success") {
-      ?>
-        <div class="toast--success">Atualização feita com sucesso!</div>
-      <?php
-      } elseif ($toast == "toast--failure") {
-      ?>
-        <div class="toast--failure"><?= $error ?></div>
-      <?php
-      }
-      ?>
+      <?php if ($submitted) { ?>
+        <?php if ($updated) { ?>
+          <div class="toast--success">Atualização feita com sucesso!</div>
+        <?php } else { ?>
+          <div class="toast--failure"><?= $error ?></div>
+        <?php } ?>
+      <?php } ?>
     </div>
   </main>
 
@@ -218,12 +213,27 @@ require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/pdo/get-row.php";
   <script src="/_view/assets/js/get-hint.js"></script>
 
   <script>
-    const getHint = makeGetHint("/_controller/fornecedor/hint.php");
-
     $(document).ready(function() {
+      // Initially hidden edit forms
+      // ---------------------------------------------------------------
+
       $(".list__form").hide();
 
-      // Save initial values to rollback to
+      // Show an edit form
+      // ---------------------------------------------------------------
+
+      $(".list__edit").click(function() {
+        const form = $(this).prev();
+        const p = form.prev();
+
+        p.hide();
+        $(this).hide();
+
+        form.show();
+      });
+
+      // Rollback to on hide
+      // ---------------------------------------------------------------
 
       let initialEditValues = {};
 
@@ -234,31 +244,18 @@ require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/pdo/get-row.php";
         initialEditValues[id] = value;
       })
 
-      // Hook show update
-
-      $(".list__edit").click(function() {
-        const form = $(this).prev();
-        const p = form.prev();
-
-        p.hide();
-        form.show();
-
-        $(this).hide();
-      });
-
-      // Hook cancel update
+      // Hide an edit form
+      // ---------------------------------------------------------------
 
       $(".list__cancel").click(function() {
         const padlock = $(this).parent();
         const form = padlock.parent();
-
         const p = form.prev();
         const edit = form.next();
-
         const input = form.find(".list__input");
-        const inputID = input.attr('id');
+        const id = input.attr('id');
 
-        input.val(initialEditValues[inputID]);
+        input.val(initialEditValues[id]); // rollback
 
         form.hide();
 
@@ -266,6 +263,10 @@ require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/pdo/get-row.php";
         edit.show();
       });
     });
+
+    // -----------------------------------------------------------------
+
+    const getHint = makeGetHint("/_controller/fornecedor/hint.php");
   </script>
 </body>
 

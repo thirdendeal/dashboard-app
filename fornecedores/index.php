@@ -1,5 +1,5 @@
 <?php
-require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/pdo/get-rows.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/get-rows.php";
 
 list($rows_success, $rows) = get_rows("fornecedor");
 ?>
@@ -10,14 +10,14 @@ list($rows_success, $rows) = get_rows("fornecedor");
 <head>
   <?php
   $head_title = "Fornecedores";
-  include $_SERVER['DOCUMENT_ROOT'] . "/_view/includes/head.php";
+  include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/head.php";
   ?>
 </head>
 
 <body class="body">
   <?php
   $aside_current_tab = 2;
-  include $_SERVER['DOCUMENT_ROOT'] . "/_view/includes/aside.php";
+  include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/aside.php";
   ?>
 
   <main class="main">

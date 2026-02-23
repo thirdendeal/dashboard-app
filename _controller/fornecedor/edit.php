@@ -4,48 +4,70 @@ session_start();
 
 // ---------------------------------------------------------------------
 
-require $_SERVER['DOCUMENT_ROOT'] . "/_model/database/pdo/update.php";
-require $_SERVER['DOCUMENT_ROOT'] . "/_model/entity/fornecedor/validate.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/update.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_model/entity/fornecedor/validate.php";
 
 // Parse
 // ---------------------------------------------------------------------
 
+// Query
+
 parse_str(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_QUERY), $query);
 
-$id = $query["id"];
+// Field
 
-// Escape and validate
+if (isset($_POST["nome"])) {
+  $field = "nome";
+} elseif(isset($_POST["cnpj"])) {
+  $field = "cnpj";
+} elseif(isset($_POST["e-mail"])) {
+  $field = "e-mail";
+} elseif(isset($_POST["telefone"])) {
+  $field = "telefone";
+} elseif(isset($_POST["status"])) {
+  $field = "status";
+} else {
+  $field = "";
+}
+
+// Escape
+// ---------------------------------------------------------------------
+
+// Identifier
+
+$id = htmlspecialchars(stripslashes(trim($query["id"])));
+
+// Value
+
+if ($field == "e-mail") {
+  $value = filter_var($_POST[$field], FILTER_SANITIZE_EMAIL);
+} else {
+  $value = htmlspecialchars(stripslashes(trim($_POST[$field])));
+}
+
+// Validate
 // ---------------------------------------------------------------------
 
 $validate = new \Fornecedor\Validate();
 
-if (isset($_POST["nome"])) {
-  $column = "nome";
-  $value  = htmlspecialchars(stripslashes(trim($_POST[$column])));
-
-  $error = $validate->nome($value);
-} elseif (isset($_POST["cnpj"])) {
-  $column = "cnpj";
-  $value  = htmlspecialchars(stripslashes(trim($_POST[$column])));
-
-  $error = $validate->cnpj($value);
-} elseif (isset($_POST["e-mail"])) {
-  $column = "e-mail";
-  $value  = filter_var($_POST[$column], FILTER_SANITIZE_EMAIL);
-
-  $error = $validate->email($value);
-} elseif (isset($_POST["telefone"])) {
-  $column = "telefone";
-  $value  = htmlspecialchars(stripslashes(trim($_POST[$column])));
-
-  $error = $validate->telefone($value);
-} elseif (isset($_POST["status"])) {
-  $column = "status";
-  $value  = htmlspecialchars(stripslashes(trim($_POST[$column])));
-
-  $error = $validate->status($value);
-} else {
-  $error = "Algo deu errado...";
+switch ($field) {
+  case "nome":
+    $error = $validate->nome($value);
+    break;
+  case "cnpj":
+    $error = $validate->cnpj($value);
+    break;
+  case "e-mail":
+    $error = $validate->email($value);
+    break;
+  case "telefone":
+    $error = $validate->telefone($value);
+    break;
+  case "status":
+    $error = $validate->status($value);
+    break;
+  default:
+    $error = "Algo deu errado na atualização...";
 }
 
 $_SESSION["error"] = $error;
@@ -54,8 +76,14 @@ $_SESSION["error"] = $error;
 // ---------------------------------------------------------------------
 
 if (empty($error)) {
-  $_SESSION["status"] = update("fornecedor", "id_fornecedor", $id, [$column => $value]);
+  $_SESSION["status"] = update(
+    "fornecedor", "id_fornecedor", $id, [$field => $value]
+  );
 }
+
+// ---------------------------------------------------------------------
+
+$_SESSION["submitted"] = true;
 
 // ---------------------------------------------------------------------
 
