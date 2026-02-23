@@ -28,7 +28,7 @@ list($rows_success, $rows) = get_rows("fornecedor");
       <a href="/adicionar-fornecedor/" class="green-button">Adicionar Fornecedor</a>
       <br>
 
-      <?php if ($rows_success) { ?>
+      <?php if ($rows->rowCount() > 0) { ?>
         <table>
           <thead>
             <tr>
