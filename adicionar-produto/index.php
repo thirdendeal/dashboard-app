@@ -1,3 +1,48 @@
+<?php
+
+session_start();
+
+// Submission
+// ---------------------------------------------------------------------
+
+$submitted = isset($_SESSION["submitted"]);
+
+unset($_SESSION["submitted"]);
+
+// Status
+// ---------------------------------------------------------------------
+
+$attempted = isset($_SESSION["status"]);
+$inserted = $_SESSION["status"] ?? false;
+
+unset($_SESSION["status"]);
+
+// Fields
+// ---------------------------------------------------------------------
+
+// Auto-fill on failure only
+
+$fields = [
+  "nome"      => $inserted ? "" : ($_SESSION["fields"]["nome"] ?? ""),
+  "descrição" => $inserted ? "" : ($_SESSION["fields"]["descrição"] ?? ""),
+  "código"    => $inserted ? "" : ($_SESSION["fields"]["código"] ?? "")
+];
+
+unset($_SESSION["fields"]);
+
+// Errors
+// ---------------------------------------------------------------------
+
+$errors = [
+  "nome"      => $_SESSION["errors"]["nome"] ?? "",
+  "descrição" => $_SESSION["errors"]["descrição"] ?? "",
+  "código"    => $_SESSION["errors"]["código"] ?? ""
+];
+
+unset($_SESSION["errors"]);
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -19,28 +64,46 @@
       <h1>Adicionar Produto</h1>
       <br>
 
-      <form action="">
+      <form action="/_controller/produto/add.php" method="post">
         <label for="nome">
           Nome do Produto
-          <input class="textbox" type="text" name="nome" id="nome" />
+          <input class="textbox" type="text" name="nome" id="nome" value="<?= $fields["nome"] ?>" oninput="getHint(this.id, this.value)" />
+          <span class="error"><?= $errors["nome"] ?></span>
         </label>
 
-        <label for="descricao">
+        <label for="descrição">
           Descrição
-          <textarea class="textbox-area" name="descricao" id="descricao" rows="5" cols="30"></textarea>
+          <textarea class="textbox-area" name="descrição" id="descrição" rows="5" cols="30" oninput="getHint(this.id, this.value)" /><?= $fields["descrição"] ?></textarea>
+          <span class="error"><?= $errors["descrição"] ?></span>
         </label>
 
-        <label for="codigo">
+        <label for="codxe">
           Código
-          <input class="textbox" type="text" name="codigo" id="codigo" />
+          <input class="textbox" type="text" name="código" id="código" value="<?= $fields["código"] ?>" oninput="getHint(this.id, this.value)" />
+          <span class="error"><?= $errors["código"] ?></span>
         </label>
 
         <br>
 
         <input class="green-button" type="submit" value="Registrar Produto" />
       </form>
+
+      <?php if ($attempted) { ?>
+        <?php if ($inserted) { ?>
+          <div class="toast--success">Registro feito com sucesso! <a class="toast-link" href="/produtos/">Visualizar</a></div>
+        <?php } else { ?>
+          <div class="toast--failure">Algo deu errado no registro...</div>
+        <?php } ?>
+      <?php } ?>
     </div>
   </main>
+
+  <script src="/_view/vendor/jquery-v4.0.0.min.js"></script>
+  <script src="/_view/assets/js/get-hint.js"></script>
+
+  <script>
+    const getHint = makeGetHint("/_controller/produto/hint.php");
+  </script>
 </body>
 
 </html>

@@ -98,7 +98,7 @@ unset($_SESSION["errors"]);
 
       <?php if ($attempted) { ?>
         <?php if ($inserted) { ?>
-          <div class="toast--success">Registro feito com sucesso! <a class="toast-link" href="/fornecedores">Vizualizar</a></div>
+          <div class="toast--success">Registro feito com sucesso! <a class="toast-link" href="/fornecedores/">Visualizar</a></div>
         <?php } else { ?>
           <div class="toast--failure">Algo deu errado no registro...</div>
         <?php } ?>
