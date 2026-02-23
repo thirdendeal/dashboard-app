@@ -1,0 +1,68 @@
+<?php
+
+session_start();
+
+// ---------------------------------------------------------------------
+
+require $_SERVER["DOCUMENT_ROOT"] . "/_view/helpers/consume-session.php";
+
+// ---------------------------------------------------------------------
+
+$session = consume_session(
+  "connect", "connect_submit", "setup", "setup_submit"
+);
+
+?>
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <?php
+  $head_title = "Configurar";
+  include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/head.php";
+  ?>
+</head>
+
+<body class="body">
+  <?php
+  $aside_current_tab = 0;
+  include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/aside.php";
+  ?>
+
+  <main class="main">
+    <div class="container">
+      <h1>Configurar</h1>
+      <br>
+
+      <ul>
+        <li>
+          <form action="/_controller/configurar/connect.php" method="post">
+            <input class="green-button" type="submit" value="Testar Conexão">
+          </form>
+
+          <?php if ($session["connect_submit"]) { ?>
+            <div class="<?= $session["connect"] ? "green" : "red" ?>">
+              <?= $session["connect"] ? "> Conexão feita com sucesso." : "* Erro na conexão ao banco de dados." ?>
+            </div>
+          <?php } ?>
+
+          <br>
+        </li>
+        <li>
+          <form action="/_controller/configurar/setup.php" method="post">
+            <input class="green-button" type="submit" value="Setup Banco de Dados">
+          </form>
+
+          <?php if ($session["setup_submit"]) { ?>
+            <div class="<?= $session["setup"] ? "green" : "red" ?>">
+              <?= $session["setup"] ? "> Setup feito com sucesso." : "* Erro no setup do banco de dados." ?>
+            </div>
+          <?php } ?>
+        </li>
+      </ul>
+    </div>
+  </main>
+</body>
+
+</html>

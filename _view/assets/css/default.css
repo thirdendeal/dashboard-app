@@ -117,6 +117,19 @@ textarea {
   color: red;
 }
 
+.pass,
+.fail {
+  display: inline-block;
+  background-color: green;
+  color: white;
+  padding: 0.25rem;
+  font-family: sans-serif;
+}
+
+.fail {
+  background: red;
+}
+
 /* Sidebar */
 /* ------------------------------------------------------------------ */
 
