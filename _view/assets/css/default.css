@@ -468,3 +468,7 @@ svg {
 .left {
   text-align: left;
 }
+
+.gray {
+  color: gray;
+}
