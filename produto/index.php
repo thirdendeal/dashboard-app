@@ -4,9 +4,10 @@ session_start();
 
 // ---------------------------------------------------------------------
 
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/get-row.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/find-rows.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_model/entity/produto_fornecedor/join-by-produto.php";
 
-// Get row
+// Redirect malformed
 // ---------------------------------------------------------------------
 
 if (empty($_GET["id"])) {
@@ -15,11 +16,12 @@ if (empty($_GET["id"])) {
   exit();
 }
 
-list($row_success, $row) = get_row(
-  "produto",
-  "id_produto",
-  htmlspecialchars(stripslashes(trim($_GET["id"])))
-);
+$id = htmlspecialchars(stripslashes(trim($_GET["id"])));
+
+// Get `produto`
+// ---------------------------------------------------------------------
+
+list($row_success, $row) = find_rows("produto", "id_produto", $id);
 
 if ($row_success) {
   $produto = $row->fetch(PDO::FETCH_ASSOC);
@@ -98,7 +100,9 @@ unset($_SESSION['error']);
           <li class="list__item">
             <h3 class="list__title">Descrição</h3>
 
-            <p class="list__p"><?= $produto["descrição"] ?></p>
+            <p class="list__p <?php echo $produto["descrição"] ? "" : "gray" ?>">
+              <?php echo $produto["descrição"] ? $produto["descrição"] : "(Nenhum)" ?>
+            </p>
 
             <form class="list__form" action="/_controller/produto/edit.php" method="post">
               <label for="descrição">
@@ -169,6 +173,31 @@ unset($_SESSION['error']);
             </button>
           </li>
         </ul>
+
+        <br>
+        <span class="label">Fornecedores</span>
+
+        <?php
+
+        // Get `produto_fornecedor`
+        // ---------------------------------------------------------------------
+
+        list($_, $table_rows) = join_by_produto(
+          $id,
+          "fornecedor.id_fornecedor",
+          "fornecedor.nome",
+          "fornecedor.cnpj",
+          "fornecedor.`e-mail`",
+          "fornecedor.telefone"
+        );
+
+        $table_fields = [
+          "nome",
+          "e-mail"
+        ];
+
+        include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/fornecedor/table.php";
+        ?>
       <?php } else { ?>
         <h1>Produto</h1>
         <br>
@@ -189,62 +218,12 @@ unset($_SESSION['error']);
   </main>
 
   <script src="/_view/vendor/jquery-v4.0.0.min.js"></script>
+
   <script src="/_view/assets/js/get-hint.js"></script>
+  <script src="/_view/assets/js/link-table.js"></script>
+  <script src="/_view/assets/js/toggle-edit.js"></script>
 
   <script>
-    $(document).ready(function() {
-      // Initially hidden edit forms
-      // ---------------------------------------------------------------
-
-      $(".list__form").hide();
-
-      // Show an edit form
-      // ---------------------------------------------------------------
-
-      $(".list__edit").click(function() {
-        const form = $(this).prev();
-        const p = form.prev();
-
-        p.hide();
-        $(this).hide();
-
-        form.show();
-      });
-
-      // Rollback to on hide
-      // ---------------------------------------------------------------
-
-      let initialEditValues = {};
-
-      $(".list__input").each(function() {
-        const id = $(this).attr('id');
-        const value = $(this).val();
-
-        initialEditValues[id] = value;
-      })
-
-      // Hide an edit form
-      // ---------------------------------------------------------------
-
-      $(".list__cancel").click(function() {
-        const padlock = $(this).parent();
-        const form = padlock.parent();
-        const p = form.prev();
-        const edit = form.next();
-        const input = form.find(".list__input");
-        const id = input.attr('id');
-
-        input.val(initialEditValues[id]); // rollback
-
-        form.hide();
-
-        p.show();
-        edit.show();
-      });
-    });
-
-    // -----------------------------------------------------------------
-
     const getHint = makeGetHint("/_controller/produto/hint.php");
   </script>
 </body>

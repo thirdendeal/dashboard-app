@@ -199,7 +199,8 @@ h1 {
 /* Forms */
 /* ------------------------------------------------------------------ */
 
-label {
+label,
+.label {
   color: saddlebrown;
   display: block;
   font-weight: 700;
@@ -321,8 +322,9 @@ table {
   width: 100%;
 }
 
-tr {
+td {
   cursor: pointer;
+  padding: 0.5rem 0;
 }
 
 tr:nth-child(odd) td {
@@ -348,9 +350,13 @@ th {
 
 td {
   font-weight: 400;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
   white-space: nowrap;
+}
+
+.link-row--selected td {
+  background-color: orange !important;
 }
 
 /* List View */

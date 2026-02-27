@@ -22,6 +22,7 @@ function insert($table_name, $pairs)
   );
 
   $status = $statement->execute($values);
+  $id = $pdo->lastInsertId();
 
-  return $status;
+  return [$status, $id];
 }

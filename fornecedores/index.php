@@ -1,7 +1,5 @@
 <?php
 require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/get-rows.php";
-
-list($rows_success, $rows) = get_rows("fornecedor");
 ?>
 
 <!DOCTYPE html>
@@ -28,60 +26,25 @@ list($rows_success, $rows) = get_rows("fornecedor");
       <a href="/adicionar-fornecedor/" class="green-button">Adicionar Fornecedor</a>
       <br>
 
-      <?php if ($rows->rowCount() > 0) { ?>
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nome</th>
-              <th>CNPJ</th>
-              <th>E-Mail</th>
-              <th>Telefone</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php while ($row = $rows->fetch(PDO::FETCH_ASSOC)) { ?>
-              <tr class="link-row" data-href="/fornecedor?id=<?= $row["id_fornecedor"] ?>">
-                <td><?= $row["id_fornecedor"] ?></td>
-                <td><?= $row["nome"] ?></td>
-                <td><?= $row["cnpj"] ?></td>
-                <td><?= $row["e-mail"] ?></td>
-                <td><?= $row["telefone"] ?></td>
-                <td class="<?php echo $row['status'] ? 'green' : 'red' ?>">
-                  <?php echo $row["status"] ? "ATIVO" : "INATIVO" ?>
-                </td>
-              </tr>
-            <?php } ?>
-          </tbody>
-        </table>
-      <?php } else { ?>
-        <div class="empty-view">
-          Nenhum fornecedor encontrado :(
-        </div>
-      <?php } ?>
+      <?php
+      list($_, $table_rows) = get_rows("fornecedor");
+
+      $table_fields = [
+        "nome",
+        "e-mail",
+        "telefone",
+        "cnpj",
+        "status"
+      ];
+
+      include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/fornecedor/table.php";
+      ?>
     </div>
   </main>
 
   <script src="/_view/vendor/jquery-v4.0.0.min.js"></script>
 
-  <script>
-    $(document).ready(function() {
-      $(".link-row").hover(function() {
-        $(this).children().each(function() {
-          $(this).css("background-color", "blanchedalmond");
-        });
-      }, function() {
-        $(this).children().each(function() {
-          $(this).removeAttr('style');
-        });
-      });
-
-      $(".link-row").click(function() {
-        window.location = $(this).data("href");
-      });
-    });
-  </script>
+  <script src="/_view/assets/js/link-table.js"></script>
 </body>
 
 </html>

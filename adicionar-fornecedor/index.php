@@ -73,12 +73,6 @@ unset($_SESSION["errors"]);
           <span class="error"><?= $errors["nome"] ?></span>
         </label>
 
-        <label for="cnpj">
-          CNPJ
-          <input class="textbox" type="text" name="cnpj" id="cnpj" value="<?= $fields["cnpj"] ?>" oninput="getHint(this.id, this.value)" />
-          <span class="error"><?= $errors["cnpj"] ?></span>
-        </label>
-
         <label for="e-mail">
           E-Mail
           <input class="textbox" type="email" name="e-mail" id="e-mail" value="<?= $fields["e-mail"] ?>" oninput="getHint(this.id, this.value)" />
@@ -89,6 +83,12 @@ unset($_SESSION["errors"]);
           Telefone
           <input class="textbox" type="tel" name="telefone" id="telefone" value="<?= $fields["telefone"] ?>" oninput="getHint(this.id, this.value)" />
           <span class="error"><?= $errors["telefone"] ?></span>
+        </label>
+
+        <label for="cnpj">
+          CNPJ
+          <input class="textbox" type="text" name="cnpj" id="cnpj" value="<?= $fields["cnpj"] ?>" oninput="getHint(this.id, this.value)" />
+          <span class="error"><?= $errors["cnpj"] ?></span>
         </label>
 
         <br>
@@ -107,6 +107,7 @@ unset($_SESSION["errors"]);
   </main>
 
   <script src="/_view/vendor/jquery-v4.0.0.min.js"></script>
+
   <script src="/_view/assets/js/get-hint.js"></script>
 
   <script>

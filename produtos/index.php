@@ -44,10 +44,13 @@ list($rows_success, $rows) = get_rows("produto");
               <tr class="link-row" data-href="/produto?id=<?= $row["id_produto"] ?>">
                 <td><?= $row["id_produto"] ?></td>
                 <td><?= $row["nome"] ?></td>
-                <td><?= $row["descrição"] ?></td>
+                <td class="<?php echo $row["descrição"] ? "" : "gray" ?>">
+                  <?php echo $row["descrição"] ? $row["descrição"] : "(Nenhuma)" ?>
+                </td>
                 <td class="<?php echo $row["código"] ? "" : "gray" ?>">
                   <?php echo $row["código"] ? $row["código"] : "(Nenhum)" ?>
                 </td>
+
                 <td class="<?php echo $row['status'] ? 'green' : 'red' ?>">
                   <?php echo $row["status"] ? "ATIVO" : "INATIVO" ?>
                 </td>
@@ -65,23 +68,7 @@ list($rows_success, $rows) = get_rows("produto");
 
   <script src="/_view/vendor/jquery-v4.0.0.min.js"></script>
 
-  <script>
-    $(document).ready(function() {
-      $(".link-row").hover(function() {
-        $(this).children().each(function() {
-          $(this).css("background-color", "blanchedalmond");
-        });
-      }, function() {
-        $(this).children().each(function() {
-          $(this).removeAttr('style');
-        });
-      });
-
-      $(".link-row").click(function() {
-        window.location = $(this).data("href");
-      });
-    });
-  </script>
+  <script src="/_view/assets/js/link-table.js"></script>
 </body>
 
 </html>

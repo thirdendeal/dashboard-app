@@ -2,6 +2,10 @@
 
 session_start();
 
+// ---------------------------------------------------------------------
+
+require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/find-rows.php";
+
 // Submission
 // ---------------------------------------------------------------------
 
@@ -77,11 +81,30 @@ unset($_SESSION["errors"]);
           <span class="error"><?= $errors["descrição"] ?></span>
         </label>
 
-        <label for="codxe">
+        <label for="código">
           Código
           <input class="textbox" type="text" name="código" id="código" value="<?= $fields["código"] ?>" oninput="getHint(this.id, this.value)" />
           <span class="error"><?= $errors["código"] ?></span>
         </label>
+
+        <br>
+
+        <span class="label">Fornecedores</span>
+
+        <?php
+        list($_, $table_rows) = find_rows("fornecedor", "status", 1);
+
+        $table_checkbox = true;
+
+        $table_fields = [
+          "nome",
+          "e-mail",
+          "telefone",
+          "cnpj"
+        ];
+
+        include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/fornecedor/table.php";
+        ?>
 
         <br>
 
@@ -99,6 +122,8 @@ unset($_SESSION["errors"]);
   </main>
 
   <script src="/_view/vendor/jquery-v4.0.0.min.js"></script>
+
+  <script src="/_view/assets/js/checkbox-table.js"></script>
   <script src="/_view/assets/js/get-hint.js"></script>
 
   <script>
