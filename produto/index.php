@@ -180,23 +180,22 @@ unset($_SESSION['error']);
         <?php
 
         // Get `produto_fornecedor`
-        // ---------------------------------------------------------------------
+        // -------------------------------------------------------------
 
         list($_, $table_rows) = join_by_produto(
           $id,
           "fornecedor.id_fornecedor",
           "fornecedor.nome",
-          "fornecedor.cnpj",
-          "fornecedor.`e-mail`",
-          "fornecedor.telefone"
+          "fornecedor.`e-mail`"
         );
 
-        $table_fields = [
-          "nome",
-          "e-mail"
+        $table = "fornecedor";
+        $table_pairs = [
+          "nome" => "Nome",
+          "e-mail" => "E-Mail"
         ];
 
-        include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/fornecedor/table.php";
+        include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/table.php";
         ?>
       <?php } else { ?>
         <h1>Produto</h1>

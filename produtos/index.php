@@ -1,7 +1,5 @@
 <?php
 require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/get-rows.php";
-
-list($rows_success, $rows) = get_rows("produto");
 ?>
 
 <!DOCTYPE html>
@@ -28,41 +26,19 @@ list($rows_success, $rows) = get_rows("produto");
       <a href="/adicionar-produto/" class="green-button">Adicionar Produto</a>
       <br>
 
-      <?php if ($rows->rowCount() > 0) { ?>
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nome</th>
-              <th>Descrição</th>
-              <th>Código</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php while ($row = $rows->fetch(PDO::FETCH_ASSOC)) { ?>
-              <tr class="link-row" data-href="/produto?id=<?= $row["id_produto"] ?>">
-                <td><?= $row["id_produto"] ?></td>
-                <td><?= $row["nome"] ?></td>
-                <td class="<?php echo $row["descrição"] ? "" : "gray" ?>">
-                  <?php echo $row["descrição"] ? $row["descrição"] : "(Nenhuma)" ?>
-                </td>
-                <td class="<?php echo $row["código"] ? "" : "gray" ?>">
-                  <?php echo $row["código"] ? $row["código"] : "(Nenhum)" ?>
-                </td>
+      <?php
+      list($_, $table_rows) = get_rows("produto");
 
-                <td class="<?php echo $row['status'] ? 'green' : 'red' ?>">
-                  <?php echo $row["status"] ? "ATIVO" : "INATIVO" ?>
-                </td>
-              </tr>
-            <?php } ?>
-          </tbody>
-        </table>
-      <?php } else { ?>
-        <div class="empty-view">
-          Nenhum produto encontrado :(
-        </div>
-      <?php } ?>
+      $table = "produto";
+      $table_pairs = [
+        "nome" => "Nome",
+        "descrição" => "Descrição",
+        "código" => "Código",
+        "status" => "Status"
+      ];
+
+      include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/table.php";
+      ?>
     </div>
   </main>
 

@@ -94,16 +94,17 @@ unset($_SESSION["errors"]);
         <?php
         list($_, $table_rows) = find_rows("fornecedor", "status", 1);
 
-        $table_checkbox = true;
-
-        $table_fields = [
-          "nome",
-          "e-mail",
-          "telefone",
-          "cnpj"
+        $table = "fornecedor";
+        $table_pairs = [
+          "nome" => "Nome",
+          "e-mail" => "E-Mail",
+          "telefone" => "Telefone",
+          "cnpj" => "CNPJ"
         ];
 
-        include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/fornecedor/table.php";
+        $table_checkbox = true;
+
+        include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/table.php";
         ?>
 
         <br>

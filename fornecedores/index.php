@@ -29,15 +29,16 @@ require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/get-rows.php";
       <?php
       list($_, $table_rows) = get_rows("fornecedor");
 
-      $table_fields = [
-        "nome",
-        "e-mail",
-        "telefone",
-        "cnpj",
-        "status"
+      $table = "fornecedor";
+      $table_pairs = [
+        "nome" => "Nome",
+        "e-mail" => "E-Mail",
+        "telefone" => "Telefone",
+        "cnpj" => "CNPJ",
+        "status" => "Status",
       ];
 
-      include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/fornecedor/table.php";
+      include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/table.php";
       ?>
     </div>
   </main>

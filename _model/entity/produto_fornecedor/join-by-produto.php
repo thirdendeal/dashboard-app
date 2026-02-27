@@ -13,9 +13,10 @@ function join_by_produto($pk, ...$columns) {
     SELECT $columns_string
     FROM dashboard_app.produto_fornecedor
     INNER JOIN dashboard_app.produto
-    ON dashboard_app.produto_fornecedor.id_produto = $pk
+    ON dashboard_app.produto_fornecedor.id_produto = dashboard_app.produto.id_produto
     INNER JOIN dashboard_app.fornecedor
-    ON dashboard_app.produto_fornecedor.id_fornecedor = dashboard_app.fornecedor.id_fornecedor;
+    ON dashboard_app.produto_fornecedor.id_fornecedor = dashboard_app.fornecedor.id_fornecedor
+    WHERE dashboard_app.produto.id_produto = $pk;
   ");
 
   $status = $statement->execute();
