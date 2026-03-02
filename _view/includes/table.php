@@ -6,7 +6,7 @@ $table_checkbox ??= false;
 
 ?>
 
-<?php if ($table_rows->rowCount() > 0) { ?>
+<?php if ($table_rows && $table_rows->rowCount() > 0) { ?>
   <table>
     <thead>
       <tr>

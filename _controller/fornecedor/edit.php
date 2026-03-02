@@ -4,7 +4,7 @@ session_start();
 
 // ---------------------------------------------------------------------
 
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/update.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/update-where.php";
 require $_SERVER["DOCUMENT_ROOT"] . "/_model/entity/fornecedor/validate.php";
 
 // Parse
@@ -18,13 +18,13 @@ parse_str(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_QUERY), $query);
 
 if (isset($_POST["nome"])) {
   $field = "nome";
-} elseif(isset($_POST["cnpj"])) {
+} elseif (isset($_POST["cnpj"])) {
   $field = "cnpj";
-} elseif(isset($_POST["e-mail"])) {
+} elseif (isset($_POST["e-mail"])) {
   $field = "e-mail";
-} elseif(isset($_POST["telefone"])) {
+} elseif (isset($_POST["telefone"])) {
   $field = "telefone";
-} elseif(isset($_POST["status"])) {
+} elseif (isset($_POST["status"])) {
   $field = "status";
 } else {
   $field = "";
@@ -76,8 +76,11 @@ $_SESSION["error"] = $error;
 // ---------------------------------------------------------------------
 
 if (empty($error)) {
-  $_SESSION["status"] = update(
-    "fornecedor", "id_fornecedor", $id, [$field => $value]
+  $_SESSION["status"] = update_where(
+    "fornecedor",
+    "id_fornecedor",
+    $id,
+    [$field => $value]
   );
 }
 

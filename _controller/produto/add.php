@@ -4,8 +4,8 @@ session_start();
 
 // ---------------------------------------------------------------------
 
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/count-rows.php";
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/insert.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/count-all-rows.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/insert-into.php";
 
 require $_SERVER["DOCUMENT_ROOT"] . "/_model/entity/produto/validate.php";
 
@@ -37,27 +37,29 @@ $_SESSION["errors"] = $errors;
 // ---------------------------------------------------------------------
 
 if (empty(array_filter($errors))) {
-  // Add `produto`
+  $produto_id = insert_into("produto", $fields);
 
-  list($status, $produto) = insert("produto", $fields);
+  $_SESSION["status"] = $produto_id;
 
-  $_SESSION["status"] = $status;
+  // Link
 
-  // Link `produto` to `fornecedor`
+  if ($produto_id) {
+    $fornecedor_count = count_all_rows("fornecedor");
 
-  list($_, $count) = count_rows("fornecedor", "id_fornecedor");
-  $n = $count->fetchColumn();
+    if ($fornecedor_count) {
+      $fornecedor_ids = [];
 
-  $fornecedores = [];
+      for ($id = 1; $id <= $fornecedor_count; $id++) {
+        if (isset($_POST["fornecedor_$id"]))
+          $fornecedor_ids[] = $id;
+      }
 
-  for ($i = 1; $i <= $n; $i++) {
-    if (isset($_POST["fornecedor_$i"])) {
-      array_push($fornecedores, $i);
+      foreach ($fornecedor_ids as $fornecedor_id) {
+        $produto_fornecedor_id = insert_into("produto_fornecedor", ["id_produto" => $produto_id, "id_fornecedor" => $fornecedor_id]);
+
+        $_SESSION["status"] = $_SESSION["status"] && $produto_fornecedor_id;
+      }
     }
-  }
-
-  foreach ($fornecedores as $fornecedor) {
-    insert("produto_fornecedor", ["id_produto" => $produto, "id_fornecedor" => $fornecedor]);
   }
 }
 

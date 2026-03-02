@@ -4,12 +4,12 @@ require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo.php";
 
 // ---------------------------------------------------------------------
 
-function count_rows($table_name, $column)
+function select_all_rows($table)
 {
   global $pdo;
 
-  $statement = $pdo->prepare("SELECT COUNT(`$column`) FROM dashboard_app.`$table_name`");
+  $statement = $pdo->prepare("SELECT * FROM dashboard_app.`$table`;");
   $status    = $statement->execute();
 
-  return [$status, $statement];
+  return $status ? $statement : false;
 }

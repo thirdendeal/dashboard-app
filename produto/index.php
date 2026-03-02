@@ -4,7 +4,7 @@ session_start();
 
 // ---------------------------------------------------------------------
 
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/find-rows.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/select-rows-where.php";
 require $_SERVER["DOCUMENT_ROOT"] . "/_model/entity/produto_fornecedor/join-by-produto.php";
 
 // Redirect malformed
@@ -21,9 +21,9 @@ $id = htmlspecialchars(stripslashes(trim($_GET["id"])));
 // Get `produto`
 // ---------------------------------------------------------------------
 
-list($row_success, $row) = find_rows("produto", "id_produto", $id);
+$row = select_rows_where("produto", "id_produto", $id); // one or none
 
-if ($row_success) {
+if ($row) {
   $produto = $row->fetch(PDO::FETCH_ASSOC);
 }
 

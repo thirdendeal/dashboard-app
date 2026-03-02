@@ -4,7 +4,7 @@ session_start();
 
 // ---------------------------------------------------------------------
 
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/find-rows.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/select-rows-where.php";
 
 // Submission
 // ---------------------------------------------------------------------
@@ -92,7 +92,7 @@ unset($_SESSION["errors"]);
         <span class="label">Fornecedores</span>
 
         <?php
-        list($_, $table_rows) = find_rows("fornecedor", "status", 1);
+        $table_rows = select_rows_where("fornecedor", "status", 1); // active
 
         $table = "fornecedor";
         $table_pairs = [

@@ -6,7 +6,7 @@ session_start();
 
 require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo.php";
 
-$SQL = $_SERVER["DOCUMENT_ROOT"] . "/_model/database/setup.sql";
+$SQL = $_SERVER["DOCUMENT_ROOT"] . "/_model/repository/setup.sql";
 
 // ---------------------------------------------------------------------
 

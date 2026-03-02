@@ -4,7 +4,7 @@ session_start();
 
 // ---------------------------------------------------------------------
 
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/update.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/update-where.php";
 require $_SERVER["DOCUMENT_ROOT"] . "/_model/entity/produto/validate.php";
 
 // Parse
@@ -18,13 +18,13 @@ parse_str(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_QUERY), $query);
 
 if (isset($_POST["nome"])) {
   $field = "nome";
-} elseif(isset($_POST["descrição"])) {
+} elseif (isset($_POST["descrição"])) {
   $field = "descrição";
-} elseif(isset($_POST["código"])) {
+} elseif (isset($_POST["código"])) {
   $field = "código";
-} elseif(isset($_POST["telefone"])) {
+} elseif (isset($_POST["telefone"])) {
   $field = "telefone";
-} elseif(isset($_POST["status"])) {
+} elseif (isset($_POST["status"])) {
   $field = "status";
 } else {
   $field = "";
@@ -64,8 +64,11 @@ $_SESSION["error"] = $error;
 // ---------------------------------------------------------------------
 
 if (empty($error)) {
-  $_SESSION["status"] = update(
-    "produto", "id_produto", $id, [$field => $value]
+  $_SESSION["status"] = update_where(
+    "produto",
+    "id_produto",
+    $id,
+    [$field => $value]
   );
 }
 
