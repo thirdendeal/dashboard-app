@@ -1,5 +1,5 @@
 <?php
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/select-from.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/repository-query.php";
 ?>
 
 <!DOCTYPE html>
@@ -27,14 +27,15 @@ require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/select-from.php";
       <br>
 
       <?php
-      $table_rows = select_from("*", "dashboard_app.produto");
+      $table_rows = repository_query("produto/p-count-f.sql");
 
       $table = "produto";
       $table_pairs = [
         "nome" => "Nome",
+        "fornecedores" => "Fornecedores",
         "descrição" => "Descrição",
         "código" => "Código",
-        "status" => "Status"
+        "status" => "Status",
       ];
 
       include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/table.php";

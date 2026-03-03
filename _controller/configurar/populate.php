@@ -4,13 +4,11 @@ session_start();
 
 // ---------------------------------------------------------------------
 
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo.php";
-
-$SQL = $_SERVER["DOCUMENT_ROOT"] . "/_model/repository/populate.sql";
+require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/repository-exec.php";
 
 // ---------------------------------------------------------------------
 
-$_SESSION["populate"] = $pdo->exec(file_get_contents($SQL));
+$_SESSION["populate"] = repository_exec("dashboard-app/populate.sql");
 $_SESSION["populate_submit"] = true;
 
 // ---------------------------------------------------------------------
