@@ -1,5 +1,5 @@
 <?php
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/select-all-rows.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/select-from.php";
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +27,7 @@ require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/select-all-rows.php";
       <br>
 
       <?php
-      $table_rows = select_all_rows("produto");
+      $table_rows = select_from("*", "dashboard_app.produto");
 
       $table = "produto";
       $table_pairs = [

@@ -4,7 +4,7 @@ session_start();
 
 // ---------------------------------------------------------------------
 
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/select-rows-where.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/select-from-where.php";
 
 // Get row
 // ---------------------------------------------------------------------
@@ -17,7 +17,7 @@ if (empty($_GET["id"])) {
 
 $id = htmlspecialchars(stripslashes(trim($_GET["id"])));
 
-$row = select_rows_where("fornecedor", "id_fornecedor", $id); // one or none
+$row = select_from_where("*", "dashboard_app.fornecedor", ["id_fornecedor = ?", [$id]]); // one or none
 
 if ($row) {
   $fornecedor = $row->fetch(PDO::FETCH_ASSOC);

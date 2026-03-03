@@ -77,10 +77,8 @@ $_SESSION["error"] = $error;
 
 if (empty($error)) {
   $_SESSION["status"] = update_where(
-    "fornecedor",
-    "id_fornecedor",
-    $id,
-    [$field => $value]
+    ["dashboard_app.fornecedor", [$field => $value]],
+    ["id_fornecedor = ?", [$id]]
   );
 }
 

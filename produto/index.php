@@ -4,8 +4,8 @@ session_start();
 
 // ---------------------------------------------------------------------
 
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/select-rows-where.php";
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/entity/produto_fornecedor/join-by-produto.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/inner-join.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/select-from-where.php";
 
 // Redirect malformed
 // ---------------------------------------------------------------------
@@ -21,7 +21,7 @@ $id = htmlspecialchars(stripslashes(trim($_GET["id"])));
 // Get `produto`
 // ---------------------------------------------------------------------
 
-$row = select_rows_where("produto", "id_produto", $id); // one or none
+$row = select_from_where("*", "dashboard_app.produto", ["id_produto = ?", [$id]]); // one or none
 
 if ($row) {
   $produto = $row->fetch(PDO::FETCH_ASSOC);
@@ -182,14 +182,19 @@ unset($_SESSION['error']);
         // Get `produto_fornecedor`
         // -------------------------------------------------------------
 
-        list($_, $table_rows) = join_by_produto(
-          $id,
-          "fornecedor.id_fornecedor",
-          "fornecedor.nome",
-          "fornecedor.`e-mail`"
+        $table_rows = select_from_where(
+          "fornecedor.id_fornecedor, fornecedor.nome, fornecedor.`e-mail`",
+          inner_join(
+            "dashboard_app.produto_fornecedor",
+            [
+              "dashboard_app.produto" => "dashboard_app.produto_fornecedor.id_produto = dashboard_app.produto.id_produto",
+              "dashboard_app.fornecedor" => "dashboard_app.produto_fornecedor.id_fornecedor = dashboard_app.fornecedor.id_fornecedor"
+            ]
+          ),
+          ["dashboard_app.produto.id_produto = ?", [$id]]
         );
 
-        $table = "fornecedor";
+        $table = "fornecedor"; // from `select`
         $table_pairs = [
           "nome" => "Nome",
           "e-mail" => "E-Mail"

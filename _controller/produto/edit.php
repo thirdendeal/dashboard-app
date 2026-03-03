@@ -65,10 +65,8 @@ $_SESSION["error"] = $error;
 
 if (empty($error)) {
   $_SESSION["status"] = update_where(
-    "produto",
-    "id_produto",
-    $id,
-    [$field => $value]
+    ["dashboard_app.produto", [$field => $value]],
+    ["id_produto = ?", [$id]]
   );
 }
 

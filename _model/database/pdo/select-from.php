@@ -4,11 +4,11 @@ require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo.php";
 
 // ---------------------------------------------------------------------
 
-function select_all_rows($table)
+function select_from($select, $from)
 {
   global $pdo;
 
-  $statement = $pdo->prepare("SELECT * FROM dashboard_app.`$table`;");
+  $statement = $pdo->prepare("SELECT $select FROM $from");
   $status    = $statement->execute();
 
   return $status ? $statement : false;

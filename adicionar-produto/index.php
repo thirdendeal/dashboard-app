@@ -4,7 +4,7 @@ session_start();
 
 // ---------------------------------------------------------------------
 
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/select-rows-where.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/select-from-where.php";
 
 // Submission
 // ---------------------------------------------------------------------
@@ -92,7 +92,7 @@ unset($_SESSION["errors"]);
         <span class="label">Fornecedores</span>
 
         <?php
-        $table_rows = select_rows_where("fornecedor", "status", 1); // active
+        $table_rows = select_from_where("*", "dashboard_app.fornecedor", ["status = ?", [1]]); // active
 
         $table = "fornecedor";
         $table_pairs = [

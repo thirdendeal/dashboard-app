@@ -4,26 +4,30 @@ require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo.php";
 
 // ---------------------------------------------------------------------
 
-function update_where($table, $column, $value, $pairs)
+function update_where($update, $where)
 {
   global $pdo;
 
+  list($update, $update_pairs) = $update;
+  list($where, $where_values)  = $where;
+
   // Match
 
-  $ordered_assigments = [];
-  $ordered_values = [];
+  $assigments = [];
+  $values     = [];
 
-  foreach ($pairs as $pair_column => $pair_value) {
-    $ordered_assigments[] = "`$pair_column` = ?";
-    $ordered_values[] = $pair_value;
+  foreach ($update_pairs as $column => $value) {
+    $assigments[] = "`$column` = ?";
+    $values[]     = $value;
   }
 
-  $assigments = implode(", ", $ordered_assigments);
+  $update_assigments = implode(", ", $assigments);
+  $update_values     = $values;
 
   // Update
 
-  $statement = $pdo->prepare("UPDATE dashboard_app.`$table` SET $assigments WHERE `$column` = ?;");
-  $status    = $statement->execute([...$ordered_values, $value]);
+  $statement = $pdo->prepare("UPDATE $update SET $update_assigments WHERE $where");
+  $status    = $statement->execute([...$update_values, ...$where_values]);
 
-  return $status ? $pdo->lastInsertId() : false;
+  return $status;
 }
