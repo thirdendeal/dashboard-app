@@ -4,8 +4,20 @@ session_start();
 
 // ---------------------------------------------------------------------
 
+require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/count-from.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/delete-where.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/insert.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/repository.php";
 require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/update-where.php";
+
 require $_SERVER["DOCUMENT_ROOT"] . "/_model/entity/produto/validate.php";
+
+// ---------------------------------------------------------------------
+
+function accumulate_session($session_variable, $value)
+{
+  return isset($_SESSION[$session_variable]) ? $_SESSION[$session_variable] && $value : $value;
+}
 
 // Parse
 // ---------------------------------------------------------------------
@@ -26,14 +38,15 @@ if (isset($_POST["nome"])) {
   $field = "telefone";
 } elseif (isset($_POST["status"])) {
   $field = "status";
-} else {
-  $field = "";
+} elseif (isset($_POST["checkbox-table"])) {
+  $field = "checkbox-table";
 }
 
 // Escape
 // ---------------------------------------------------------------------
 
-$id    = htmlspecialchars(stripslashes(trim($query["id"])));
+$produto_id = htmlspecialchars(stripslashes(trim($query["id"])));
+
 $value = htmlspecialchars(stripslashes(trim($_POST[$field])));
 
 // Validate
@@ -54,6 +67,9 @@ switch ($field) {
   case "status":
     $error = $validate->status($value);
     break;
+  case "checkbox-table":
+    $error = "";
+    break;
   default:
     $error = "Algo deu errado na atualização...";
 }
@@ -63,11 +79,49 @@ $_SESSION["error"] = $error;
 // Update
 // ---------------------------------------------------------------------
 
-if (empty($error)) {
+if ($field != "checkbox-table" && empty($error)) {
   $_SESSION["status"] = update_where(
     ["dashboard_app.produto", [$field => $value]],
-    ["id_produto = ?", [$id]]
+    ["id_produto = ?", [$produto_id]]
   );
+}
+
+// Update relationships
+// ---------------------------------------------------------------------
+
+if ($field == "checkbox-table") {
+  $fornecedor_count = count_from("*", "dashboard_app.fornecedor");
+
+  if ($fornecedor_count) {
+    $linked = Repository::prepare_execute("fornecedor/linked-to-p.sql", [$produto_id])
+      ->fetchAll(PDO::FETCH_COLUMN, 6);
+
+    for ($fornecedor_id = 1; $fornecedor_id <= $fornecedor_count; $fornecedor_id++) {
+      if (isset($_POST["fornecedor_$fornecedor_id"])) {
+        if ($linked[$fornecedor_id - 1]) {
+          continue;
+        }
+
+        $status = insert([
+          "dashboard_app.produto_fornecedor",
+          ["id_produto" => $produto_id, "id_fornecedor" => $fornecedor_id]
+        ]);
+
+        $_SESSION["status"] = accumulate_session("status", ($status !== false));
+      } else {
+        if (!$linked[$fornecedor_id - 1]) {
+          continue;
+        }
+
+        $status = delete_where(
+          "dashboard_app.produto_fornecedor",
+          ["id_fornecedor = ?", [$fornecedor_id]]
+        );
+
+        $_SESSION["status"] = accumulate_session("status", $status);
+      }
+    }
+  }
 }
 
 // ---------------------------------------------------------------------
@@ -76,4 +130,4 @@ $_SESSION["submitted"] = true;
 
 // ---------------------------------------------------------------------
 
-header("Location: /produto?id=$id");
+header("Location: /produto?id=$produto_id");

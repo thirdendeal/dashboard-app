@@ -3,11 +3,12 @@
 $table ??= "";
 $table_pairs ??= [];
 $table_checkbox ??= false;
+$table_linked ??= false;
 
 ?>
 
 <?php if ($table_rows && $table_rows->rowCount() > 0) { ?>
-  <table>
+  <table class="<?php echo $table_checkbox ? "checkbox-table" : "link-table" ?>">
     <thead>
       <tr>
         <?php if ($table_checkbox) { ?>
@@ -21,14 +22,15 @@ $table_checkbox ??= false;
     </thead>
     <tbody>
       <?php while ($row = $table_rows->fetch(PDO::FETCH_ASSOC)) { ?>
-        <?php $id = $row["id_$table"] ?>
-        <?php $table_id = $table . "_" . $id ?>
+        <?php $row_id = $row["id_$table"] ?>
+        <?php $table_id = $table . "_" . $row_id ?>
+        <?php $row_linked = $table_linked && $row["linked"] ?>
 
-        <tr class="link-row" <?= $table_checkbox ? "data-checkbox=\"$table_id\"" : "data-href=\"/$table?id=$id\"" ?>>
+        <tr class="link-row <?php echo $row_linked ? "link-row--selected" : "" ?>" <?= $table_checkbox ? "data-checkbox=\"$table_id\"" : "data-href=\"/$table?id=$row_id\"" ?>>
           <?php if ($table_checkbox) { ?>
             <td>
               <label for="<?= $table_id ?>" style="margin: 0">
-                <input type="checkbox" id="<?= $table_id ?>" name="<?= $table_id ?>" value="<?= $id ?>">
+                <input type="checkbox" id="<?= $table_id ?>" name="<?= $table_id ?>" value="<?= $row_id ?>" <?php echo $row_linked ? "checked" : "" ?>>
               </label>
             </td>
           <?php } ?>
@@ -56,6 +58,6 @@ $table_checkbox ??= false;
   </table>
 <?php } else { ?>
   <div class="empty-view">
-    Nenhum fornecedor encontrado :(
+    Nenhum <?php echo $table ?> encontrado :(
   </div>
 <?php } ?>

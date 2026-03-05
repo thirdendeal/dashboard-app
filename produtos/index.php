@@ -1,5 +1,5 @@
 <?php
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/repository-query.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/repository.php";
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +27,7 @@ require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/repository-query.php";
       <br>
 
       <?php
-      $table_rows = repository_query("produto/p-count-f.sql");
+      $table_rows = Repository::query("produto/p-count-f.sql");
 
       $table = "produto";
       $table_pairs = [

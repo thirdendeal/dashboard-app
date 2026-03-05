@@ -2,7 +2,7 @@ $(document).ready(function () {
   // Row hover
   // -------------------------------------------------------------------
 
-  $(".link-row").hover(
+  $(".checkbox-table .link-row").hover(
     function () {
       $(this)
         .children()
@@ -22,7 +22,7 @@ $(document).ready(function () {
   // Row select
   // -------------------------------------------------------------------
 
-  $(".link-row").click(function () {
+  $(".checkbox-table .link-row").click(function () {
     const checkbox = $(`#${$(this).data("checkbox")}`);
 
     $(this).toggleClass("link-row--selected");

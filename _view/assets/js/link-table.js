@@ -2,7 +2,7 @@ $(document).ready(function () {
   // Row hover
   // -------------------------------------------------------------------
 
-  $(".link-row").hover(
+  $(".link-table .link-row").hover(
     function () {
       $(this)
         .children()
@@ -22,7 +22,7 @@ $(document).ready(function () {
   // Row link
   // -------------------------------------------------------------------
 
-  $(".link-row").click(function () {
+  $(".link-table .link-row").click(function () {
     window.location = $(this).data("href");
   });
 });
