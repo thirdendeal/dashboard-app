@@ -12,7 +12,7 @@ $table_linked ??= false;
     <thead>
       <tr>
         <?php if ($table_checkbox) { ?>
-          <th></th>
+          <th style="padding-left: 0.75rem;">■</th>
         <?php } ?>
 
         <?php foreach ($table_pairs as $_ => $header) { ?>
@@ -22,11 +22,22 @@ $table_linked ??= false;
     </thead>
     <tbody>
       <?php while ($row = $table_rows->fetch(PDO::FETCH_ASSOC)) { ?>
-        <?php $row_id = $row["id_$table"] ?>
-        <?php $table_id = $table . "_" . $row_id ?>
-        <?php $row_linked = $table_linked && $row["linked"] ?>
+        <?php
+        $row_linked = $table_linked && $row["linked"];
 
-        <tr class="link-row <?php echo $row_linked ? "link-row--selected" : "" ?>" <?= $table_checkbox ? "data-checkbox=\"$table_id\"" : "data-href=\"/$table?id=$row_id\"" ?>>
+        if ($table_linked && !$row["linked"] && !$row["status"]) { // not linked and inactive
+          continue;
+        }
+
+        $row_id = $row["id_$table"];
+        $table_id = $table . "_" . $row_id;
+
+        $link_inactive = isset($row["status"]) && !$row["status"] ? "gray" : "";
+        $link_selected = $row_linked ? "link-row--selected" : "";
+        $tr_data = $table_checkbox ? "data-checkbox=\"$table_id\"" : "data-href=\"/$table?id=$row_id\"";
+        ?>
+
+        <tr class="link-row <?= $link_inactive ?> <?= $link_selected ?>" <?= $tr_data ?>>
           <?php if ($table_checkbox) { ?>
             <td>
               <label for="<?= $table_id ?>" style="margin: 0">
@@ -47,6 +58,10 @@ $table_linked ??= false;
             <?php } elseif ($field == "código") { ?>
               <td class="<?php echo $row["código"] ? "" : "gray" ?>">
                 <?php echo $row["código"] ? $row["código"] : "(Nenhum)" ?>
+              </td>
+            <?php } elseif ($field == "fornecedores") { ?>
+              <td class="center">
+                <?php echo $row["fornecedores"] ?>
               </td>
             <?php } else { ?>
               <td><?= $row[$field] ?></td>

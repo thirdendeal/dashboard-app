@@ -355,6 +355,11 @@ td {
   white-space: nowrap;
 }
 
+.link-row--selected.gray td {
+  color: black;
+  background-color: peru !important;
+}
+
 .link-row--selected td {
   background-color: orange !important;
 }
@@ -456,25 +461,20 @@ svg {
 /* Ad-Hoc */
 /* ------------------------------------------------------------------ */
 
+.gray {
+  color: gray;
+}
+
 .green {
   color: green;
 }
 
 .red {
-  color: red;
+  color: red !important;
 }
 
-.pass,
-.fail {
-  display: inline-block;
-  background-color: green;
-  color: white;
-  padding: 0.25rem;
-  font-family: sans-serif;
-}
-
-.fail {
-  background: red;
+.center {
+  text-align: center;
 }
 
 .left {
