@@ -93,7 +93,7 @@ if ($field == "checkbox-table") {
   $fornecedor_count = count_from("*", "dashboard_app.fornecedor");
 
   if ($fornecedor_count) {
-    $linked = Repository::prepare_execute("fornecedor/linked-to-p.sql", [$produto_id])
+    $linked = Repository::prepare_execute("fornecedor/f-linked-to-p.sql", [$produto_id])
       ->fetchAll(PDO::FETCH_COLUMN, 6);
 
     for ($fornecedor_id = 1; $fornecedor_id <= $fornecedor_count; $fornecedor_id++) {

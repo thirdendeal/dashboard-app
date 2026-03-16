@@ -1,5 +1,33 @@
 <?php
+
+session_start();
+
+// ---------------------------------------------------------------------
+
 require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/repository.php";
+
+// Delete
+// ---------------------------------------------------------------------
+
+// Submission
+
+$submitted = isset($_SESSION["submitted"]);
+
+unset($_SESSION["submitted"]);
+
+// Status
+
+$attempted = isset($_SESSION["status"]);
+$deleted = $_SESSION["status"] ?? false;
+
+unset($_SESSION['status']);
+
+// Error
+
+$error = $_SESSION['error'] ?? "";
+
+unset($_SESSION['error']);
+
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +51,12 @@ require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/repository.php";
         <h1>Produtos</h1>
         <br>
 
-        <a href="/adicionar-produto/" class="green-button">Adicionar Produto</a>
+        <a href="/adicionar-produto/">
+          <div class="button button--green full-width">
+            Adicionar Produto
+          </div>
+        </a>
+
         <br>
 
         <?php
@@ -40,6 +73,14 @@ require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/repository.php";
 
         include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/table.php";
         ?>
+
+        <?php if ($submitted) { ?>
+          <?php if ($deleted) { ?>
+            <div class="toast--success">Remoção feita com sucesso!</div>
+          <?php } else { ?>
+            <div class="toast--failure"><?= $error ? $error : "Algo deu errado..." ?></div>
+          <?php } ?>
+        <?php } ?>
       </div>
     </main>
 

@@ -27,9 +27,9 @@ unset($_SESSION["status"]);
 // Auto-fill on failure only
 
 $fields = [
-  "nome"      => $inserted ? "" : ($_SESSION["fields"]["nome"] ?? ""),
+  "nome" => $inserted ? "" : ($_SESSION["fields"]["nome"] ?? ""),
   "descrição" => $inserted ? "" : ($_SESSION["fields"]["descrição"] ?? ""),
-  "código"    => $inserted ? "" : ($_SESSION["fields"]["código"] ?? "")
+  "código" => $inserted ? "" : ($_SESSION["fields"]["código"] ?? "")
 ];
 
 unset($_SESSION["fields"]);
@@ -38,9 +38,9 @@ unset($_SESSION["fields"]);
 // ---------------------------------------------------------------------
 
 $errors = [
-  "nome"      => $_SESSION["errors"]["nome"] ?? "",
+  "nome" => $_SESSION["errors"]["nome"] ?? "",
   "descrição" => $_SESSION["errors"]["descrição"] ?? "",
-  "código"    => $_SESSION["errors"]["código"] ?? ""
+  "código" => $_SESSION["errors"]["código"] ?? ""
 ];
 
 unset($_SESSION["errors"]);
@@ -50,86 +50,86 @@ unset($_SESSION["errors"]);
 <!DOCTYPE html>
 <html lang="pt-BR">
 
-<head>
-  <?php
-  $head_title = "Adicionar Produto";
-  include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/head.php";
-  ?>
-</head>
+  <head>
+    <?php
+    $head_title = "Adicionar Produto";
+    include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/head.php";
+    ?>
+  </head>
 
-<body class="body">
-  <?php
-  $aside_current_tab = 3;
-  include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/aside.php";
-  ?>
+  <body class="body">
+    <?php
+    $aside_current_tab = 3;
+    include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/aside.php";
+    ?>
 
-  <main class="main">
-    <div class="container">
-      <h1>Adicionar Produto</h1>
-      <br>
-
-      <form action="/_controller/produto/add.php" method="post">
-        <label for="nome">
-          Nome do Produto
-          <input class="textbox" type="text" name="nome" id="nome" value="<?= $fields["nome"] ?>" oninput="getHint(this.id, this.value)" />
-          <span class="error"><?= $errors["nome"] ?></span>
-        </label>
-
-        <label for="descrição">
-          Descrição
-          <textarea class="textbox-area" name="descrição" id="descrição" rows="5" cols="30" oninput="getHint(this.id, this.value)" /><?= $fields["descrição"] ?></textarea>
-          <span class="error"><?= $errors["descrição"] ?></span>
-        </label>
-
-        <label for="código">
-          Código
-          <input class="textbox" type="text" name="código" id="código" value="<?= $fields["código"] ?>" oninput="getHint(this.id, this.value)" />
-          <span class="error"><?= $errors["código"] ?></span>
-        </label>
-
+    <main class="main">
+      <div class="container">
+        <h1>Adicionar Produto</h1>
         <br>
 
-        <span class="label">Fornecedores</span>
+        <form action="/_controller/produto/add.php" method="post">
+          <label for="nome">
+            Nome do Produto
+            <input class="textbox" type="text" name="nome" id="nome" value="<?= $fields["nome"] ?>" oninput="getHint(this.id, this.value)" />
+            <span class="error"><?= $errors["nome"] ?></span>
+          </label>
 
-        <?php
-        $table_rows = select_from_where("*", "dashboard_app.fornecedor", ["status = ?", [1]]); // active
+          <label for="descrição">
+            Descrição
+            <textarea class="textbox-area" name="descrição" id="descrição" rows="5" cols="30" oninput="getHint(this.id, this.value)" /><?= $fields["descrição"] ?></textarea>
+            <span class="error"><?= $errors["descrição"] ?></span>
+          </label>
 
-        $table = "fornecedor";
-        $table_pairs = [
-          "nome" => "Nome",
-          "e-mail" => "E-Mail",
-          "telefone" => "Telefone",
-          "cnpj" => "CNPJ"
-        ];
+          <label for="código">
+            Código
+            <input class="textbox" type="text" name="código" id="código" value="<?= $fields["código"] ?>" oninput="getHint(this.id, this.value)" />
+            <span class="error"><?= $errors["código"] ?></span>
+          </label>
 
-        $table_checkbox = true;
+          <br>
 
-        include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/table.php";
-        ?>
+          <span class="label">Fornecedores</span>
 
-        <br>
+          <?php
+          $table_rows = select_from_where("*", "dashboard_app.fornecedor", ["status = ?", [1]]); // active
+          
+          $table = "fornecedor";
+          $table_pairs = [
+            "nome" => "Nome",
+            "e-mail" => "E-Mail",
+            "telefone" => "Telefone",
+            "cnpj" => "CNPJ"
+          ];
 
-        <input class="green-button" type="submit" value="Registrar Produto" />
-      </form>
+          $table_checkbox = true;
 
-      <?php if ($attempted) { ?>
-        <?php if ($inserted) { ?>
-          <div class="toast--success">Registro feito com sucesso! <a class="toast-link" href="/produtos/">Visualizar</a></div>
-        <?php } else { ?>
-          <div class="toast--failure">Algo deu errado no registro...</div>
+          include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/table.php";
+          ?>
+
+          <br>
+
+          <input class="button button--green full-width" type="submit" value="Registrar Produto" />
+        </form>
+
+        <?php if ($attempted) { ?>
+          <?php if ($inserted) { ?>
+            <div class="toast--success">Registro feito com sucesso! <a class="toast-link" href="/produtos/">Visualizar</a></div>
+          <?php } else { ?>
+            <div class="toast--failure">Algo deu errado no registro...</div>
+          <?php } ?>
         <?php } ?>
-      <?php } ?>
-    </div>
-  </main>
+      </div>
+    </main>
 
-  <script src="/_view/vendor/jquery-v4.0.0.min.js"></script>
+    <script src="/_view/vendor/jquery-v4.0.0.min.js"></script>
 
-  <script src="/_view/assets/js/checkbox-table.js"></script>
-  <script src="/_view/assets/js/get-hint.js"></script>
+    <script src="/_view/assets/js/checkbox-table.js"></script>
+    <script src="/_view/assets/js/get-hint.js"></script>
 
-  <script>
-    const getHint = makeGetHint("/_controller/produto/hint.php");
-  </script>
-</body>
+    <script>
+      const getHint = makeGetHint("/_controller/produto/hint.php");
+    </script>
+  </body>
 
 </html>

@@ -1,3 +1,7 @@
+/* ------------------------------------------------------------------ */
+/* Global */
+/* ------------------------------------------------------------------ */
+
 /* Default */
 /* ------------------------------------------------------------------ */
 
@@ -109,91 +113,8 @@ textarea {
   vertical-align: middle;
 }
 
-/* Sidebar */
-/* ------------------------------------------------------------------ */
-
-body {
-  display: flex;
-  font-family: sans-serif;
-}
-
-aside {
-  background-color: sandybrown;
-  color: white;
-  flex: 25% 0 0;
-  height: 100vh;
-}
-
-main {
-  flex-grow: 1;
-  height: 100vh;
-  overflow-y: scroll;
-  padding: 5rem 3rem;
-}
-
-h1 {
-  color: chocolate;
-}
-
-.container {
-  margin: auto;
-  max-width: 38rem;
-  padding-left: 3rem;
-  padding-right: 3rem;
-}
-
-/* ------------------------------------------------------------------ */
-
-.logotype {
-  padding: 2rem 1rem;
-}
-
-/* ------------------------------------------------------------------ */
-
-.tab__link {
-  background-color: peru;
-  display: block;
-  font-weight: 700;
-  padding: 1rem;
-  text-decoration: none;
-}
-
-.tab__link:hover {
-  background-color: saddlebrown;
-}
-
-/* ------------------------------------------------------------------ */
-
-.tab__link--current {
-  background-color: chocolate;
-  text-decoration: underline;
-}
-
-.tab__link--current:hover {
-  text-decoration: underline;
-}
-
-/* Buttons */
-/* ------------------------------------------------------------------ */
-
-.green-button {
-  background-color: limegreen;
-  border-radius: 0.5rem;
-  color: white;
-  display: block;
-  font-weight: 700;
-  padding: 0.75rem;
-  text-align: center;
-  width: 100%;
-}
-
-.green-button:visited {
-  color: white;
-}
-
-.green-button:hover {
-  background-color: forestgreen;
-  cursor: pointer;
+svg {
+  vertical-align: text-top;
 }
 
 /* Forms */
@@ -227,6 +148,11 @@ label,
   content: "* ";
 }
 
+/* ------------------------------------------------------------------ */
+/* Ad-Hoc */
+/* ------------------------------------------------------------------ */
+
+/* Toast Notification */
 /* ------------------------------------------------------------------ */
 
 @keyframes toastIn {
@@ -353,6 +279,11 @@ td {
   padding-left: 0.75rem;
   padding-right: 0.75rem;
   white-space: nowrap;
+
+  max-width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .link-row--selected.gray td {
@@ -362,6 +293,140 @@ td {
 
 .link-row--selected td {
   background-color: orange !important;
+}
+
+/* Buttons */
+/* ------------------------------------------------------------------ */
+
+/* Button */
+
+.button {
+  border-radius: 0.5rem;
+  color: white;
+  font-weight: 700;
+  padding: 0.75rem;
+  text-align: center;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+/* Blue Button */
+
+.button--blue {
+  background-color: cornflowerblue;
+}
+
+.button--blue:hover {
+  background-color: steelblue;
+}
+
+/* Chocolate Button */
+
+.button--chocolate {
+  background-color: chocolate;
+}
+
+.button--chocolate:hover {
+  background-color: saddlebrown;
+}
+
+/* Gray Button */
+
+.button--gray {
+  background-color: gray;
+}
+
+.button--gray:hover {
+  background-color: dimgray;
+}
+
+/* Green Button */
+
+.button--green {
+  background-color: limegreen;
+}
+
+.button--green:hover {
+  background-color: forestgreen;
+}
+
+/* Red Button */
+
+.button--red {
+  background-color: indianred;
+}
+
+.button--red:hover {
+  background-color: firebrick;
+}
+
+/* ------------------------------------------------------------------ */
+/* Layouts */
+/* ------------------------------------------------------------------ */
+
+/* Default */
+/* ------------------------------------------------------------------ */
+
+body {
+  display: flex;
+  font-family: sans-serif;
+}
+
+aside {
+  background-color: sandybrown;
+  color: white;
+  flex: 25% 0 0;
+  height: 100vh;
+}
+
+main {
+  flex-grow: 1;
+  height: 100vh;
+  overflow-y: scroll;
+}
+
+h1 {
+  color: chocolate;
+}
+
+.container {
+  margin: auto;
+  max-width: 38rem;
+  padding: 5rem 4rem;
+}
+
+/* ------------------------------------------------------------------ */
+
+.logotype {
+  padding: 2rem 1rem;
+}
+
+/* Sidebar */
+/* ------------------------------------------------------------------ */
+
+.tab__link {
+  background-color: peru;
+  display: block;
+  font-weight: 700;
+  padding: 1rem;
+  text-decoration: none;
+}
+
+.tab__link:hover {
+  background-color: saddlebrown;
+}
+
+/* ------------------------------------------------------------------ */
+
+.tab__link--current {
+  background-color: chocolate;
+  text-decoration: underline;
+}
+
+.tab__link--current:hover {
+  text-decoration: underline;
 }
 
 /* List View */
@@ -384,7 +449,7 @@ td {
   border-radius: 0.5rem 0 0 0.5rem;
   border: 2px solid saddlebrown;
   color: saddlebrown;
-  flex: 0 0 20%;
+  flex: 0 0 25%;
   font-size: 1em;
   margin-right: 1rem;
   padding: 0.5rem 0.75rem;
@@ -393,34 +458,27 @@ td {
 .list__form,
 .list__p {
   flex-grow: 1;
+  flex-shrink: 1;
+}
+
+.list__p {
   padding: 0.25rem 0.5rem;
 }
 
-.list__form {
-  padding: 0.25rem 0;
-}
+/* ------------------------------------------------------------------ */
 
 .list__edit {
-  background-color: cornflowerblue;
-  border-radius: 0.5rem;
-  color: white;
-  display: inline-block;
   font-size: 1.1rem;
-  font-weight: 700;
   margin-left: 1rem;
   padding-right: 0.6rem;
   padding: 0.4rem 0.7rem;
 }
 
 .list__edit--full {
-  margin: 0;
-  margin-top: 1.6rem; /* line-height */
+  display: block;
+  margin-left: 0;
+  margin-top: 1rem;
   width: 100%;
-}
-
-.list__edit:hover {
-  background-color: steelblue;
-  cursor: pointer;
 }
 
 .list__form__padlock {
@@ -430,36 +488,26 @@ td {
 
 .list__cancel,
 .list__submit {
-  background-color: mediumseagreen;
-  border-radius: 0.5rem;
-  color: white;
   display: block;
   flex: 0 0 49%;
-  font-weight: 700;
   padding: 0.5rem;
-  text-align: center;
 }
 
-.list__cancel {
-  background-color: indianred;
-}
-
-.list__cancel:hover,
-.list__submit:hover {
-  background-color: forestgreen;
-  cursor: pointer;
-}
-
-.list__cancel:hover {
-  background-color: firebrick;
-}
-
-svg {
-  vertical-align: text-top;
-}
-
-/* Ad-Hoc */
 /* ------------------------------------------------------------------ */
+/* Utility */
+/* ------------------------------------------------------------------ */
+
+/* Box */
+
+.full-width {
+  width: 100%;
+}
+
+.p-1rem {
+  padding-bottom: 1rem;
+}
+
+/* Color */
 
 .gray {
   color: gray;
@@ -473,14 +521,12 @@ svg {
   color: red !important;
 }
 
+/* Text */
+
 .center {
   text-align: center;
 }
 
 .left {
   text-align: left;
-}
-
-.gray {
-  color: gray;
 }

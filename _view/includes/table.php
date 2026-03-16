@@ -8,7 +8,7 @@ $table_linked ??= false;
 ?>
 
 <?php if ($table_rows && $table_rows->rowCount() > 0) { ?>
-  <table class="<?php echo $table_checkbox ? "checkbox-table" : "link-table" ?>">
+  <table class="<?= $table_checkbox ? "checkbox-table" : "link-table" ?>">
     <thead>
       <tr>
         <?php if ($table_checkbox) { ?>
@@ -41,27 +41,27 @@ $table_linked ??= false;
           <?php if ($table_checkbox) { ?>
             <td>
               <label for="<?= $table_id ?>" style="margin: 0">
-                <input type="checkbox" id="<?= $table_id ?>" name="<?= $table_id ?>" value="<?= $row_id ?>" <?php echo $row_linked ? "checked" : "" ?>>
+                <input type="checkbox" id="<?= $table_id ?>" name="<?= $table_id ?>" value="<?= $row_id ?>" <?= $row_linked ? "checked" : "" ?>>
               </label>
             </td>
           <?php } ?>
 
           <?php foreach ($table_pairs as $field => $_) { ?>
             <?php if ($field == "status") { ?>
-              <td class="<?php echo $row["status"] ? "green" : "red" ?>">
-                <?php echo $row["status"] ? "ATIVO" : "INATIVO" ?>
+              <td class="<?= $row["status"] ? "green" : "red" ?>">
+                <?= $row["status"] ? "ATIVO" : "INATIVO" ?>
               </td>
             <?php } elseif ($field == "descrição") { ?>
-              <td class="<?php echo $row["descrição"] ? "" : "gray" ?>">
-                <?php echo $row["descrição"] ? $row["descrição"] : "(Nenhuma)" ?>
+              <td class="<?= $row["descrição"] ? "" : "gray" ?>">
+                <?= $row["descrição"] ? $row["descrição"] : "(Nenhuma)" ?>
               </td>
             <?php } elseif ($field == "código") { ?>
-              <td class="<?php echo $row["código"] ? "" : "gray" ?>">
-                <?php echo $row["código"] ? $row["código"] : "(Nenhum)" ?>
+              <td class="<?= $row["código"] ? "" : "gray" ?>">
+                <?= $row["código"] ? $row["código"] : "(Nenhum)" ?>
               </td>
             <?php } elseif ($field == "fornecedores") { ?>
               <td class="center">
-                <?php echo $row["fornecedores"] ?>
+                <?= $row["fornecedores"] ?>
               </td>
             <?php } else { ?>
               <td><?= $row[$field] ?></td>
@@ -73,6 +73,6 @@ $table_linked ??= false;
   </table>
 <?php } else { ?>
   <div class="empty-view">
-    Nenhum <?php echo $table ?> encontrado :(
+    Nenhum <?= $table ?> encontrado :(
   </div>
 <?php } ?>
