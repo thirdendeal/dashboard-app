@@ -4,10 +4,10 @@ session_start();
 
 // ---------------------------------------------------------------------
 
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/count-from.php";
 require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/delete-where.php";
 require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/insert.php";
 require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/repository.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/select-from.php";
 require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/update-where.php";
 
 require $_SERVER["DOCUMENT_ROOT"] . "/_model/entity/produto/validate.php";
@@ -90,36 +90,37 @@ if ($field != "checkbox-table" && empty($error)) {
 // ---------------------------------------------------------------------
 
 if ($field == "checkbox-table") {
-  $fornecedor_count = count_from("*", "dashboard_app.fornecedor");
+  $fornecedor_ids = select_from("id_fornecedor", "dashboard_app.fornecedor")
+    ->fetchAll(PDO::FETCH_COLUMN, 0);
 
-  if ($fornecedor_count) {
-    $linked = Repository::prepare_execute("fornecedor/f-linked-to-p.sql", [$produto_id])
-      ->fetchAll(PDO::FETCH_COLUMN, 6);
+  $f_entries = Repository::prepare_execute("fornecedor/f-linked-to-p.sql", [$produto_id])
+    ->fetchAll(PDO::FETCH_GROUP);
 
-    for ($fornecedor_id = 1; $fornecedor_id <= $fornecedor_count; $fornecedor_id++) {
-      if (isset($_POST["fornecedor_$fornecedor_id"])) {
-        if ($linked[$fornecedor_id - 1]) {
-          continue;
-        }
+  foreach ($fornecedor_ids as $fornecedor_id) {
+    $linked = $f_entries[$fornecedor_id][0]["linked"];
 
-        $status = insert([
-          "dashboard_app.produto_fornecedor",
-          ["id_produto" => $produto_id, "id_fornecedor" => $fornecedor_id]
-        ]);
-
-        $_SESSION["status"] = accumulate_session("status", ($status !== false));
-      } else {
-        if (!$linked[$fornecedor_id - 1]) {
-          continue;
-        }
-
-        $status = delete_where(
-          "dashboard_app.produto_fornecedor",
-          ["id_fornecedor = ?", [$fornecedor_id]]
-        );
-
-        $_SESSION["status"] = accumulate_session("status", $status);
+    if (isset($_POST["fornecedor_$fornecedor_id"])) {
+      if ($linked) {
+        continue;
       }
+
+      $status = insert([
+        "dashboard_app.produto_fornecedor",
+        ["id_produto" => $produto_id, "id_fornecedor" => $fornecedor_id]
+      ]);
+
+      $_SESSION["status"] = accumulate_session("status", ($status !== false));
+    } else {
+      if (!$linked) {
+        continue;
+      }
+
+      $status = delete_where(
+        "dashboard_app.produto_fornecedor",
+        ["id_fornecedor = ?", [$fornecedor_id]]
+      );
+
+      $_SESSION["status"] = accumulate_session("status", $status);
     }
   }
 }
