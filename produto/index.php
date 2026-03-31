@@ -152,13 +152,16 @@ unset($_SESSION['error']);
             <li class="list__item">
               <h3 class="list__title">Status</h3>
 
-              <p class="list__p <?= $produto['status'] ? 'blue' : 'red' ?>">
+              <p class="list__p <?= $produto['status'] ? 'green' : 'red' ?>">
                 <?= $produto["status"] ? "ATIVO" : "INATIVO" ?>
               </p>
 
               <form class="list__form" action="/_controller/produto/edit.php" method="post">
                 <label for="status">
-                  <input class="list__input textbox" type="text" name="status" id="status" value="<?= $produto["status"] ?>" oninput="getHint(this.id, this.value)" />
+                  <select class="select" name="status" id="status">
+                    <option value="1" <?= $produto["status"] ? "selected" : "" ?>>ATIVO</option>
+                    <option value="0" <?= $produto["status"] ? "" : "selected" ?>>INATIVO</option>
+                  </select>
                   <span class="list__error error"></span>
                 </label>
 

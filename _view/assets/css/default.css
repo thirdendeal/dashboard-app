@@ -129,7 +129,8 @@ label,
 }
 
 .textbox,
-.textbox-area {
+.textbox-area,
+.select {
   background-color: whitesmoke;
   border-radius: 0.5rem;
   color: black;

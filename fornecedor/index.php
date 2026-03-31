@@ -171,7 +171,10 @@ unset($_SESSION['error']);
 
               <form class="list__form" action="/_controller/fornecedor/edit.php" method="post">
                 <label for="status">
-                  <input class="list__input textbox" type="text" name="status" id="status" value="<?= $fornecedor["status"] ?>" oninput="getHint(this.id, this.value)" />
+                  <select class="select" name="status" id="status">
+                    <option value="1" <?= $fornecedor["status"] ? "selected" : "" ?>>ATIVO</option>
+                    <option value="0" <?= $fornecedor["status"] ? "" : "selected" ?>>INATIVO</option>
+                  </select>
                   <span class="list__error error"></span>
                 </label>
 
