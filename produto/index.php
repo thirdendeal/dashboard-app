@@ -58,7 +58,7 @@ unset($_SESSION['error']);
 
   <head>
     <?php
-    $head_title = "Produto";
+    $head_title = $produto["nome"];
     include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/head.php";
     ?>
   </head>
@@ -72,7 +72,7 @@ unset($_SESSION['error']);
     <main class="main">
       <div class="container">
         <?php if ($produto) { ?>
-          <h1><?= $produto["nome"] ?> – Produto</h1>
+          <h1><?= $produto["nome"] ?></h1>
           <br>
 
           <ul class="list">
