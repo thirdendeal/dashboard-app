@@ -81,7 +81,7 @@ unset($_SESSION['error']);
 
               <p class="list__p"><?= $produto["nome"] ?></p>
 
-              <form class="list__form" action="/_controller/produto/edit.php" method="post">
+              <form style="display: none" class="list__form" action="/_controller/produto/edit.php" method="post">
                 <label for="nome">
                   <input class="list__input textbox" type="text" name="nome" id="nome" value="<?= $produto["nome"] ?>" oninput="getHint(this.id, this.value)" />
                   <span class="list__error error"></span>
@@ -106,7 +106,7 @@ unset($_SESSION['error']);
                 <?= $produto["descrição"] ? $produto["descrição"] : "(Nenhum)" ?>
               </p>
 
-              <form class="list__form" action="/_controller/produto/edit.php" method="post">
+              <form style="display: none" class="list__form" action="/_controller/produto/edit.php" method="post">
                 <label for="descrição">
                   <textarea class="textbox-area" name="descrição" id="descrição" rows="5" cols="30" oninput="getHint(this.id, this.value)" /><?= $produto["descrição"] ?></textarea>
                   <span class="list__error error"></span>
@@ -131,7 +131,7 @@ unset($_SESSION['error']);
                 <?= $produto["código"] ? $produto["código"] : "(Nenhum)" ?>
               </p>
 
-              <form class="list__form" action="/_controller/produto/edit.php" method="post">
+              <form style="display: none" class="list__form" action="/_controller/produto/edit.php" method="post">
                 <label for="código">
                   <input class="list__input textbox" type="tel" name="código" id="código" value="<?= $produto["código"] ?>" oninput="getHint(this.id, this.value)" />
                   <span class="list__error error"></span>
@@ -156,7 +156,7 @@ unset($_SESSION['error']);
                 <?= $produto["status"] ? "ATIVO" : "INATIVO" ?>
               </p>
 
-              <form class="list__form" action="/_controller/produto/edit.php" method="post">
+              <form style="display: none" class="list__form" action="/_controller/produto/edit.php" method="post">
                 <label for="status">
                   <select class="select" name="status" id="status">
                     <option value="1" <?= $produto["status"] ? "selected" : "" ?>>ATIVO</option>
@@ -206,7 +206,7 @@ unset($_SESSION['error']);
           include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/table.php";
           ?>
 
-          <form class="list__form" action="/_controller/produto/edit.php" method="post">
+          <form style="display: none" class="list__form" action="/_controller/produto/edit.php" method="post">
             <input type="hidden" name="checkbox-table" id="checkbox-table" value="true">
 
             <?php
@@ -246,7 +246,7 @@ unset($_SESSION['error']);
 
           <div></div>
 
-          <form class="list__form" action="/_controller/produto/remove.php" method="post">
+          <form style="display: none" class="list__form" action="/_controller/produto/remove.php" method="post">
             <div class="list__form__padlock">
               <input class="list__submit button button--red" type="submit" value="Remover" />
               <button class="list__cancel button button--gray" type="button">Cancelar</button>

@@ -75,7 +75,7 @@ unset($_SESSION['error']);
 
               <p class="list__p"><?= $fornecedor["nome"] ?></p>
 
-              <form class="list__form" action="/_controller/fornecedor/edit.php" method="post">
+              <form style="display: none" class="list__form" action="/_controller/fornecedor/edit.php" method="post">
                 <label for="nome">
                   <input class="list__input textbox" type="text" name="nome" id="nome" value="<?= $fornecedor["nome"] ?>" oninput="getHint(this.id, this.value)" />
                   <span class="list__error error"></span>
@@ -98,7 +98,7 @@ unset($_SESSION['error']);
 
               <p class="list__p"><?= $fornecedor["e-mail"] ?></p>
 
-              <form class="list__form" action="/_controller/fornecedor/edit.php" method="post">
+              <form style="display: none" class="list__form" action="/_controller/fornecedor/edit.php" method="post">
                 <label for="e-mail">
                   <input class="list__input textbox" type="email" name="e-mail" id="e-mail" value="<?= $fornecedor["e-mail"] ?>" oninput="getHint(this.id, this.value)" />
                   <span class="list__error error"></span>
@@ -121,7 +121,7 @@ unset($_SESSION['error']);
 
               <p class="list__p"><?= $fornecedor["telefone"] ?></p>
 
-              <form class="list__form" action="/_controller/fornecedor/edit.php" method="post">
+              <form style="display: none" class="list__form" action="/_controller/fornecedor/edit.php" method="post">
                 <label for="telefone">
                   <input class="list__input textbox" type="tel" name="telefone" id="telefone" value="<?= $fornecedor["telefone"] ?>" oninput="getHint(this.id, this.value)" />
                   <span class="list__error error"></span>
@@ -144,7 +144,7 @@ unset($_SESSION['error']);
 
               <p class="list__p"><?= $fornecedor["cnpj"] ?></p>
 
-              <form class="list__form" action="/_controller/fornecedor/edit.php" method="post">
+              <form style="display: none" class="list__form" action="/_controller/fornecedor/edit.php" method="post">
                 <label for="cnpj">
                   <input class="list__input textbox" type="text" name="cnpj" id="cnpj" value="<?= $fornecedor["cnpj"] ?>" oninput="getHint(this.id, this.value)" />
                   <span class="list__error error"></span>
@@ -169,7 +169,7 @@ unset($_SESSION['error']);
                 <?= $fornecedor["status"] ? "ATIVO" : "INATIVO" ?>
               </p>
 
-              <form class="list__form" action="/_controller/fornecedor/edit.php" method="post">
+              <form style="display: none" class="list__form" action="/_controller/fornecedor/edit.php" method="post">
                 <label for="status">
                   <select class="select" name="status" id="status">
                     <option value="1" <?= $fornecedor["status"] ? "selected" : "" ?>>ATIVO</option>
@@ -198,7 +198,7 @@ unset($_SESSION['error']);
 
           <div></div>
 
-          <form class="list__form" action="/_controller/fornecedor/remove.php" method="post">
+          <form style="display: none;" class="list__form" action="/_controller/fornecedor/remove.php" method="post">
             <div class="list__form__padlock">
               <input class="list__submit button button--red" type="submit" value="Remover" />
               <button class="list__cancel button button--gray" type="button">Cancelar</button>
