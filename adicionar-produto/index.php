@@ -92,8 +92,8 @@ unset($_SESSION["errors"]);
           <span class="label">Fornecedores</span>
 
           <?php
-          $table_rows = select_from_where("*", "dashboard_app.fornecedor", ["status = ?", [1]]); // active
-          
+          $table_rows = select_from_where("*", "dashboard_app.fornecedor", ["status = ?", [1]]);
+
           $table = "fornecedor";
           $table_pairs = [
             "nome" => "Nome",

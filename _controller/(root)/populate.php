@@ -13,4 +13,4 @@ $_SESSION["populate_submit"] = true;
 
 // ---------------------------------------------------------------------
 
-header("Location: /configurar/");
+header("Location: /");

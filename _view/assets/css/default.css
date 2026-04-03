@@ -430,6 +430,13 @@ h1 {
   text-decoration: underline;
 }
 
+/* Dashboard */
+/* ------------------------------------------------------------------ */
+
+.command-item {
+  margin-bottom: 0.5rem;
+}
+
 /* List View */
 /* ------------------------------------------------------------------ */
 
@@ -520,6 +527,10 @@ h1 {
 
 .red {
   color: red !important;
+}
+
+.yellow {
+  color: yellow;
 }
 
 /* Text */
