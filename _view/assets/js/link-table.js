@@ -22,7 +22,13 @@ $(document).ready(function () {
   // Row link
   // -------------------------------------------------------------------
 
-  $(".link-table .link-row").click(function () {
-    window.location = $(this).data("href");
+  $(".link-table .link-row").click(function (e) {
+    let url = $(this).data("href");
+
+    if (e.ctrlKey) {
+      window.open(url, "_blank");
+    } else {
+      window.location = url;
+    }
   });
 });

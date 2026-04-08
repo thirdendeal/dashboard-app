@@ -246,6 +246,7 @@ table {
   display: block;
   overflow-x: auto;
   padding: 1rem;
+  user-select: none;
   width: 100%;
 }
 
