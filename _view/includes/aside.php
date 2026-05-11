@@ -13,6 +13,7 @@
       <li class="tab__item"><a href="/" class="tab__link<?= $a ?>">Dashboard</a></li>
       <li class="tab__item"><a href="/fornecedores/" class="tab__link<?= $b ?>">Fornecedores</a></li>
       <li class="tab__item"><a href="/produtos/" class="tab__link<?= $c ?>">Produtos</a></li>
+      <li class="tab__item"><a href="/configurar/" class="tab__link<?= $d ?>">Configurar</a></li>
     </ul>
   </nav>
 </aside>

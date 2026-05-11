@@ -13,4 +13,4 @@ $_SESSION["drop_submit"] = true;
 
 // ---------------------------------------------------------------------
 
-header("Location: /");
+header("Location: /configurar/");
