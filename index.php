@@ -1,26 +1,3 @@
-<?php
-
-session_start();
-
-// ---------------------------------------------------------------------
-
-require $_SERVER["DOCUMENT_ROOT"] . "/_view/helpers/consume-session.php";
-
-// ---------------------------------------------------------------------
-
-$session = consume_session(
-  "connect",
-  "connect_submit",
-  "setup",
-  "setup_submit",
-  "drop",
-  "drop_submit",
-  "populate",
-  "populate_submit"
-);
-
-?>
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 

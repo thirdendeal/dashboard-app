@@ -60,18 +60,38 @@ unset($_SESSION['error']);
         <br>
 
         <?php
-        $table_rows = select_from("*", "dashboard_app.fornecedor");
+        try {
+          // Connect
+          require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo.php"; // throws on error
+        } catch (Exception $e) {
+          ?>
+          <div class="empty-view">
+            Falha na conexão!
+          </div>
+          <?php
+        }
 
-        $table = "fornecedor";
-        $table_pairs = [
-          "nome" => "Nome",
-          "e-mail" => "E-Mail",
-          "telefone" => "Telefone",
-          "cnpj" => "CNPJ",
-          "status" => "Status",
-        ];
+        try {
+          // Use database
+          $table_rows = select_from("*", "dashboard_app.fornecedor");
 
-        include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/table.php";
+          $table = "fornecedor";
+          $table_pairs = [
+            "nome" => "Nome",
+            "e-mail" => "E-Mail",
+            "telefone" => "Telefone",
+            "cnpj" => "CNPJ",
+            "status" => "Status",
+          ];
+
+          include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/table.php";
+        } catch (Exception $e) {
+          ?>
+          <div class="empty-view">
+            Banco de Dados não encontrado...
+          </div>
+          <?php
+        }
         ?>
 
         <?php if ($submitted) { ?>

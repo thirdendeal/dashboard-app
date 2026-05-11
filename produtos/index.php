@@ -60,18 +60,38 @@ unset($_SESSION['error']);
         <br>
 
         <?php
-        $table_rows = Repository::query("produto/p-count-f.sql");
+        try {
+          // Connect
+          require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo.php"; // throws on error
+        } catch (Exception $e) {
+          ?>
+          <div class="empty-view">
+            Falha na conexão!
+          </div>
+          <?php
+        }
 
-        $table = "produto";
-        $table_pairs = [
-          "nome" => "Nome",
-          "descrição" => "Descrição",
-          "código" => "Código",
-          "fornecedores" => "Fornecedores",
-          "status" => "Status",
-        ];
+        try {
+          // Use database
+          $table_rows = Repository::query("produto/p-count-f.sql");
 
-        include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/table.php";
+          $table = "produto";
+          $table_pairs = [
+            "nome" => "Nome",
+            "descrição" => "Descrição",
+            "código" => "Código",
+            "fornecedores" => "Fornecedores",
+            "status" => "Status",
+          ];
+
+          include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/table.php";
+        } catch (Exception $e) {
+          ?>
+          <div class="empty-view">
+            Banco de Dados não encontrado...
+          </div>
+          <?php
+        }
         ?>
 
         <?php if ($submitted) { ?>
