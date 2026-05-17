@@ -1,10 +1,14 @@
 <?php
 
+// `Configurar`
+// ---------------------------------------------------------------------
+
 session_start();
 
 // ---------------------------------------------------------------------
 
 require $_SERVER["DOCUMENT_ROOT"] . "/_view/helpers/consume-session.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_view/helpers/include-with.php";
 
 // ---------------------------------------------------------------------
 
@@ -12,105 +16,93 @@ $connect = consume_session("connect");
 $setup = consume_session("setup");
 $drop = consume_session("drop");
 $populate = consume_session("populate");
-
 ?>
 
-<!DOCTYPE html>
-<html lang="pt-BR">
+<?php
+include_with("default", ["title" => "Configurar", "tab" => 4]);
+?>
 
-  <head>
-    <?php
-    $head_title = "Configurar";
-    include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/head.php";
-    ?>
-  </head>
+<main class="main">
+  <div class="container">
+    <h1>Configurar</h1>
+    <br>
 
-  <body class="body">
-    <?php
-    $aside_current_tab = 4;
-    include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/aside.php";
-    ?>
+    <ul class="command-list">
+      <li class="command-item">
+        <form action="/_controller/configurar/connect.php" method="post">
+          <input class="button button--green full-width left" type="submit" value="Testar Conexão">
+        </form>
 
-    <main class="main">
-      <div class="container">
-        <h1>Configurar</h1>
+        <?php if ($connect["submitted"] ?? false) { ?>
+          <?php if ($connect["success"]) { ?>
+            <div class="green">
+              > Conexão feita com sucesso
+            </div>
+          <?php } else { ?>
+            <div class="red">
+              * Erro na conexão ao banco de dados
+            </div>
+          <?php } ?>
+        <?php } ?>
+      </li>
+      <li class="command-item">
+        <form action="/_controller/configurar/setup.php" method="post">
+          <input class="button button--green full-width left" type="submit" value="Criar Banco de Dados">
+        </form>
+
+        <?php if ($setup["submitted"] ?? false) { ?>
+          <?php if ($setup["success"]) { ?>
+            <div class="green">
+              > Criação feita com sucesso
+            </div>
+          <?php } else { ?>
+            <div class="red">
+              * Erro na criação do banco de dados
+            </div>
+          <?php } ?>
+        <?php } ?>
+      </li>
+      <li class="command-item">
+        <form action="/_controller/configurar/populate.php" method="post">
+          <input class="button button--green full-width left" type="submit" value="Inserir Dados">
+        </form>
+
+        <?php if ($populate["submitted"] ?? false) { ?>
+          <?php if ($populate["success"]) { ?>
+            <div class="green">
+              > Inserção feita com sucesso
+            </div>
+          <?php } else { ?>
+            <div class="red">
+              * Erro na inserção no banco de dados
+            </div>
+          <?php } ?>
+        <?php } ?>
+
         <br>
+      </li>
 
-        <ul class="command-list">
-          <li class="command-item">
-            <form action="/_controller/configurar/connect.php" method="post">
-              <input class="button button--green full-width left" type="submit" value="Testar Conexão">
-            </form>
+      <li class="command-item">
+        <form action="/_controller/configurar/drop.php" method="post">
+          <input class="button button--red full-width left" type="submit" value="Remover Banco de Dados">
+        </form>
 
-            <?php if ($connect["submitted"] ?? false) { ?>
-              <?php if ($connect["success"]) { ?>
-                <div class="green">
-                  > Conexão feita com sucesso
-                </div>
-              <?php } else { ?>
-                <div class="red">
-                  * Erro na conexão ao banco de dados
-                </div>
-              <?php } ?>
-            <?php } ?>
-          </li>
-          <li class="command-item">
-            <form action="/_controller/configurar/setup.php" method="post">
-              <input class="button button--green full-width left" type="submit" value="Criar Banco de Dados">
-            </form>
+        <?php if ($drop["submitted"] ?? false) { ?>
+          <?php if ($drop["success"]) { ?>
+            <div class="red">
+              > Remoção feita com sucesso
+            </div>
+          <?php } else { ?>
+            <div class="yellow">
+              * Erro ao remover o banco de dados
+            </div>
+          <?php } ?>
+        <?php } ?>
+      </li>
+    </ul>
+  </div>
+</main>
 
-            <?php if ($setup["submitted"] ?? false) { ?>
-              <?php if ($setup["success"]) { ?>
-                <div class="green">
-                  > Criação feita com sucesso
-                </div>
-              <?php } else { ?>
-                <div class="red">
-                  * Erro na criação do banco de dados
-                </div>
-              <?php } ?>
-            <?php } ?>
-          </li>
-          <li class="command-item">
-            <form action="/_controller/configurar/populate.php" method="post">
-              <input class="button button--green full-width left" type="submit" value="Inserir Dados">
-            </form>
-
-            <?php if ($populate["submitted"] ?? false) { ?>
-              <?php if ($populate["success"]) { ?>
-                <div class="green">
-                  > Inserção feita com sucesso
-                </div>
-              <?php } else { ?>
-                <div class="red">
-                  * Erro na inserção no banco de dados
-                </div>
-              <?php } ?>
-            <?php } ?>
-
-            <br>
-          </li>
-
-          <li class="command-item">
-            <form action="/_controller/configurar/drop.php" method="post">
-              <input class="button button--red full-width left" type="submit" value="Remover Banco de Dados">
-            </form>
-
-            <?php if ($drop["submitted"] ?? false) { ?>
-              <?php if ($drop["success"]) { ?>
-                <div class="red">
-                  > Remoção feita com sucesso
-                </div>
-              <?php } else { ?>
-                <div class="yellow">
-                  * Erro ao remover o banco de dados
-                </div>
-              <?php } ?>
-            <?php } ?>
-          </li>
-        </ul>
-      </div>
-    </main>
-  </body>
-
-</html>
+<?php
+include_with("default", ["close" => true]);
+?>

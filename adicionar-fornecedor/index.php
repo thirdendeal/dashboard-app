@@ -1,90 +1,82 @@
 <?php
 
+// `Adicionar Fornecedor`
+// ---------------------------------------------------------------------
+
 session_start();
 
 // ---------------------------------------------------------------------
 
 require $_SERVER["DOCUMENT_ROOT"] . "/_view/helpers/consume-session.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_view/helpers/include-with.php";
 
 // ---------------------------------------------------------------------
 
 $add_f = consume_session("add_f");
-
 ?>
 
-<!DOCTYPE html>
-<html lang="pt-BR">
+<?php
+include_with("default", ["title" => "Adicionar Fornecedor", "tab" => 2]);
+?>
 
-  <head>
-    <?php
-    $head_title = "Adicionar Fornecedor";
-    include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/head.php";
-    ?>
-  </head>
+<main class="main">
+  <div class="container">
+    <h1>Adicionar Fornecedor</h1>
+    <br>
 
-  <body class="body">
-    <?php
-    $aside_current_tab = 2;
-    include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/aside.php";
-    ?>
+    <form action="/_controller/fornecedor/add.php" method="post">
+      <label for="nome">
+        Nome do Fornecedor
+        <input class="textbox" type="text" name="nome" id="nome" value="<?= $add_f["fields"]["nome"] ?? "" ?>" oninput="getHint(this.id, this.value)" />
+        <span class="error"><?= $add_f["errors"]["nome"] ?? "" ?></span>
+      </label>
 
-    <main class="main">
-      <div class="container">
-        <h1>Adicionar Fornecedor</h1>
-        <br>
+      <label for="e-mail">
+        E-Mail
+        <input class="textbox" type="email" name="e-mail" id="e-mail" value="<?= $add_f["fields"]["e-mail"] ?? "" ?>" oninput="getHint(this.id, this.value)" />
+        <span class="error"><?= $add_f["errors"]["e-mail"] ?? "" ?></span>
+      </label>
 
-        <form action="/_controller/fornecedor/add.php" method="post">
-          <label for="nome">
-            Nome do Fornecedor
-            <input class="textbox" type="text" name="nome" id="nome" value="<?= $add_f["fields"]["nome"] ?? "" ?>" oninput="getHint(this.id, this.value)" />
-            <span class="error"><?= $add_f["errors"]["nome"] ?? "" ?></span>
-          </label>
+      <label for="telefone">
+        Telefone
+        <input class="textbox" type="tel" name="telefone" id="telefone" value="<?= $add_f["fields"]["telefone"] ?? "" ?>" oninput="getHint(this.id, this.value)" />
+        <span class="error"><?= $add_f["errors"]["telefone"] ?? "" ?></span>
+      </label>
 
-          <label for="e-mail">
-            E-Mail
-            <input class="textbox" type="email" name="e-mail" id="e-mail" value="<?= $add_f["fields"]["e-mail"] ?? "" ?>" oninput="getHint(this.id, this.value)" />
-            <span class="error"><?= $add_f["errors"]["e-mail"] ?? "" ?></span>
-          </label>
+      <label for="cnpj">
+        CNPJ
+        <input class="textbox" type="text" name="cnpj" id="cnpj" value="<?= $add_f["fields"]["cnpj"] ?? "" ?>" oninput="getHint(this.id, this.value)" />
+        <span class="error"><?= $add_f["errors"]["cnpj"] ?? "" ?></span>
+      </label>
 
-          <label for="telefone">
-            Telefone
-            <input class="textbox" type="tel" name="telefone" id="telefone" value="<?= $add_f["fields"]["telefone"] ?? "" ?>" oninput="getHint(this.id, this.value)" />
-            <span class="error"><?= $add_f["errors"]["telefone"] ?? "" ?></span>
-          </label>
+      <br>
 
-          <label for="cnpj">
-            CNPJ
-            <input class="textbox" type="text" name="cnpj" id="cnpj" value="<?= $add_f["fields"]["cnpj"] ?? "" ?>" oninput="getHint(this.id, this.value)" />
-            <span class="error"><?= $add_f["errors"]["cnpj"] ?? "" ?></span>
-          </label>
+      <input class="button button--green full-width" type="submit" value="Registrar Fornecedor" />
+    </form>
 
-          <br>
+    <?php if ($add_f["submitted"] ?? false) { ?>
+      <?php if ($add_f["success"]) { ?>
+        <div class="toast--success">
+          Registro feito com sucesso!
+          <a class="toast-link" href="/fornecedores/">Visualizar</a>
+        </div>
+      <?php } else { ?>
+        <div class="toast--failure">
+          Algo deu errado...
+        </div>
+      <?php } ?>
+    <?php } ?>
+  </div>
+</main>
 
-          <input class="button button--green full-width" type="submit" value="Registrar Fornecedor" />
-        </form>
+<script src="/_view/vendor/jquery-v4.0.0.min.js"></script>
 
-        <?php if ($add_f["submitted"] ?? false) { ?>
-          <?php if ($add_f["success"]) { ?>
-            <div class="toast--success">
-              Registro feito com sucesso!
-              <a class="toast-link" href="/fornecedores/">Visualizar</a>
-            </div>
-          <?php } else { ?>
-            <div class="toast--failure">
-              Algo deu errado...
-            </div>
-          <?php } ?>
-        <?php } ?>
-      </div>
-    </main>
+<script src="/_view/assets/js/get-hint.js"></script>
 
-    <script src="/_view/vendor/jquery-v4.0.0.min.js"></script>
+<script>
+  const getHint = makeGetHint("/_controller/fornecedor/hint.php");
+</script>
 
-    <script src="/_view/assets/js/get-hint.js"></script>
-
-    <script>
-      const getHint = makeGetHint("/_controller/fornecedor/hint.php");
-    </script>
-  </body>
-
-</html>
+<?php
+include_with("default", ["close" => true]);
+?>

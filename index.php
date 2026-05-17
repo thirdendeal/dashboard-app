@@ -1,27 +1,24 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<?php
 
-  <head>
-    <?php
-    $head_title = "Dashboard";
-    include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/head.php";
-    ?>
-  </head>
+// Dashboard
+// ---------------------------------------------------------------------
 
-  <body class="body">
-    <?php
-    $aside_current_tab = 1;
-    include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/aside.php";
-    ?>
+require $_SERVER["DOCUMENT_ROOT"] . "/_view/helpers/include-with.php";
+?>
 
-    <main class="main">
-      <div class="container">
-        <h1>Dashboard</h1>
-        <br>
+<?php
+include_with("default", ["title" => "Dashboard", "tab" => 1]);
+?>
 
-        <p>Bem-vinda, equipe Burguer Burguer!</p>
-      </div>
-    </main>
-  </body>
+<main class="main">
+  <div class="container">
+    <h1>Dashboard</h1>
+    <br>
 
-</html>
+    <p>Bem-vinda, equipe Burguer Burguer!</p>
+  </div>
+</main>
+
+<?php
+include_with("default", ["close" => true]);
+?>
