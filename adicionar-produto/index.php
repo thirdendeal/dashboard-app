@@ -5,45 +5,11 @@ session_start();
 // ---------------------------------------------------------------------
 
 require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/select-from-where.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_view/helpers/consume-session.php";
 
-// Submission
 // ---------------------------------------------------------------------
 
-$submitted = isset($_SESSION["submitted"]);
-
-unset($_SESSION["submitted"]);
-
-// Status
-// ---------------------------------------------------------------------
-
-$attempted = isset($_SESSION["status"]);
-$inserted = $_SESSION["status"] ?? false;
-
-unset($_SESSION["status"]);
-
-// Fields
-// ---------------------------------------------------------------------
-
-// Auto-fill on failure only
-
-$fields = [
-  "nome" => $inserted ? "" : ($_SESSION["fields"]["nome"] ?? ""),
-  "descrição" => $inserted ? "" : ($_SESSION["fields"]["descrição"] ?? ""),
-  "código" => $inserted ? "" : ($_SESSION["fields"]["código"] ?? "")
-];
-
-unset($_SESSION["fields"]);
-
-// Errors
-// ---------------------------------------------------------------------
-
-$errors = [
-  "nome" => $_SESSION["errors"]["nome"] ?? "",
-  "descrição" => $_SESSION["errors"]["descrição"] ?? "",
-  "código" => $_SESSION["errors"]["código"] ?? ""
-];
-
-unset($_SESSION["errors"]);
+$add_p = consume_session("add_p");
 
 ?>
 
@@ -71,20 +37,20 @@ unset($_SESSION["errors"]);
         <form action="/_controller/produto/add.php" method="post">
           <label for="nome">
             Nome do Produto
-            <input class="textbox" type="text" name="nome" id="nome" value="<?= $fields["nome"] ?>" oninput="getHint(this.id, this.value)" />
-            <span class="error"><?= $errors["nome"] ?></span>
+            <input class="textbox" type="text" name="nome" id="nome" value="<?= $add_p["fields"]["nome"] ?? "" ?>" oninput="getHint(this.id, this.value)" />
+            <span class="error"><?= $add_p["errors"]["nome"] ?? "" ?></span>
           </label>
 
           <label for="descrição">
             Descrição
-            <textarea class="textbox-area" name="descrição" id="descrição" rows="5" cols="30" oninput="getHint(this.id, this.value)" /><?= $fields["descrição"] ?></textarea>
-            <span class="error"><?= $errors["descrição"] ?></span>
+            <textarea class="textbox-area" name="descrição" id="descrição" rows="5" cols="30" oninput="getHint(this.id, this.value)" /><?= $add_p["fields"]["descrição"] ?? "" ?></textarea>
+            <span class="error"><?= $add_p["errors"]["descrição"] ?? "" ?></span>
           </label>
 
           <label for="código">
             Código
-            <input class="textbox" type="text" name="código" id="código" value="<?= $fields["código"] ?>" oninput="getHint(this.id, this.value)" />
-            <span class="error"><?= $errors["código"] ?></span>
+            <input class="textbox" type="text" name="código" id="código" value="<?= $add_p["fields"]["código"] ?? "" ?>" oninput="getHint(this.id, this.value)" />
+            <span class="error"><?= $add_p["errors"]["código"] ?? "" ?></span>
           </label>
 
           <br>
@@ -112,11 +78,16 @@ unset($_SESSION["errors"]);
           <input class="button button--green full-width" type="submit" value="Registrar Produto" />
         </form>
 
-        <?php if ($attempted) { ?>
-          <?php if ($inserted) { ?>
-            <div class="toast--success">Registro feito com sucesso! <a class="toast-link" href="/produtos/">Visualizar</a></div>
+        <?php if ($add_p["submitted"] ?? false) { ?>
+          <?php if ($add_p["success"]) { ?>
+            <div class="toast--success">
+              Registro feito com sucesso!
+              <a class="toast-link" href="/produtos/">Visualizar</a>
+            </div>
           <?php } else { ?>
-            <div class="toast--failure">Algo deu errado no registro...</div>
+            <div class="toast--failure">
+              Algo deu errado...
+            </div>
           <?php } ?>
         <?php } ?>
       </div>

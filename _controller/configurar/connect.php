@@ -1,5 +1,11 @@
 <?php
 
+// Connect
+// ---------------------------------------------------------------------
+//
+// From: /configurar/
+// To:   /configurar/
+
 session_start();
 
 // ---------------------------------------------------------------------
@@ -8,8 +14,10 @@ require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo.php"; // throws on err
 
 // ---------------------------------------------------------------------
 
-$_SESSION["connect"] = true;
-$_SESSION["connect_submit"] = true;
+$_SESSION["connect"] = [
+  "submitted" => true,
+  "success" => true // throws on error
+];
 
 // ---------------------------------------------------------------------
 

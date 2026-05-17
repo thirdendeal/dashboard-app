@@ -8,16 +8,10 @@ require $_SERVER["DOCUMENT_ROOT"] . "/_view/helpers/consume-session.php";
 
 // ---------------------------------------------------------------------
 
-$session = consume_session(
-  "connect",
-  "connect_submit",
-  "setup",
-  "setup_submit",
-  "drop",
-  "drop_submit",
-  "populate",
-  "populate_submit"
-);
+$connect = consume_session("connect");
+$setup = consume_session("setup");
+$drop = consume_session("drop");
+$populate = consume_session("populate");
 
 ?>
 
@@ -48,10 +42,16 @@ $session = consume_session(
               <input class="button button--green full-width left" type="submit" value="Testar Conexão">
             </form>
 
-            <?php if ($session["connect_submit"]) { ?>
-              <div class="<?= $session["connect"] ? "green" : "red" ?>">
-                <?= $session["connect"] ? "> Conexão feita com sucesso" : "* Erro na conexão ao banco de dados" ?>
-              </div>
+            <?php if ($connect["submitted"] ?? false) { ?>
+              <?php if ($connect["success"]) { ?>
+                <div class="green">
+                  > Conexão feita com sucesso
+                </div>
+              <?php } else { ?>
+                <div class="red">
+                  * Erro na conexão ao banco de dados
+                </div>
+              <?php } ?>
             <?php } ?>
           </li>
           <li class="command-item">
@@ -59,10 +59,16 @@ $session = consume_session(
               <input class="button button--green full-width left" type="submit" value="Criar Banco de Dados">
             </form>
 
-            <?php if ($session["setup_submit"]) { ?>
-              <div class="<?= $session["setup"] ? "green" : "red" ?>">
-                <?= $session["setup"] ? "> Criação feita com sucesso" : "* Erro na criação do banco de dados" ?>
-              </div>
+            <?php if ($setup["submitted"] ?? false) { ?>
+              <?php if ($setup["success"]) { ?>
+                <div class="green">
+                  > Criação feita com sucesso
+                </div>
+              <?php } else { ?>
+                <div class="red">
+                  * Erro na criação do banco de dados
+                </div>
+              <?php } ?>
             <?php } ?>
           </li>
           <li class="command-item">
@@ -70,10 +76,16 @@ $session = consume_session(
               <input class="button button--green full-width left" type="submit" value="Inserir Dados">
             </form>
 
-            <?php if ($session["populate_submit"]) { ?>
-              <div class="<?= $session["populate"] ? "green" : "red" ?>">
-                <?= $session["populate"] ? "> Inserção feita com sucesso" : "* Erro na inserção no banco de dados" ?>
-              </div>
+            <?php if ($populate["submitted"] ?? false) { ?>
+              <?php if ($populate["success"]) { ?>
+                <div class="green">
+                  > Inserção feita com sucesso
+                </div>
+              <?php } else { ?>
+                <div class="red">
+                  * Erro na inserção no banco de dados
+                </div>
+              <?php } ?>
             <?php } ?>
 
             <br>
@@ -84,9 +96,16 @@ $session = consume_session(
               <input class="button button--red full-width left" type="submit" value="Remover Banco de Dados">
             </form>
 
-            <?php if ($session["drop_submit"]) { ?>
-              <div class="<?= $session["drop"] ? "red" : "yellow" ?>"> <?= $session["drop"] ? "> Remoção feita com sucesso" : "* Erro ao remover o banco de dados" ?>
-              </div>
+            <?php if ($drop["submitted"] ?? false) { ?>
+              <?php if ($drop["success"]) { ?>
+                <div class="red">
+                  > Remoção feita com sucesso
+                </div>
+              <?php } else { ?>
+                <div class="yellow">
+                  * Erro ao remover o banco de dados
+                </div>
+              <?php } ?>
             <?php } ?>
           </li>
         </ul>

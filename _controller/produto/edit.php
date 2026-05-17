@@ -1,5 +1,11 @@
 <?php
 
+// Edit `Produto`
+// ---------------------------------------------------------------------
+//
+// From: /produto?id=
+// To:   /produto?id=
+
 session_start();
 
 // ---------------------------------------------------------------------
@@ -9,15 +15,7 @@ require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/insert.php";
 require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/repository.php";
 require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/select-from.php";
 require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/update-where.php";
-
 require $_SERVER["DOCUMENT_ROOT"] . "/_model/entity/produto/validate.php";
-
-// ---------------------------------------------------------------------
-
-function accumulate_session($session_variable, $value)
-{
-  return isset($_SESSION[$session_variable]) ? $_SESSION[$session_variable] && $value : $value;
-}
 
 // Parse
 // ---------------------------------------------------------------------
@@ -45,7 +43,7 @@ if (isset($_POST["nome"])) {
 // Escape
 // ---------------------------------------------------------------------
 
-$produto_id = htmlspecialchars(stripslashes(trim($query["id"])));
+$p_id = htmlspecialchars(stripslashes(trim($query["id"])));
 
 $value = htmlspecialchars(stripslashes(trim($_POST[$field])));
 
@@ -53,6 +51,8 @@ $value = htmlspecialchars(stripslashes(trim($_POST[$field])));
 // ---------------------------------------------------------------------
 
 $validate = new \Produto\Validate();
+
+$error = null;
 
 switch ($field) {
   case "nome":
@@ -67,68 +67,80 @@ switch ($field) {
   case "status":
     $error = $validate->status($value);
     break;
-  case "checkbox-table":
-    $error = "";
-    break;
-  default:
-    $error = "Algo deu errado na atualização...";
 }
-
-$_SESSION["error"] = $error;
 
 // Update
 // ---------------------------------------------------------------------
 
+// `Produto`
+
 if ($field != "checkbox-table" && empty($error)) {
-  $_SESSION["status"] = update_where(
+  $p_update_attempt = true;
+
+  $p_update_success = update_where(
     ["dashboard_app.produto", [$field => $value]],
-    ["id_produto = ?", [$produto_id]]
+    ["id_produto = ?", [$p_id]]
   );
 }
 
-// Update relationships
-// ---------------------------------------------------------------------
+// `Produto-Fornecedor`
 
 if ($field == "checkbox-table") {
-  $fornecedor_ids = select_from("id_fornecedor", "dashboard_app.fornecedor")
+  $pf_update_attempt = true;
+
+  $f_ids = select_from("id_fornecedor", "dashboard_app.fornecedor")
     ->fetchAll(PDO::FETCH_COLUMN, 0);
 
-  $f_entries = Repository::prepare_execute("fornecedor/f-linked-to-p.sql", [$produto_id])
+  $f_entries = Repository::prepare_execute("fornecedor/f-linked-to-p.sql", [$p_id])
     ->fetchAll(PDO::FETCH_GROUP);
 
-  foreach ($fornecedor_ids as $fornecedor_id) {
-    $linked = $f_entries[$fornecedor_id][0]["linked"];
+  foreach ($f_ids as $f_id) {
+    $linked = $f_entries[$f_id][0]["linked"];
 
-    if (isset($_POST["fornecedor_$fornecedor_id"])) {
+    if (isset($_POST["fornecedor_$f_id"])) {
       if ($linked) {
         continue;
       }
 
-      $status = insert([
+      $last_insert = insert([
         "dashboard_app.produto_fornecedor",
-        ["id_produto" => $produto_id, "id_fornecedor" => $fornecedor_id]
+        ["id_produto" => $p_id, "id_fornecedor" => $f_id]
       ]);
 
-      $_SESSION["status"] = accumulate_session("status", ($status !== false));
+      $pf_update_success = ($last_insert !== false);
     } else {
       if (!$linked) {
         continue;
       }
 
-      $status = delete_where(
+      $pf_update_success = delete_where(
         "dashboard_app.produto_fornecedor",
-        ["id_fornecedor = ?", [$fornecedor_id]]
+        ["id_fornecedor = ?", [$f_id]]
       );
-
-      $_SESSION["status"] = accumulate_session("status", $status);
     }
   }
 }
 
 // ---------------------------------------------------------------------
 
-$_SESSION["submitted"] = true;
+$success = null;
+
+if ($p_update_attempt && $pf_update_attempt) {
+  $success = $p_update_success && $pf_update_success;
+} elseif ($p_update_attempt) {
+  $success = $p_update_success;
+} elseif ($pf_update_attempt) {
+  $success = $pf_update_success;
+}
 
 // ---------------------------------------------------------------------
 
-header("Location: /produto?id=$produto_id");
+$_SESSION["edit_p"] = [
+  "submitted" => true,
+  "success" => $success,
+  "error" => $error
+];
+
+// ---------------------------------------------------------------------
+
+header("Location: /produto?id=$p_id");

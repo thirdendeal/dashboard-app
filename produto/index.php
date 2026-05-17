@@ -5,9 +5,9 @@ session_start();
 // ---------------------------------------------------------------------
 
 require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/inner-join.php";
-
 require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/repository.php";
 require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/select-from-where.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_view/helpers/consume-session.php";
 
 // Redirect malformed
 // ---------------------------------------------------------------------
@@ -29,27 +29,9 @@ if ($row) {
   $produto = $row->fetch(PDO::FETCH_ASSOC);
 }
 
-// Update
 // ---------------------------------------------------------------------
 
-// Submission
-
-$submitted = isset($_SESSION["submitted"]);
-
-unset($_SESSION["submitted"]);
-
-// Status
-
-$attempted = isset($_SESSION["status"]);
-$updated = $_SESSION["status"] ?? false;
-
-unset($_SESSION['status']);
-
-// Error
-
-$error = $_SESSION['error'] ?? "";
-
-unset($_SESSION['error']);
+$edit_p = consume_session("edit_p");
 
 ?>
 
@@ -265,11 +247,15 @@ unset($_SESSION['error']);
           </div>
         <?php } ?>
 
-        <?php if ($attempted) { ?>
-          <?php if ($updated) { ?>
-            <div class="toast--success">Atualização feita com sucesso!</div>
+        <?php if ($edit_p["submitted"] ?? false) { ?>
+          <?php if ($edit_p["success"] ?? false) { ?>
+            <div class="toast--success">
+              Atualização feita com sucesso!
+            </div>
           <?php } else { ?>
-            <div class="toast--failure"><?= $error ? $error : "Algo deu errado..." ?></div>
+            <div class="toast--failure">
+              <?= $edit_p["error"] ?? "Algo deu errado..." ?>
+            </div>
           <?php } ?>
         <?php } ?>
       </div>

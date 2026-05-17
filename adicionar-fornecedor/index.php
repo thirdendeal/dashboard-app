@@ -2,46 +2,13 @@
 
 session_start();
 
-// Submission
 // ---------------------------------------------------------------------
 
-$submitted = isset($_SESSION["submitted"]);
+require $_SERVER["DOCUMENT_ROOT"] . "/_view/helpers/consume-session.php";
 
-unset($_SESSION["submitted"]);
-
-// Status
 // ---------------------------------------------------------------------
 
-$attempted = isset($_SESSION["status"]);
-$inserted = $_SESSION["status"] ?? false;
-
-unset($_SESSION["status"]);
-
-// Fields
-// ---------------------------------------------------------------------
-
-// Auto-fill on failure only
-
-$fields = [
-  "nome" => $inserted ? "" : ($_SESSION["fields"]["nome"] ?? ""),
-  "cnpj" => $inserted ? "" : ($_SESSION["fields"]["cnpj"] ?? ""),
-  "e-mail" => $inserted ? "" : ($_SESSION["fields"]["e-mail"] ?? ""),
-  "telefone" => $inserted ? "" : ($_SESSION["fields"]["telefone"] ?? "")
-];
-
-unset($_SESSION["fields"]);
-
-// Errors
-// ---------------------------------------------------------------------
-
-$errors = [
-  "nome" => $_SESSION["errors"]["nome"] ?? "",
-  "cnpj" => $_SESSION["errors"]["cnpj"] ?? "",
-  "e-mail" => $_SESSION["errors"]["e-mail"] ?? "",
-  "telefone" => $_SESSION["errors"]["telefone"] ?? ""
-];
-
-unset($_SESSION["errors"]);
+$add_f = consume_session("add_f");
 
 ?>
 
@@ -69,26 +36,26 @@ unset($_SESSION["errors"]);
         <form action="/_controller/fornecedor/add.php" method="post">
           <label for="nome">
             Nome do Fornecedor
-            <input class="textbox" type="text" name="nome" id="nome" value="<?= $fields["nome"] ?>" oninput="getHint(this.id, this.value)" />
-            <span class="error"><?= $errors["nome"] ?></span>
+            <input class="textbox" type="text" name="nome" id="nome" value="<?= $add_f["fields"]["nome"] ?? "" ?>" oninput="getHint(this.id, this.value)" />
+            <span class="error"><?= $add_f["errors"]["nome"] ?? "" ?></span>
           </label>
 
           <label for="e-mail">
             E-Mail
-            <input class="textbox" type="email" name="e-mail" id="e-mail" value="<?= $fields["e-mail"] ?>" oninput="getHint(this.id, this.value)" />
-            <span class="error"><?= $errors["e-mail"] ?></span>
+            <input class="textbox" type="email" name="e-mail" id="e-mail" value="<?= $add_f["fields"]["e-mail"] ?? "" ?>" oninput="getHint(this.id, this.value)" />
+            <span class="error"><?= $add_f["errors"]["e-mail"] ?? "" ?></span>
           </label>
 
           <label for="telefone">
             Telefone
-            <input class="textbox" type="tel" name="telefone" id="telefone" value="<?= $fields["telefone"] ?>" oninput="getHint(this.id, this.value)" />
-            <span class="error"><?= $errors["telefone"] ?></span>
+            <input class="textbox" type="tel" name="telefone" id="telefone" value="<?= $add_f["fields"]["telefone"] ?? "" ?>" oninput="getHint(this.id, this.value)" />
+            <span class="error"><?= $add_f["errors"]["telefone"] ?? "" ?></span>
           </label>
 
           <label for="cnpj">
             CNPJ
-            <input class="textbox" type="text" name="cnpj" id="cnpj" value="<?= $fields["cnpj"] ?>" oninput="getHint(this.id, this.value)" />
-            <span class="error"><?= $errors["cnpj"] ?></span>
+            <input class="textbox" type="text" name="cnpj" id="cnpj" value="<?= $add_f["fields"]["cnpj"] ?? "" ?>" oninput="getHint(this.id, this.value)" />
+            <span class="error"><?= $add_f["errors"]["cnpj"] ?? "" ?></span>
           </label>
 
           <br>
@@ -96,11 +63,16 @@ unset($_SESSION["errors"]);
           <input class="button button--green full-width" type="submit" value="Registrar Fornecedor" />
         </form>
 
-        <?php if ($attempted) { ?>
-          <?php if ($inserted) { ?>
-            <div class="toast--success">Registro feito com sucesso! <a class="toast-link" href="/fornecedores/">Visualizar</a></div>
+        <?php if ($add_f["submitted"] ?? false) { ?>
+          <?php if ($add_f["success"]) { ?>
+            <div class="toast--success">
+              Registro feito com sucesso!
+              <a class="toast-link" href="/fornecedores/">Visualizar</a>
+            </div>
           <?php } else { ?>
-            <div class="toast--failure">Algo deu errado no registro...</div>
+            <div class="toast--failure">
+              Algo deu errado...
+            </div>
           <?php } ?>
         <?php } ?>
       </div>

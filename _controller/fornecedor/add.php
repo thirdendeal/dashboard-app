@@ -1,5 +1,11 @@
 <?php
 
+// Add `Fornecedor`
+// ---------------------------------------------------------------------
+//
+// From: /adicionar-fornecedor/
+// To:   /adicionar-fornecedor/
+
 session_start();
 
 // ---------------------------------------------------------------------
@@ -11,13 +17,11 @@ require $_SERVER["DOCUMENT_ROOT"] . "/_model/entity/fornecedor/validate.php";
 // ---------------------------------------------------------------------
 
 $fields = [
-  "nome"     => htmlspecialchars(stripslashes(trim($_POST["nome"]))),
-  "cnpj"     => htmlspecialchars(stripslashes(trim($_POST["cnpj"]))),
-  "e-mail"   => filter_var($_POST["e-mail"], FILTER_SANITIZE_EMAIL),
+  "nome" => htmlspecialchars(stripslashes(trim($_POST["nome"]))),
+  "cnpj" => htmlspecialchars(stripslashes(trim($_POST["cnpj"]))),
+  "e-mail" => filter_var($_POST["e-mail"], FILTER_SANITIZE_EMAIL),
   "telefone" => htmlspecialchars(stripslashes(trim($_POST["telefone"])))
 ];
-
-$_SESSION["fields"] = $fields;
 
 // Validate
 // ---------------------------------------------------------------------
@@ -25,24 +29,29 @@ $_SESSION["fields"] = $fields;
 $validate = new \Fornecedor\Validate();
 
 $errors = [
-  "nome"     => $validate->nome($fields["nome"]),
-  "cnpj"     => $validate->cnpj($fields["cnpj"]),
-  "e-mail"   => $validate->email($fields["e-mail"]),
+  "nome" => $validate->nome($fields["nome"]),
+  "cnpj" => $validate->cnpj($fields["cnpj"]),
+  "e-mail" => $validate->email($fields["e-mail"]),
   "telefone" => $validate->telefone($fields["telefone"])
 ];
-
-$_SESSION["errors"] = $errors;
 
 // Insert
 // ---------------------------------------------------------------------
 
+$success = null;
+
 if (empty(array_filter($errors))) {
-  $_SESSION["status"] = insert(["dashboard_app.fornecedor", $fields]);
+  $success = insert(["dashboard_app.fornecedor", $fields]);
 }
 
 // ---------------------------------------------------------------------
 
-$_SESSION["submitted"] = true;
+$_SESSION["add_f"] = [
+  "submitted" => true,
+  "success" => $success,
+  "fields" => $success ?: $fields,
+  "errors" => $errors
+];
 
 // ---------------------------------------------------------------------
 

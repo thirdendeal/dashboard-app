@@ -5,28 +5,11 @@ session_start();
 // ---------------------------------------------------------------------
 
 require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/select-from.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_view/helpers/consume-session.php";
 
-// Delete
 // ---------------------------------------------------------------------
 
-// Submission
-
-$submitted = isset($_SESSION["submitted"]);
-
-unset($_SESSION["submitted"]);
-
-// Status
-
-$attempted = isset($_SESSION["status"]);
-$deleted = $_SESSION["status"] ?? false;
-
-unset($_SESSION['status']);
-
-// Error
-
-$error = $_SESSION['error'] ?? "";
-
-unset($_SESSION['error']);
+$remove_f = consume_session("remove_f");
 
 ?>
 
@@ -94,11 +77,15 @@ unset($_SESSION['error']);
         }
         ?>
 
-        <?php if ($submitted) { ?>
-          <?php if ($deleted) { ?>
-            <div class="toast--success">Remoção feita com sucesso!</div>
+        <?php if ($remove_f["submitted"] ?? false) { ?>
+          <?php if ($remove_f["success"]) { ?>
+            <div class="toast--success">
+              Remoção feita com sucesso!
+            </div>
           <?php } else { ?>
-            <div class="toast--failure"><?= $error ? $error : "Algo deu errado..." ?></div>
+            <div class="toast--failure">
+              Algo deu errado...
+            </div>
           <?php } ?>
         <?php } ?>
       </div>

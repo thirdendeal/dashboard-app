@@ -5,6 +5,7 @@ session_start();
 // ---------------------------------------------------------------------
 
 require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/select-from-where.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_view/helpers/consume-session.php";
 
 // Get row
 // ---------------------------------------------------------------------
@@ -23,27 +24,9 @@ if ($row) {
   $fornecedor = $row->fetch(PDO::FETCH_ASSOC);
 }
 
-// Update
 // ---------------------------------------------------------------------
 
-// Submission
-
-$submitted = isset($_SESSION["submitted"]);
-
-unset($_SESSION["submitted"]);
-
-// Status
-
-$attempted = isset($_SESSION["status"]);
-$updated = $_SESSION["status"] ?? false;
-
-unset($_SESSION['status']);
-
-// Error
-
-$error = $_SESSION['error'] ?? "";
-
-unset($_SESSION['error']);
+$edit_f = consume_session("edit_f");
 
 ?>
 
@@ -217,11 +200,15 @@ unset($_SESSION['error']);
           </div>
         <?php } ?>
 
-        <?php if ($submitted) { ?>
-          <?php if ($updated) { ?>
-            <div class="toast--success">Atualização feita com sucesso!</div>
+        <?php if ($edit_f["submitted"] ?? false) { ?>
+          <?php if ($edit_f["success"]) { ?>
+            <div class="toast--success">
+              Atualização feita com sucesso!
+            </div>
           <?php } else { ?>
-            <div class="toast--failure"><?= $error ? $error : "Algo deu errado..." ?></div>
+            <div class="toast--failure">
+              <?= $edit_f["error"] ?? "Algo deu errado..." ?>
+            </div>
           <?php } ?>
         <?php } ?>
       </div>

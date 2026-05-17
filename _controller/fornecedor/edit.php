@@ -1,5 +1,11 @@
 <?php
 
+// Edit `Fornecedor`
+// ---------------------------------------------------------------------
+//
+// From: /fornecedor?id=
+// To:   /fornecedor?id=
+
 session_start();
 
 // ---------------------------------------------------------------------
@@ -26,8 +32,6 @@ if (isset($_POST["nome"])) {
   $field = "telefone";
 } elseif (isset($_POST["status"])) {
   $field = "status";
-} else {
-  $field = "";
 }
 
 // Escape
@@ -50,6 +54,8 @@ if ($field == "e-mail") {
 
 $validate = new \Fornecedor\Validate();
 
+$error = null;
+
 switch ($field) {
   case "nome":
     $error = $validate->nome($value);
@@ -66,17 +72,15 @@ switch ($field) {
   case "status":
     $error = $validate->status($value);
     break;
-  default:
-    $error = "Algo deu errado na atualização...";
 }
-
-$_SESSION["error"] = $error;
 
 // Update
 // ---------------------------------------------------------------------
 
+$success = null;
+
 if (empty($error)) {
-  $_SESSION["status"] = update_where(
+  $success = update_where(
     ["dashboard_app.fornecedor", [$field => $value]],
     ["id_fornecedor = ?", [$id]]
   );
@@ -84,7 +88,11 @@ if (empty($error)) {
 
 // ---------------------------------------------------------------------
 
-$_SESSION["submitted"] = true;
+$_SESSION["edit_f"] = [
+  "submitted" => true,
+  "success" => $success,
+  "error" => $error
+];
 
 // ---------------------------------------------------------------------
 

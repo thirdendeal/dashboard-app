@@ -1,5 +1,11 @@
 <?php
 
+// Hint `Fornecedor`
+// ---------------------------------------------------------------------
+//
+// XHR: /fornecedor?id=
+// XHR: /adicionar-fornecedor/
+
 require $_SERVER["DOCUMENT_ROOT"] . "/_model/entity/fornecedor/validate.php";
 
 // Escape
