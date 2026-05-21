@@ -77,12 +77,22 @@ include_with("default", ["title" => "Configurar", "tab" => 4]);
         <?php if ($setup["submitted"] ?? false) { ?>
           <?php if ($setup["success"]) { ?>
             <div class="green">
-              > Criação feita com sucesso
+              > Banco de Dados criado com sucesso
             </div>
           <?php } else { ?>
-            <div class="red">
-              * Erro na criação do banco de dados
-            </div>
+            <?php if (!$setup["connect"]) { ?>
+              <div class="red">
+                * Falha na conexão
+              </div>
+            <?php } elseif ($setup["database"]) { ?>
+              <div class="darkorange">
+                ** Banco de Dados já existe
+              </div>
+            <?php } else { ?>
+              <div class="red">
+                * Erro na criação do banco de dados
+              </div>
+            <?php } ?>
           <?php } ?>
         <?php } ?>
       </li>
@@ -94,12 +104,22 @@ include_with("default", ["title" => "Configurar", "tab" => 4]);
         <?php if ($populate["submitted"] ?? false) { ?>
           <?php if ($populate["success"]) { ?>
             <div class="green">
-              > Inserção feita com sucesso
+              > Dados inseridos com sucesso
             </div>
           <?php } else { ?>
-            <div class="red">
-              * Erro na inserção no banco de dados
-            </div>
+            <?php if (!$populate["connect"]) { ?>
+              <div class="red">
+                * Falha na conexão
+              </div>
+            <?php } elseif (!$populate["database"]) { ?>
+              <div class="red">
+                * Banco de Dados não encontrado
+              </div>
+            <?php } else { ?>
+              <div class="red">
+                * Erro na inserção de dados
+              </div>
+            <?php } ?>
           <?php } ?>
         <?php } ?>
 
@@ -113,13 +133,23 @@ include_with("default", ["title" => "Configurar", "tab" => 4]);
 
         <?php if ($drop["submitted"] ?? false) { ?>
           <?php if ($drop["success"]) { ?>
-            <div class="red">
-              > Remoção feita com sucesso
+            <div class="green">
+              > Banco de Dados removido com sucesso
             </div>
           <?php } else { ?>
-            <div class="yellow">
-              * Erro ao remover o banco de dados
-            </div>
+            <?php if (!$drop["connect"]) { ?>
+              <div class="red">
+                * Falha na conexão
+              </div>
+            <?php } elseif (!$drop["database"]) { ?>
+              <div class="red">
+                * Banco de Dados não encontrado
+              </div>
+            <?php } else { ?>
+              <div class="red">
+                * Erro na remoção do banco de dados
+              </div>
+            <?php } ?>
           <?php } ?>
         <?php } ?>
       </li>
