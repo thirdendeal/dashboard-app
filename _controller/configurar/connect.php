@@ -10,13 +10,13 @@ session_start();
 
 // ---------------------------------------------------------------------
 
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo.php"; // throws on error
+require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo-no-database.php";
 
 // ---------------------------------------------------------------------
 
 $_SESSION["connect"] = [
   "submitted" => true,
-  "success" => true // throws on error
+  "success" => get_class($pdo_no_database) == "PDO"
 ];
 
 // ---------------------------------------------------------------------
