@@ -10,13 +10,14 @@ session_start();
 
 // ---------------------------------------------------------------------
 
+require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo.php";
 require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/repository.php";
 
 // ---------------------------------------------------------------------
 
 $_SESSION["populate"] = [
   "submitted" => true,
-  "success" => Repository::exec("dashboard-app/populate.sql")
+  "success" => Repository::exec($pdo, "dashboard-app/populate.sql")
 ];
 
 // ---------------------------------------------------------------------

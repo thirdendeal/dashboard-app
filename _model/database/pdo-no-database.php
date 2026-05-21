@@ -1,8 +1,8 @@
 <?php
 
 try {
-  $pdo = new PDO(
-    "mysql:host=localhost;dbname=dashboard_app;port=3306;charset=utf8mb4",
+  $pdo_no_database = new PDO(
+    "mysql:host=localhost;port=3306;charset=utf8mb4",
     "dashboard",
     "development-password",
     [
@@ -11,5 +11,5 @@ try {
     ]
   );
 } catch (PDOException $e) {
-  $pdo = $e;
+  $pdo_no_database = $e;
 }

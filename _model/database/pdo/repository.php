@@ -1,23 +1,26 @@
 <?php
 
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo.php";
-
+// Repository
 // ---------------------------------------------------------------------
 
 class Repository
 {
-  public static function exec($file)
+  public static function exec($pdo, $file)
   {
-    global $pdo;
+    if (get_class($pdo) == "PDOException") {
+      return $pdo;
+    }
 
     $path = $_SERVER["DOCUMENT_ROOT"] . "/_model/repository/" . $file;
 
     return $pdo->exec(file_get_contents($path));
   }
 
-  public static function prepare_execute($file, $values)
+  public static function prepare_execute($pdo, $file, $values)
   {
-    global $pdo;
+    if (get_class($pdo) == "PDOException") {
+      return $pdo;
+    }
 
     $path = $_SERVER["DOCUMENT_ROOT"] . "/_model/repository/" . $file;
 
@@ -27,9 +30,11 @@ class Repository
     return $status ? $statement : false;
   }
 
-  public static function query($file)
+  public static function query($pdo, $file)
   {
-    global $pdo;
+    if (get_class($pdo) == "PDOException") {
+      return $pdo;
+    }
 
     $path = $_SERVER["DOCUMENT_ROOT"] . "/_model/repository/" . $file;
 

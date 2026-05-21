@@ -8,6 +8,10 @@ function delete_where($delete, $where)
 {
   global $pdo;
 
+  if (get_class($pdo) == "PDOException") {
+    return $pdo;
+  }
+
   [$where, $values] = $where;
 
   $statement = $pdo->prepare("DELETE FROM $delete WHERE $where");

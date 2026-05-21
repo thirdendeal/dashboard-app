@@ -7,7 +7,11 @@ $table_linked ??= false;
 
 ?>
 
-<?php if ($table_rows && $table_rows->rowCount() > 0) { ?>
+<?php if (get_class($table_rows) == "PDOException") { ?>
+  <div class="empty-view">
+    Falha na conexão com o banco de dados...
+  </div>
+<?php } elseif ($table_rows && $table_rows->rowCount() > 0) { ?>
   <table class="<?= $table_checkbox ? "checkbox-table" : "link-table" ?>">
     <thead>
       <tr>

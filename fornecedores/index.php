@@ -35,38 +35,18 @@ include_with("default", ["title" => "Fornecedores", "tab" => 2]);
     <br>
 
     <?php
-    try {
-      // Connect
-      require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo.php"; // throws on error
-    } catch (Exception $e) {
-      ?>
-      <div class="empty-view">
-        Falha na conexão!
-      </div>
-      <?php
-    }
+    $table_rows = select_from("*", "dashboard_app.fornecedor");
 
-    try {
-      // Use database
-      $table_rows = select_from("*", "dashboard_app.fornecedor");
+    $table = "fornecedor";
+    $table_pairs = [
+      "nome" => "Nome",
+      "e-mail" => "E-Mail",
+      "telefone" => "Telefone",
+      "cnpj" => "CNPJ",
+      "status" => "Status",
+    ];
 
-      $table = "fornecedor";
-      $table_pairs = [
-        "nome" => "Nome",
-        "e-mail" => "E-Mail",
-        "telefone" => "Telefone",
-        "cnpj" => "CNPJ",
-        "status" => "Status",
-      ];
-
-      include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/table.php";
-    } catch (Exception $e) {
-      ?>
-      <div class="empty-view">
-        Banco de Dados não encontrado...
-      </div>
-      <?php
-    }
+    include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/table.php";
     ?>
 
     <?php if ($remove_f["submitted"] ?? false) { ?>

@@ -7,6 +7,8 @@ session_start();
 
 // ---------------------------------------------------------------------
 
+require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo.php";
+
 require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/inner-join.php";
 require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/repository.php";
 require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/select-from-where.php";
@@ -185,7 +187,7 @@ include_with("default", ["title" => $produto["nome"], "tab" => 3]);
 
         <?php
         // filled checkbox table
-        $table_rows = Repository::prepare_execute("fornecedor/f-linked-to-p.sql", [$id]);
+        $table_rows = Repository::prepare_execute($pdo, "fornecedor/f-linked-to-p.sql", [$id]);
 
         $table = "fornecedor";
         $table_pairs = [

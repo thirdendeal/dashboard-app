@@ -8,8 +8,12 @@ function select_from($select, $from)
 {
   global $pdo;
 
+  if (get_class($pdo) == "PDOException") {
+    return $pdo;
+  }
+
   $statement = $pdo->prepare("SELECT $select FROM $from");
-  $status    = $statement->execute();
+  $status = $statement->execute();
 
   return $status ? $statement : false;
 }

@@ -7,6 +7,7 @@ session_start();
 
 // ---------------------------------------------------------------------
 
+require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo.php";
 require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/repository.php";
 
 require $_SERVER["DOCUMENT_ROOT"] . "/_view/helpers/consume-session.php";
@@ -35,38 +36,18 @@ include_with("default", ["title" => "Produtos", "tab" => 3]);
     <br>
 
     <?php
-    try {
-      // Connect
-      require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo.php"; // throws on error
-    } catch (Exception $e) {
-      ?>
-      <div class="empty-view">
-        Falha na conexão!
-      </div>
-      <?php
-    }
+    $table_rows = Repository::query($pdo, "produto/p-count-f.sql");
 
-    try {
-      // Use database
-      $table_rows = Repository::query("produto/p-count-f.sql");
+    $table = "produto";
+    $table_pairs = [
+      "nome" => "Nome",
+      "descrição" => "Descrição",
+      "código" => "Código",
+      "fornecedores" => "Fornecedores",
+      "status" => "Status",
+    ];
 
-      $table = "produto";
-      $table_pairs = [
-        "nome" => "Nome",
-        "descrição" => "Descrição",
-        "código" => "Código",
-        "fornecedores" => "Fornecedores",
-        "status" => "Status",
-      ];
-
-      include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/table.php";
-    } catch (Exception $e) {
-      ?>
-      <div class="empty-view">
-        Banco de Dados não encontrado...
-      </div>
-      <?php
-    }
+    include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/table.php";
     ?>
 
     <?php if ($remove_p["submitted"] ?? false) { ?>

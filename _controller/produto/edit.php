@@ -10,6 +10,7 @@ session_start();
 
 // ---------------------------------------------------------------------
 
+require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo.php";
 require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/delete-where.php";
 require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/insert.php";
 require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/repository.php";
@@ -91,7 +92,7 @@ if ($field == "checkbox-table") {
   $f_ids = select_from("id_fornecedor", "dashboard_app.fornecedor")
     ->fetchAll(PDO::FETCH_COLUMN, 0);
 
-  $f_entries = Repository::prepare_execute("fornecedor/f-linked-to-p.sql", [$p_id])
+  $f_entries = Repository::prepare_execute($pdo, "fornecedor/f-linked-to-p.sql", [$p_id])
     ->fetchAll(PDO::FETCH_GROUP);
 
   foreach ($f_ids as $f_id) {
