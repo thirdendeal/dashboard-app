@@ -13,6 +13,7 @@ require $_SERVER["DOCUMENT_ROOT"] . "/_view/helpers/include-with.php";
 // ---------------------------------------------------------------------
 
 $connect = consume_session("connect");
+$database = consume_session("database");
 $setup = consume_session("setup");
 $drop = consume_session("drop");
 $populate = consume_session("populate");
@@ -30,7 +31,7 @@ include_with("default", ["title" => "Configurar", "tab" => 4]);
     <ul class="command-list">
       <li class="command-item">
         <form action="/_controller/configurar/connect.php" method="post">
-          <input class="button button--green full-width left" type="submit" value="Testar Conexão">
+          <input class="button button--green full-width left" type="submit" value="Verificar Conexão">
         </form>
 
         <?php if ($connect["submitted"] ?? false) { ?>
@@ -40,8 +41,31 @@ include_with("default", ["title" => "Configurar", "tab" => 4]);
             </div>
           <?php } else { ?>
             <div class="red">
-              * Erro na conexão ao banco de dados
+              * Falha na conexão
             </div>
+          <?php } ?>
+        <?php } ?>
+      </li>
+      <li class="command-item">
+        <form action="/_controller/configurar/database.php" method="post">
+          <input class="button button--green full-width left" type="submit" value="Verificar Banco de Dados">
+        </form>
+
+        <?php if ($database["submitted"] ?? false) { ?>
+          <?php if ($database["success"]) { ?>
+            <div class="green">
+              > Banco de Dados encontrado
+            </div>
+          <?php } else { ?>
+            <?php if ($database["connect"]) { ?>
+              <div class="red">
+                * Banco de Dados não encontrado
+              </div>
+            <?php } else { ?>
+              <div class="red">
+                * Falha na conexão
+              </div>
+            <?php } ?>
           <?php } ?>
         <?php } ?>
       </li>
