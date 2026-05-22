@@ -1,6 +1,6 @@
 <?php
 
-// Populate
+// Setup
 // ---------------------------------------------------------------------
 //
 // From: /configurar/
@@ -10,10 +10,10 @@ session_start();
 
 // ---------------------------------------------------------------------
 
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo-no-database.php";
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_/model/database/pdo-no-database.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_/model/database/pdo.php";
 
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/repository.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_/model/database/pdo/repository.php";
 
 // ---------------------------------------------------------------------
 
@@ -22,19 +22,19 @@ $database = get_class($pdo) == "PDO";
 
 // ---------------------------------------------------------------------
 
-$populate = null;
+$setup = null;
 
-if ($connect && $database) {
-  $populate = Repository::exec($pdo, "dashboard-app/populate.sql");
+if ($connect && !$database) {
+  $setup = Repository::exec($pdo_no_database, "dashboard-app/setup.sql");
 }
 
 // ---------------------------------------------------------------------
 
-$_SESSION["populate"] = [
+$_SESSION["setup"] = [
   "submitted" => true,
   "connect" => $connect,
   "database" => $database,
-  "success" => $populate
+  "success" => $setup
 ];
 
 // ---------------------------------------------------------------------

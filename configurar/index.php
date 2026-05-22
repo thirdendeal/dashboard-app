@@ -7,8 +7,8 @@ session_start();
 
 // ---------------------------------------------------------------------
 
-require $_SERVER["DOCUMENT_ROOT"] . "/_view/helpers/consume-session.php";
-require $_SERVER["DOCUMENT_ROOT"] . "/_view/helpers/include-with.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_/view/helpers/consume-session.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_/view/helpers/include-with.php";
 
 // ---------------------------------------------------------------------
 
@@ -30,127 +30,127 @@ include_with("default", ["title" => "Configurar", "tab" => 4]);
 
     <ul class="command-list">
       <li class="command-item">
-        <form action="/_controller/configurar/connect.php" method="post">
+        <form action="/_/controller/configurar/connect.php" method="post">
           <input class="button button--green full-width left" type="submit" value="Verificar Conexão">
         </form>
 
         <?php if ($connect["submitted"] ?? false) { ?>
-          <?php if ($connect["success"]) { ?>
-            <div class="green">
-              > Conexão feita com sucesso
-            </div>
-          <?php } else { ?>
-            <div class="red">
-              * Falha na conexão
-            </div>
-          <?php } ?>
+            <?php if ($connect["success"]) { ?>
+                <div class="green">
+                  > Conexão feita com sucesso
+                </div>
+            <?php } else { ?>
+                <div class="red">
+                  * Falha na conexão
+                </div>
+            <?php } ?>
         <?php } ?>
       </li>
       <li class="command-item">
-        <form action="/_controller/configurar/database.php" method="post">
+        <form action="/_/controller/configurar/database.php" method="post">
           <input class="button button--green full-width left" type="submit" value="Verificar Banco de Dados">
         </form>
 
         <?php if ($database["submitted"] ?? false) { ?>
-          <?php if ($database["success"]) { ?>
-            <div class="green">
-              > Banco de Dados encontrado
-            </div>
-          <?php } else { ?>
-            <?php if ($database["connect"]) { ?>
-              <div class="red">
-                * Banco de Dados não encontrado
-              </div>
+            <?php if ($database["success"]) { ?>
+                <div class="green">
+                  > Banco de Dados encontrado
+                </div>
             <?php } else { ?>
-              <div class="red">
-                * Falha na conexão
-              </div>
+                <?php if ($database["connect"]) { ?>
+                    <div class="red">
+                      * Banco de Dados não encontrado
+                    </div>
+                <?php } else { ?>
+                    <div class="red">
+                      * Falha na conexão
+                    </div>
+                <?php } ?>
             <?php } ?>
-          <?php } ?>
         <?php } ?>
       </li>
       <li class="command-item">
-        <form action="/_controller/configurar/setup.php" method="post">
+        <form action="/_/controller/configurar/setup.php" method="post">
           <input class="button button--green full-width left" type="submit" value="Criar Banco de Dados">
         </form>
 
         <?php if ($setup["submitted"] ?? false) { ?>
-          <?php if ($setup["success"]) { ?>
-            <div class="green">
-              > Banco de Dados criado com sucesso
-            </div>
-          <?php } else { ?>
-            <?php if (!$setup["connect"]) { ?>
-              <div class="red">
-                * Falha na conexão
-              </div>
-            <?php } elseif ($setup["database"]) { ?>
-              <div class="darkorange">
-                ** Banco de Dados já existe
-              </div>
+            <?php if ($setup["success"]) { ?>
+                <div class="green">
+                  > Banco de Dados criado com sucesso
+                </div>
             <?php } else { ?>
-              <div class="red">
-                * Erro na criação do banco de dados
-              </div>
+                <?php if (!$setup["connect"]) { ?>
+                    <div class="red">
+                      * Falha na conexão
+                    </div>
+                <?php } elseif ($setup["database"]) { ?>
+                    <div class="darkorange">
+                      ** Banco de Dados já existe
+                    </div>
+                <?php } else { ?>
+                    <div class="red">
+                      * Erro na criação do banco de dados
+                    </div>
+                <?php } ?>
             <?php } ?>
-          <?php } ?>
         <?php } ?>
       </li>
       <li class="command-item">
-        <form action="/_controller/configurar/populate.php" method="post">
+        <form action="/_/controller/configurar/populate.php" method="post">
           <input class="button button--green full-width left" type="submit" value="Inserir Dados">
         </form>
 
         <?php if ($populate["submitted"] ?? false) { ?>
-          <?php if ($populate["success"]) { ?>
-            <div class="green">
-              > Dados inseridos com sucesso
-            </div>
-          <?php } else { ?>
-            <?php if (!$populate["connect"]) { ?>
-              <div class="red">
-                * Falha na conexão
-              </div>
-            <?php } elseif (!$populate["database"]) { ?>
-              <div class="red">
-                * Banco de Dados não encontrado
-              </div>
+            <?php if ($populate["success"]) { ?>
+                <div class="green">
+                  > Dados inseridos com sucesso
+                </div>
             <?php } else { ?>
-              <div class="red">
-                * Erro na inserção de dados
-              </div>
+                <?php if (!$populate["connect"]) { ?>
+                    <div class="red">
+                      * Falha na conexão
+                    </div>
+                <?php } elseif (!$populate["database"]) { ?>
+                    <div class="red">
+                      * Banco de Dados não encontrado
+                    </div>
+                <?php } else { ?>
+                    <div class="red">
+                      * Erro na inserção de dados
+                    </div>
+                <?php } ?>
             <?php } ?>
-          <?php } ?>
         <?php } ?>
 
         <br>
       </li>
 
       <li class="command-item">
-        <form action="/_controller/configurar/drop.php" method="post">
+        <form action="/_/controller/configurar/drop.php" method="post">
           <input class="button button--red full-width left" type="submit" value="Remover Banco de Dados">
         </form>
 
         <?php if ($drop["submitted"] ?? false) { ?>
-          <?php if ($drop["success"]) { ?>
-            <div class="green">
-              > Banco de Dados removido com sucesso
-            </div>
-          <?php } else { ?>
-            <?php if (!$drop["connect"]) { ?>
-              <div class="red">
-                * Falha na conexão
-              </div>
-            <?php } elseif (!$drop["database"]) { ?>
-              <div class="red">
-                * Banco de Dados não encontrado
-              </div>
+            <?php if ($drop["success"]) { ?>
+                <div class="green">
+                  > Banco de Dados removido com sucesso
+                </div>
             <?php } else { ?>
-              <div class="red">
-                * Erro na remoção do banco de dados
-              </div>
+                <?php if (!$drop["connect"]) { ?>
+                    <div class="red">
+                      * Falha na conexão
+                    </div>
+                <?php } elseif (!$drop["database"]) { ?>
+                    <div class="red">
+                      * Banco de Dados não encontrado
+                    </div>
+                <?php } else { ?>
+                    <div class="red">
+                      * Erro na remoção do banco de dados
+                    </div>
+                <?php } ?>
             <?php } ?>
-          <?php } ?>
         <?php } ?>
       </li>
     </ul>

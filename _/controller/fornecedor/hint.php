@@ -6,7 +6,7 @@
 // XHR: /fornecedor?id=
 // XHR: /adicionar-fornecedor/
 
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/entity/fornecedor/validate.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_/model/entity/fornecedor/validate.php";
 
 // Escape
 // ---------------------------------------------------------------------

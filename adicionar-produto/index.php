@@ -7,10 +7,10 @@ session_start();
 
 // ---------------------------------------------------------------------
 
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/select-from-where.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_/model/database/pdo/select-from-where.php";
 
-require $_SERVER["DOCUMENT_ROOT"] . "/_view/helpers/consume-session.php";
-require $_SERVER["DOCUMENT_ROOT"] . "/_view/helpers/include-with.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_/view/helpers/consume-session.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_/view/helpers/include-with.php";
 
 // ---------------------------------------------------------------------
 
@@ -26,7 +26,7 @@ include_with("default", ["title" => "Adicionar Produto", "tab" => 3]);
     <h1>Adicionar Produto</h1>
     <br>
 
-    <form action="/_controller/produto/add.php" method="post">
+    <form action="/_/controller/produto/add.php" method="post">
       <label for="nome">
         Nome do Produto
         <input class="textbox" type="text" name="nome" id="nome" value="<?= $add_p["fields"]["nome"] ?? "" ?>" oninput="getHint(this.id, this.value)" />
@@ -62,7 +62,7 @@ include_with("default", ["title" => "Adicionar Produto", "tab" => 3]);
 
       $table_checkbox = true;
 
-      include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/table.php";
+      include $_SERVER["DOCUMENT_ROOT"] . "/_/view/includes/table.php";
       ?>
 
       <br>
@@ -85,13 +85,13 @@ include_with("default", ["title" => "Adicionar Produto", "tab" => 3]);
   </div>
 </main>
 
-<script src="/_view/vendor/jquery-v4.0.0.min.js"></script>
+<script src="/_/view/vendor/jquery-v4.0.0.min.js"></script>
 
-<script src="/_view/assets/js/checkbox-table.js"></script>
-<script src="/_view/assets/js/get-hint.js"></script>
+<script src="/_/view/assets/js/checkbox-table.js"></script>
+<script src="/_/view/assets/js/get-hint.js"></script>
 
 <script>
-  const getHint = makeGetHint("/_controller/produto/hint.php");
+  const getHint = makeGetHint("/_/controller/produto/hint.php");
 </script>
 
 <?php

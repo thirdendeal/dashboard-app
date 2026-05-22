@@ -10,13 +10,13 @@ session_start();
 
 // ---------------------------------------------------------------------
 
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo.php";
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/delete-where.php";
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/insert.php";
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/repository.php";
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/select-from.php";
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/update-where.php";
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/entity/produto/validate.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_/model/database/pdo.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_/model/database/pdo/delete-where.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_/model/database/pdo/insert.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_/model/database/pdo/repository.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_/model/database/pdo/select-from.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_/model/database/pdo/update-where.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_/model/entity/produto/validate.php";
 
 // Parse
 // ---------------------------------------------------------------------

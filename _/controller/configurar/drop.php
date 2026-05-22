@@ -1,6 +1,6 @@
 <?php
 
-// Setup
+// Drop
 // ---------------------------------------------------------------------
 //
 // From: /configurar/
@@ -10,10 +10,8 @@ session_start();
 
 // ---------------------------------------------------------------------
 
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo-no-database.php";
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo.php";
-
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/repository.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_/model/database/pdo-no-database.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_/model/database/pdo.php";
 
 // ---------------------------------------------------------------------
 
@@ -22,19 +20,19 @@ $database = get_class($pdo) == "PDO";
 
 // ---------------------------------------------------------------------
 
-$setup = null;
+$drop = null;
 
-if ($connect && !$database) {
-  $setup = Repository::exec($pdo_no_database, "dashboard-app/setup.sql");
+if ($connect && $database) {
+  $drop = $pdo->exec("DROP DATABASE dashboard_app;");
 }
 
 // ---------------------------------------------------------------------
 
-$_SESSION["setup"] = [
+$_SESSION["drop"] = [
   "submitted" => true,
   "connect" => $connect,
   "database" => $database,
-  "success" => $setup
+  "success" => $drop
 ];
 
 // ---------------------------------------------------------------------

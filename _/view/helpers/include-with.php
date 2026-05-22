@@ -4,5 +4,5 @@ function include_with($include, $variables)
 {
   extract($variables);
 
-  include $_SERVER["DOCUMENT_ROOT"] . "/_view/includes/$include.php";
+  include $_SERVER["DOCUMENT_ROOT"] . "/_/view/includes/$include.php";
 }

@@ -7,8 +7,8 @@ session_start();
 
 // ---------------------------------------------------------------------
 
-require $_SERVER["DOCUMENT_ROOT"] . "/_view/helpers/consume-session.php";
-require $_SERVER["DOCUMENT_ROOT"] . "/_view/helpers/include-with.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_/view/helpers/consume-session.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_/view/helpers/include-with.php";
 
 // ---------------------------------------------------------------------
 
@@ -24,7 +24,7 @@ include_with("default", ["title" => "Adicionar Fornecedor", "tab" => 2]);
     <h1>Adicionar Fornecedor</h1>
     <br>
 
-    <form action="/_controller/fornecedor/add.php" method="post">
+    <form action="/_/controller/fornecedor/add.php" method="post">
       <label for="nome">
         Nome do Fornecedor
         <input class="textbox" type="text" name="nome" id="nome" value="<?= $add_f["fields"]["nome"] ?? "" ?>" oninput="getHint(this.id, this.value)" />
@@ -69,12 +69,12 @@ include_with("default", ["title" => "Adicionar Fornecedor", "tab" => 2]);
   </div>
 </main>
 
-<script src="/_view/vendor/jquery-v4.0.0.min.js"></script>
+<script src="/_/view/vendor/jquery-v4.0.0.min.js"></script>
 
-<script src="/_view/assets/js/get-hint.js"></script>
+<script src="/_/view/assets/js/get-hint.js"></script>
 
 <script>
-  const getHint = makeGetHint("/_controller/fornecedor/hint.php");
+  const getHint = makeGetHint("/_/controller/fornecedor/hint.php");
 </script>
 
 <?php

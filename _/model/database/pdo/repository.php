@@ -11,7 +11,7 @@ class Repository
       return $pdo;
     }
 
-    $path = $_SERVER["DOCUMENT_ROOT"] . "/_model/repository/" . $file;
+    $path = $_SERVER["DOCUMENT_ROOT"] . "/_/model/repository/" . $file;
 
     return $pdo->exec(file_get_contents($path));
   }
@@ -22,7 +22,7 @@ class Repository
       return $pdo;
     }
 
-    $path = $_SERVER["DOCUMENT_ROOT"] . "/_model/repository/" . $file;
+    $path = $_SERVER["DOCUMENT_ROOT"] . "/_/model/repository/" . $file;
 
     $statement = $pdo->prepare(file_get_contents($path));
     $status = $statement->execute($values);
@@ -36,7 +36,7 @@ class Repository
       return $pdo;
     }
 
-    $path = $_SERVER["DOCUMENT_ROOT"] . "/_model/repository/" . $file;
+    $path = $_SERVER["DOCUMENT_ROOT"] . "/_/model/repository/" . $file;
 
     return $pdo->query(file_get_contents($path));
   }

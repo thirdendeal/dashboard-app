@@ -6,7 +6,7 @@
 // XHR: /produto?id=
 // XHR: /adicionar-produto/
 
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/entity/produto/validate.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_/model/entity/produto/validate.php";
 
 // Escape
 // ---------------------------------------------------------------------

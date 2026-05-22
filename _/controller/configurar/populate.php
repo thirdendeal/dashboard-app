@@ -1,6 +1,6 @@
 <?php
 
-// Drop
+// Populate
 // ---------------------------------------------------------------------
 //
 // From: /configurar/
@@ -10,8 +10,10 @@ session_start();
 
 // ---------------------------------------------------------------------
 
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo-no-database.php";
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_/model/database/pdo-no-database.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_/model/database/pdo.php";
+
+require $_SERVER["DOCUMENT_ROOT"] . "/_/model/database/pdo/repository.php";
 
 // ---------------------------------------------------------------------
 
@@ -20,19 +22,19 @@ $database = get_class($pdo) == "PDO";
 
 // ---------------------------------------------------------------------
 
-$drop = null;
+$populate = null;
 
 if ($connect && $database) {
-  $drop = $pdo->exec("DROP DATABASE dashboard_app;");
+  $populate = Repository::exec($pdo, "dashboard-app/populate.sql");
 }
 
 // ---------------------------------------------------------------------
 
-$_SESSION["drop"] = [
+$_SESSION["populate"] = [
   "submitted" => true,
   "connect" => $connect,
   "database" => $database,
-  "success" => $drop
+  "success" => $populate
 ];
 
 // ---------------------------------------------------------------------

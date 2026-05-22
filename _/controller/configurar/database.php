@@ -10,8 +10,8 @@ session_start();
 
 // ---------------------------------------------------------------------
 
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo-no-database.php";
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_/model/database/pdo-no-database.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_/model/database/pdo.php";
 
 // ---------------------------------------------------------------------
 

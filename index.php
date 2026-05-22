@@ -3,7 +3,7 @@
 // Dashboard
 // ---------------------------------------------------------------------
 
-require $_SERVER["DOCUMENT_ROOT"] . "/_view/helpers/include-with.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_/view/helpers/include-with.php";
 ?>
 
 <?php

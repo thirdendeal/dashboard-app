@@ -7,10 +7,10 @@ session_start();
 
 // ---------------------------------------------------------------------
 
-require $_SERVER["DOCUMENT_ROOT"] . "/_model/database/pdo/select-from-where.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_/model/database/pdo/select-from-where.php";
 
-require $_SERVER["DOCUMENT_ROOT"] . "/_view/helpers/consume-session.php";
-require $_SERVER["DOCUMENT_ROOT"] . "/_view/helpers/include-with.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_/view/helpers/consume-session.php";
+require $_SERVER["DOCUMENT_ROOT"] . "/_/view/helpers/include-with.php";
 
 // Get row
 // ---------------------------------------------------------------------
@@ -50,7 +50,7 @@ include_with("default", ["title" => $fornecedor["nome"], "tab" => 2]);
 
           <p class="list__p"><?= $fornecedor["nome"] ?></p>
 
-          <form style="display: none" class="list__form" action="/_controller/fornecedor/edit.php" method="post">
+          <form style="display: none" class="list__form" action="/_/controller/fornecedor/edit.php" method="post">
             <label for="nome">
               <input class="list__input textbox" type="text" name="nome" id="nome" value="<?= $fornecedor["nome"] ?>" oninput="getHint(this.id, this.value)" />
               <span class="list__error error"></span>
@@ -73,7 +73,7 @@ include_with("default", ["title" => $fornecedor["nome"], "tab" => 2]);
 
           <p class="list__p"><?= $fornecedor["e-mail"] ?></p>
 
-          <form style="display: none" class="list__form" action="/_controller/fornecedor/edit.php" method="post">
+          <form style="display: none" class="list__form" action="/_/controller/fornecedor/edit.php" method="post">
             <label for="e-mail">
               <input class="list__input textbox" type="email" name="e-mail" id="e-mail" value="<?= $fornecedor["e-mail"] ?>" oninput="getHint(this.id, this.value)" />
               <span class="list__error error"></span>
@@ -96,7 +96,7 @@ include_with("default", ["title" => $fornecedor["nome"], "tab" => 2]);
 
           <p class="list__p"><?= $fornecedor["telefone"] ?></p>
 
-          <form style="display: none" class="list__form" action="/_controller/fornecedor/edit.php" method="post">
+          <form style="display: none" class="list__form" action="/_/controller/fornecedor/edit.php" method="post">
             <label for="telefone">
               <input class="list__input textbox" type="tel" name="telefone" id="telefone" value="<?= $fornecedor["telefone"] ?>" oninput="getHint(this.id, this.value)" />
               <span class="list__error error"></span>
@@ -119,7 +119,7 @@ include_with("default", ["title" => $fornecedor["nome"], "tab" => 2]);
 
           <p class="list__p"><?= $fornecedor["cnpj"] ?></p>
 
-          <form style="display: none" class="list__form" action="/_controller/fornecedor/edit.php" method="post">
+          <form style="display: none" class="list__form" action="/_/controller/fornecedor/edit.php" method="post">
             <label for="cnpj">
               <input class="list__input textbox" type="text" name="cnpj" id="cnpj" value="<?= $fornecedor["cnpj"] ?>" oninput="getHint(this.id, this.value)" />
               <span class="list__error error"></span>
@@ -144,7 +144,7 @@ include_with("default", ["title" => $fornecedor["nome"], "tab" => 2]);
             <?= $fornecedor["status"] ? "ATIVO" : "INATIVO" ?>
           </p>
 
-          <form style="display: none" class="list__form" action="/_controller/fornecedor/edit.php" method="post">
+          <form style="display: none" class="list__form" action="/_/controller/fornecedor/edit.php" method="post">
             <label for="status">
               <select class="select" name="status" id="status">
                 <option value="1" <?= $fornecedor["status"] ? "selected" : "" ?>>ATIVO</option>
@@ -173,7 +173,7 @@ include_with("default", ["title" => $fornecedor["nome"], "tab" => 2]);
 
       <div></div>
 
-      <form style="display: none;" class="list__form" action="/_controller/fornecedor/remove.php" method="post">
+      <form style="display: none;" class="list__form" action="/_/controller/fornecedor/remove.php" method="post">
         <div class="list__form__padlock">
           <input class="list__submit button button--red" type="submit" value="Remover" />
           <button class="list__cancel button button--gray" type="button">Cancelar</button>
@@ -206,13 +206,13 @@ include_with("default", ["title" => $fornecedor["nome"], "tab" => 2]);
   </div>
 </main>
 
-<script src="/_view/vendor/jquery-v4.0.0.min.js"></script>
+<script src="/_/view/vendor/jquery-v4.0.0.min.js"></script>
 
-<script src="/_view/assets/js/get-hint.js"></script>
-<script src="/_view/assets/js/toggle-edit.js"></script>
+<script src="/_/view/assets/js/get-hint.js"></script>
+<script src="/_/view/assets/js/toggle-edit.js"></script>
 
 <script>
-  const getHint = makeGetHint("/_controller/fornecedor/hint.php");
+  const getHint = makeGetHint("/_/controller/fornecedor/hint.php");
 </script>
 
 <?php

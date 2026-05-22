@@ -16,10 +16,10 @@ $open = isset($close) ? !$close : true;
 
       <title><?= $title ?> – <?= $suffix ?? "Burguer Burguer" ?></title>
 
-      <link rel="stylesheet" href="/_view/vendor/minireset-v0.0.6.min.css">
-      <link rel="stylesheet" href="/_view/vendor/normalize-v8.0.1.css">
+      <link rel="stylesheet" href="/_/view/vendor/minireset-v0.0.6.min.css">
+      <link rel="stylesheet" href="/_/view/vendor/normalize-v8.0.1.css">
 
-      <link rel="stylesheet" href="/_view/assets/css/default.css">
+      <link rel="stylesheet" href="/_/view/assets/css/default.css">
     </head>
 
     <body class="body">
@@ -43,7 +43,7 @@ $open = isset($close) ? !$close : true;
         </nav>
       </aside>
 
-<?php } else { ?>
+    <?php } else { ?>
     </body>
 
   </html>
