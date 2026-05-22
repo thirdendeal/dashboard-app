@@ -77,6 +77,6 @@ $table_linked ??= false;
   </table>
 <?php } else { ?>
   <div class="empty-view">
-    Nenhum <?= $table ?> encontrado :(
+    <?= $table_no_data ?? "Nenhum $table encontrado :(" ?>
   </div>
 <?php } ?>

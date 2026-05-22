@@ -159,8 +159,10 @@ include_with("default", ["title" => $produto["nome"], "tab" => 3]);
       <span class="label h3">Fornecedores</span>
 
       <?php
-      // link table
-      $table_rows = select_from_where(
+      $filled_checkbox_table = Repository::prepare_execute($pdo, "fornecedor/f-linked-to-p.sql", [$id]);
+      $any_f = ($filled_checkbox_table && $filled_checkbox_table->rowCount() > 0);
+
+      $link_table = select_from_where(
         "fornecedor.id_fornecedor, fornecedor.nome, fornecedor.`e-mail`, fornecedor.status",
         inner_join(
           "dashboard_app.produto_fornecedor",
@@ -172,12 +174,18 @@ include_with("default", ["title" => $produto["nome"], "tab" => 3]);
         ["dashboard_app.produto.id_produto = ?", [$id]]
       );
 
+      $table_rows = $link_table;
+
       $table = "fornecedor";
       $table_pairs = [
         "nome" => "Nome",
         "e-mail" => "E-Mail",
         "status" => "Status"
       ];
+
+      if ($any_f) {
+        $table_no_data = "Nenhum fornecedor associado...";
+      }
 
       include $_SERVER["DOCUMENT_ROOT"] . "/_/view/includes/table.php";
       ?>
@@ -212,7 +220,7 @@ include_with("default", ["title" => $produto["nome"], "tab" => 3]);
         </div>
       </form>
 
-      <button class="list__edit button button--blue list__edit--full">
+      <button class="list__edit button button--blue list__edit--full" <?= $any_f ? "" : "disabled" ?>>
         Atualizar Fornecedores
       </button>
 
