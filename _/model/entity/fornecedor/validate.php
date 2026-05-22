@@ -37,7 +37,11 @@ class Validate
 
     $length = strlen($email);
 
-    if ($length < 6) {
+    $too_short = $length < 6;
+    $malformed = substr_count($email, "@") != 1;
+    $missing_tld = (substr_count(explode("@", $email)[1] ?? "", ".") == 0) || substr($email, -1) == ".";
+
+    if ($too_short || $malformed || $missing_tld) {
       return "E-mail inválido.";
     }
 
