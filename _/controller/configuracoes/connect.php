@@ -1,26 +1,24 @@
 <?php
 
-// Database
+// Connect
 // ---------------------------------------------------------------------
 //
-// From: /configurar/
-// To:   /configurar/
+// From: /configuracoes/
+// To:   /configuracoes/
 
 session_start();
 
 // ---------------------------------------------------------------------
 
 require $_SERVER["DOCUMENT_ROOT"] . "/_/model/database/pdo-no-database.php";
-require $_SERVER["DOCUMENT_ROOT"] . "/_/model/database/pdo.php";
 
 // ---------------------------------------------------------------------
 
-$_SESSION["database"] = [
+$_SESSION["connect"] = [
   "submitted" => true,
-  "connect" => get_class($pdo_no_database) == "PDO",
-  "success" => get_class($pdo) == "PDO"
+  "success" => get_class($pdo_no_database) == "PDO"
 ];
 
 // ---------------------------------------------------------------------
 
-header("Location: /configurar/");
+header("Location: /configuracoes/");

@@ -3,8 +3,8 @@
 // Setup
 // ---------------------------------------------------------------------
 //
-// From: /configurar/
-// To:   /configurar/
+// From: /configuracoes/
+// To:   /configuracoes/
 
 session_start();
 
@@ -39,4 +39,4 @@ $_SESSION["setup"] = [
 
 // ---------------------------------------------------------------------
 
-header("Location: /configurar/");
+header("Location: /configuracoes/");

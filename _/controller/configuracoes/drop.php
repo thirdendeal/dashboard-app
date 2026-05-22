@@ -3,8 +3,8 @@
 // Drop
 // ---------------------------------------------------------------------
 //
-// From: /configurar/
-// To:   /configurar/
+// From: /configuracoes/
+// To:   /configuracoes/
 
 session_start();
 
@@ -37,4 +37,4 @@ $_SESSION["drop"] = [
 
 // ---------------------------------------------------------------------
 
-header("Location: /configurar/");
+header("Location: /configuracoes/");
